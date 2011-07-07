@@ -1,7 +1,5 @@
 package org.forzadroid.attentiontest;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,17 +21,24 @@ import android.widget.TableRow;
 public class DigitalSquare extends Activity {
 
 	private static final int MARGIN = 2;
-	private AtomicInteger next = new AtomicInteger(1);
 	private long startTime;
+	private AttentionTestApplication appState;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.dig_square);		
+		setContentView(R.layout.dig_square);
 		FrameLayout parent = (FrameLayout) findViewById(R.id.digSquare);
 	
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		
+		final int size = (Integer) getIntent().getExtras().get(Constants.DIG_SQUARE_SIZE);
+	    final int count = size * size;
+	    
+	    appState = (AttentionTestApplication) getApplicationContext();
+	    final AtomicInteger next = appState.getNext();
+	    final List<Integer> values = appState.getValues(size);
 		
 		TableLayout layout = new TableLayout(this) {
 			@Override
@@ -42,13 +47,6 @@ public class DigitalSquare extends Activity {
 				int width = MeasureSpec.getSize(widthMeasureSpec);
 			    int height = MeasureSpec.getSize(heightMeasureSpec);
 
-			    int size = (Integer) getIntent().getExtras().get(Constants.DIG_SQUARE_SIZE);
-			    final int count = size * size;
-			    List<Integer> values = new ArrayList<Integer>(size);
-			    for (int q = 1; q <= count; q++) {
-			    	values.add(q);
-			    }
-			    Collections.shuffle(values);
 			    Iterator<Integer> iterator = values.iterator();
 			    
 			    for (int q = 0; q < size; q++) {
@@ -71,12 +69,11 @@ public class DigitalSquare extends Activity {
 		                buttonParams.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
 		                button.setLayoutParams(buttonParams);
 		                button.setTextSize(120 / size);
-		                button.setBackgroundColor(Color.CYAN);
+		                updateButtonStatus(button, number < next.get());
 		                button.setOnClickListener(new View.OnClickListener() {
 		                	public void onClick(View view) {
 		                		if (button.getTag().equals(next.get())) {
-		                			button.setEnabled(false);
-		                			button.setBackgroundColor(Color.GRAY);
+		                			updateButtonStatus(button, true);
 		                			if (next.incrementAndGet() > count) {
 		                				finishGame();
 		                			}
@@ -97,10 +94,17 @@ public class DigitalSquare extends Activity {
 			
 		};
 		parent.addView(layout);
-		startTime = System.currentTimeMillis();
+		startTime = appState.getStartTime();
+	}
+	
+	private void updateButtonStatus(Button button, boolean passed) {
+		button.setEnabled(! passed);
+		button.setBackgroundColor(passed ? Color.GRAY : Color.CYAN);
 	}
 	
 	private void finishGame() {
+		appState.clearDigSequence();
+		
 		float time = System.currentTimeMillis() - startTime;
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
