@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<TextView android:layout_width="fill_parent" 
+		android:gravity="center"
+		android:layout_height="wrap_content" 
+		android:textSize="30sp" 
+		android:layout_margin="20dp"
+		android:text="@string/dig_seq_size" />
+		
+	<Button android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:text="@string/dig_seq_size_3" 
+		android:textSize="20sp"
+		android:layout_margin="10dp"
+		android:id="@+id/digSeq3" />
+		
+	<Button android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:text="@string/dig_seq_size_4" 
+		android:textSize="20sp"
+		android:layout_margin="10dp"
+		android:id="@+id/digSeq4" />
+		
+	<Button android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:text="@string/dig_seq_size_5" 
+		android:textSize="20sp"
+		android:layout_margin="10dp"
+		android:id="@+id/digSeq5" />
+		
+	<Button android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:text="@string/dig_seq_size_6" 
+		android:textSize="20sp"
+		android:layout_margin="10dp"
+		android:id="@+id/digSeq6" />
+		
+</LinearLayout>
