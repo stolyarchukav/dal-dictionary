@@ -71,7 +71,7 @@ public class DigitalSquare extends Activity {
 		                buttonParams.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
 		                button.setLayoutParams(buttonParams);
 		                button.setTextSize(120 / size);
-		                button.setBackgroundColor(Color.GREEN);
+		                button.setBackgroundColor(Color.CYAN);
 		                button.setOnClickListener(new View.OnClickListener() {
 		                	public void onClick(View view) {
 		                		if (button.getTag().equals(next.get())) {
