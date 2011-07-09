@@ -19,7 +19,7 @@
         	android:label="@string/main_digital_sequence">
         </activity>
         <activity android:name=".DigitalSquare"
-        	android:label="@string/main_digital_sequence">
+        	android:label="@string/dig_square_title">
         </activity>
     </application>
 </manifest>

@@ -21,8 +21,8 @@ import android.widget.TableRow;
 public class DigitalSquare extends Activity {
 
 	private static final int MARGIN = 2;
-	private long startTime;
 	private AttentionTestApplication appState;
+	private int size;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class DigitalSquare extends Activity {
 	
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		
-		final int size = (Integer) getIntent().getExtras().get(Constants.DIG_SQUARE_SIZE);
+		size = (Integer) getIntent().getExtras().get(Constants.DIG_SQUARE_SIZE);
 	    final int count = size * size;
 	    
 	    appState = (AttentionTestApplication) getApplicationContext();
@@ -94,7 +94,7 @@ public class DigitalSquare extends Activity {
 			
 		};
 		parent.addView(layout);
-		startTime = appState.getStartTime();
+		appState.startDigitTest();
 	}
 	
 	private void updateButtonStatus(Button button, boolean passed) {
@@ -103,27 +103,27 @@ public class DigitalSquare extends Activity {
 	}
 	
 	private void finishGame() {
-		appState.clearDigSequence();
-		
-		float time = System.currentTimeMillis() - startTime;
+		String resultString = appState.finishDigitTest(size);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Congratulations! It takes " + time / 1000 + " sec")
+		builder.setMessage(resultString)
 		       .setCancelable(false)
-		       .setPositiveButton("Start new", new DialogInterface.OnClickListener() {
+		       .setPositiveButton(getString(R.string.dig_square_start_again), new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
-		                Intent intent = getIntent();
-		                finish();
-		                startActivity(intent);
+		               Intent intent = getIntent();
+		               finish();
+		               startActivity(intent);
 		           }
 		       })
-		       .setNegativeButton("Finish", new DialogInterface.OnClickListener() {
+		       .setNegativeButton(getString(R.string.dig_square_finish), new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
-		                finish();
+		        	   finish();
 		           }
 		       });
 		AlertDialog alert = builder.create();
 		alert.show();
+		
+		appState.clearDigSequence();
 	}
 	
 }
