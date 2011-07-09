@@ -9,10 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class AttentionTestApplication extends Application {
 
-	private static final String DIGIT_KEY_PREFIX = "digit";
+	public static final String DIGIT_KEY_PREFIX = "digit";
 	private static final String PREFERENCES_FILE = "AttentionTest";
 	private AtomicInteger next = new AtomicInteger(1);
 	private Long startTime;
@@ -76,8 +77,18 @@ public class AttentionTestApplication extends Application {
 		result.append(" ");
 		result.append(time / 1000.0);
 		result.append(" ");
-		result.append(getString(R.string.dig_square_milliseconds));
+		result.append(getString(R.string.dig_square_seconds));
 		return result.toString();
+	}
+	
+	public void clearRecords() {
+		Editor editor = preferences.edit();
+		for (int q = 3; q < 6; q++) {
+			String key = DIGIT_KEY_PREFIX + q;
+			records.put(key, -1L);
+			editor.putLong(key, -1);
+		}
+		editor.commit();
 	}
 	
 }

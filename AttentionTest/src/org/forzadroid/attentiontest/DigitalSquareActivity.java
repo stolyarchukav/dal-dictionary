@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public class DigitalSquare extends Activity {
+public class DigitalSquareActivity extends Activity {
 
 	private static final int MARGIN = 2;
 	private AttentionTestApplication appState;
@@ -50,14 +50,14 @@ public class DigitalSquare extends Activity {
 			    Iterator<Integer> iterator = values.iterator();
 			    
 			    for (int q = 0; q < size; q++) {
-		        	TableRow tableRow = new TableRow(DigitalSquare.this);
+		        	TableRow tableRow = new TableRow(DigitalSquareActivity.this);
 		        	tableRow.setId(q);
 		        	tableRow.setLayoutParams(new LayoutParams(
 		                    LayoutParams.FILL_PARENT,
 		                    LayoutParams.FILL_PARENT));
 
 		        	for (int w = 0; w < size; w++) {
-		        		final Button button = new Button(DigitalSquare.this);
+		        		final Button button = new Button(DigitalSquareActivity.this);
 		        		button.setWidth(width / size - MARGIN * 2);
 		        		button.setHeight(height / size - MARGIN * 2);
 		        		int number = iterator.next();

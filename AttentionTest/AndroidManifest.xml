@@ -15,11 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DigitalSequenceActivity"
+        <activity android:name="DigitalSequenceActivity"
         	android:label="@string/main_digital_sequence">
         </activity>
-        <activity android:name=".DigitalSquare"
+        <activity android:name="DigitalSquareActivity"
         	android:label="@string/dig_square_title">
+        </activity>
+        <activity android:name="RecordsActivity"
+        	android:label="@string/main_records">
         </activity>
     </application>
 </manifest>

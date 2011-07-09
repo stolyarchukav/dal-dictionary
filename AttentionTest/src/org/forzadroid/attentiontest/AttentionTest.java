@@ -22,5 +22,14 @@ public class AttentionTest extends Activity {
 			}
 		});
         
+        Button recordsButton = (Button) findViewById(R.id.recordsButton);
+        recordsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(AttentionTest.this, RecordsActivity.class);
+				startActivity(intent);
+			}
+		});
+        
     }
 }

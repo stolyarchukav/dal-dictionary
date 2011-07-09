@@ -3,6 +3,7 @@
     <string name="app_name">Тест внимания</string>
     <string name="main_title">Главное меню</string>
     <string name="main_digital_sequence">Последовательность чисел</string>
+    <string name="main_records">Лучшие результаты</string>
     <string name="dig_seq_size">Выберите уровень сложности</string>
     <string name="dig_seq_size_3">легкий (3x3)</string>
     <string name="dig_seq_size_4">средний (4x4)</string>
@@ -11,7 +12,9 @@
     <string name="dig_square_title">Нажимайте числа по порядку</string>
     <string name="dig_square_new_record">Поздравляем! Вы поставили новый рекорд</string>
     <string name="dig_square_without_record">Очень хорошо. Вы уложились в</string>
-    <string name="dig_square_milliseconds">миллисекунд</string>
+    <string name="dig_square_seconds">секунд</string>
     <string name="dig_square_start_again">Начать заново</string>
     <string name="dig_square_finish">Завершить</string>
+    <string name="records_clear">Сбросить</string>
+    <string name="records_sec">сек</string>
 </resources>

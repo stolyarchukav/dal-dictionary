@@ -44,7 +44,7 @@ public class DigitalSequenceActivity extends Activity {
 	
 	private void startDigSquare(int size) {
 		((AttentionTestApplication)getApplicationContext()).clearDigSequence();
-		Intent intent = new Intent(DigitalSequenceActivity.this, DigitalSquare.class);
+		Intent intent = new Intent(DigitalSequenceActivity.this, DigitalSquareActivity.class);
 		intent.putExtra(Constants.DIG_SQUARE_SIZE, size);
 		startActivity(intent);
 	}
