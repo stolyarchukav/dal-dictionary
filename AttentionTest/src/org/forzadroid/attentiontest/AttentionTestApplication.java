@@ -83,7 +83,7 @@ public class AttentionTestApplication extends Application {
 	
 	public void clearRecords() {
 		Editor editor = preferences.edit();
-		for (int q = 3; q < 6; q++) {
+		for (int q = 3; q <= 6; q++) {
 			String key = DIGIT_KEY_PREFIX + q;
 			records.put(key, -1L);
 			editor.putLong(key, -1);
