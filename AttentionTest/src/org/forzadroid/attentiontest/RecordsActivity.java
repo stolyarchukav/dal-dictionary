@@ -3,10 +3,15 @@ package org.forzadroid.attentiontest;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
@@ -35,6 +40,14 @@ public class RecordsActivity extends Activity {
 				updateRecords();
 			}
 		});
+		
+		//Advertising
+        AdView adView = new AdView(this, AdSize.BANNER, Constants.AD_MOB_ID);
+        LinearLayout layout = (LinearLayout)findViewById(R.id.records);
+        layout.addView(adView);
+        AdRequest adRequest = new AdRequest();
+        adRequest.setTesting(true);
+        adView.loadAd(adRequest);
 	}
 	
 	@Override

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:orientation="vertical" android:id="@+id/main_layout"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
 	
 	<TextView android:layout_width="fill_parent" 
 		android:gravity="center"
 		android:layout_height="wrap_content" 
 		android:textSize="30sp" 
-		android:layout_margin="20dp"
+		android:layout_margin="15px"
 		android:text="@string/main_title" />
 		
-	<Button android:layout_width="fill_parent" 
+	<Button android:id="@+id/digSeqButton" 
+		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
 		android:text="@string/main_digital_sequence" 
 		android:textSize="20sp"
-		android:layout_margin="20dp"
-		android:id="@+id/digSeqButton" />
+		android:layout_margin="15px" />
 		
-	<Button android:layout_width="fill_parent" 
+	<Button android:id="@+id/recordsButton"
+		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
 		android:text="@string/main_records" 
 		android:textSize="20sp"
-		android:layout_margin="20dp"
-		android:id="@+id/recordsButton" />
+		android:layout_margin="15px" />
 		
 </LinearLayout>
