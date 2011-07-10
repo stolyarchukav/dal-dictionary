@@ -4,7 +4,8 @@
     <string name="main_title">Главное меню</string>
     <string name="main_digital_sequence">Последовательность чисел</string>
     <string name="main_records">Лучшие результаты</string>
-    <string name="dig_seq_size">Выберите уровень сложности</string>
+    <string name="dig_seq_level">Выберите уровень сложности</string>
+    <string name="dig_seq_var_font_size">переменный размер шрифта</string>
     <string name="dig_seq_size_3">легкий (3x3)</string>
     <string name="dig_seq_size_4">средний (4x4)</string>
     <string name="dig_seq_size_5">сложный (5x5)</string>
@@ -17,4 +18,6 @@
     <string name="dig_square_finish">Завершить</string>
     <string name="records_clear">Сбросить</string>
     <string name="records_sec">сек</string>
+    <string name="records_var_font_size">Перем. размер</string>
+    <string name="records_stable_font_size">Пост. размер</string>
 </resources>

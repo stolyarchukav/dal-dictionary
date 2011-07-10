@@ -8,6 +8,18 @@
 		<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:id="@+id/records">
 			
+			<LinearLayout android:orientation="horizontal" 
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+				<Button android:id="@+id/rec_stable_size" 
+					android:text="@string/records_stable_font_size" 
+					android:layout_width="fill_parent" android:layout_height="fill_parent" 
+					android:layout_weight="1" android:enabled="false"/>
+				<Button android:id="@+id/rec_var_size" 
+					android:text="@string/records_var_font_size" 
+					android:layout_width="fill_parent" android:layout_height="fill_parent" 
+					android:layout_weight="1"/>
+			</LinearLayout>
+			
 			<TableLayout android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" android:stretchColumns="1">
 				<TableRow android:id="@+id/rec3" 
@@ -15,7 +27,8 @@
 					android:layout_height="fill_parent">
 					<TextView android:text="@string/dig_seq_size_3"
 						android:textSize="20sp"
-						android:layout_margin="10px" />
+						android:layout_margin="10px"
+						android:textColor="@color/table_row_odd" />
 				</TableRow>
 				<TableRow android:id="@+id/rec4" 
 					android:layout_width="fill_parent" 
@@ -29,7 +42,8 @@
 					android:layout_height="fill_parent">
 					<TextView android:text="@string/dig_seq_size_5"
 						android:textSize="20sp"
-						android:layout_margin="10px" />
+						android:layout_margin="10px"
+						android:textColor="@color/table_row_odd" />
 				</TableRow>
 				<TableRow android:id="@+id/rec6" 
 					android:layout_width="fill_parent" 

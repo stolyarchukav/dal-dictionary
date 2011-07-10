@@ -2,6 +2,7 @@ package org.forzadroid.attentiontest;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
@@ -39,7 +40,9 @@ public class DigitalSquareActivity extends Activity {
 	    appState = (AttentionTestApplication) getApplicationContext();
 	    final AtomicInteger next = appState.getNext();
 	    final List<Integer> values = appState.getValues(size);
-		
+	    final boolean varFontSize = appState.isVarFontSize();
+	    final Random random = new Random();
+	    
 		TableLayout layout = new TableLayout(this) {
 			@Override
 			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -68,7 +71,7 @@ public class DigitalSquareActivity extends Activity {
 		                        LayoutParams.FILL_PARENT);
 		                buttonParams.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
 		                button.setLayoutParams(buttonParams);
-		                button.setTextSize(120 / size);
+		                button.setTextSize((70 + (varFontSize ? random.nextInt(80) : 40)) / size);
 		                updateButtonStatus(button, number < next.get());
 		                button.setOnClickListener(new View.OnClickListener() {
 		                	public void onClick(View view) {

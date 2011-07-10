@@ -12,35 +12,43 @@
 				android:gravity="center"
 				android:layout_height="wrap_content" 
 				android:textSize="30sp" 
-				android:layout_margin="20dp"
-				android:text="@string/dig_seq_size" />
+				android:layout_margin="10px"
+				android:text="@string/dig_seq_level"
+				android:textColor="@color/title" />
+				
+			<CheckBox android:id="@+id/varFontSize"
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content"
+				android:text="@string/dig_seq_var_font_size" 
+				android:textSize="20sp"
+				android:layout_margin="10px" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_3" 
 				android:textSize="20sp"
-				android:layout_margin="10dp"
+				android:layout_margin="10px"
 				android:id="@+id/digSeq3" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_4" 
 				android:textSize="20sp"
-				android:layout_margin="10dp"
+				android:layout_margin="10px"
 				android:id="@+id/digSeq4" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_5" 
 				android:textSize="20sp"
-				android:layout_margin="10dp"
+				android:layout_margin="10px"
 				android:id="@+id/digSeq5" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_6" 
 				android:textSize="20sp"
-				android:layout_margin="10dp"
+				android:layout_margin="10px"
 				android:id="@+id/digSeq6" />
 			
 		</LinearLayout>

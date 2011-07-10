@@ -4,7 +4,8 @@
     <string name="main_title">Menu principale</string>
     <string name="main_digital_sequence">Una sequenza di numero</string>
     <string name="main_records">Punteggi</string>
-    <string name="dig_seq_size">Scegliere il livello di complessità</string>
+    <string name="dig_seq_level">Scegliere il livello di complessità</string>
+    <string name="dig_seq_var_font_size">dimensione carattere variabile</string>
     <string name="dig_seq_size_3">leggero (3x3)</string>
     <string name="dig_seq_size_4">medio (4x4)</string>
     <string name="dig_seq_size_5">complessi (5x5)</string>
@@ -17,4 +18,6 @@
     <string name="dig_square_finish">Finitura</string>
     <string name="records_clear">Reset</string>
     <string name="records_sec">sec</string>
+    <string name="records_var_font_size">variabile dim</string>
+    <string name="records_stable_font_size">permanente dim</string>
 </resources>
