@@ -71,7 +71,7 @@ public class RecordsActivity extends Activity {
         LinearLayout layout = (LinearLayout)findViewById(R.id.records);
         layout.addView(adView);
         AdRequest adRequest = new AdRequest();
-        //adRequest.setTesting(true);
+        adRequest.setTesting(true);
         adView.loadAd(adRequest);
 	}
 	

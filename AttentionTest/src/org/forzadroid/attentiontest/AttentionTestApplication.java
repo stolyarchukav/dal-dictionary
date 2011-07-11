@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Application;
@@ -23,6 +24,7 @@ public class AttentionTestApplication extends Application {
 	private Map<String, Long> records;
 	private SharedPreferences preferences;
 	private boolean varFontSize;
+	private Random random = new Random();
 	
 	@Override
 	public void onCreate() {
@@ -107,6 +109,14 @@ public class AttentionTestApplication extends Application {
 	
 	public boolean isVarFontSize() {
 		return varFontSize;
+	}
+	
+	public float getFontSize(int size) {
+		float dig = 2;
+		if (varFontSize) {
+			dig = random.nextFloat() * 3 + 3;
+		}
+		return 250 / (size * dig);
 	}
 	
 }
