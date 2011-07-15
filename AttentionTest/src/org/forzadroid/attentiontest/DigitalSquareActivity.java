@@ -52,6 +52,7 @@ public class DigitalSquareActivity extends Activity {
 			    for (int q = 0; q < size; q++) {
 		        	TableRow tableRow = new TableRow(DigitalSquareActivity.this);
 		        	tableRow.setId(q);
+		        	tableRow.setBaselineAligned(false);
 		        	tableRow.setLayoutParams(new LayoutParams(
 		                    LayoutParams.FILL_PARENT,
 		                    LayoutParams.FILL_PARENT));
@@ -63,12 +64,14 @@ public class DigitalSquareActivity extends Activity {
 		        		int number = iterator.next();
 		                button.setText(String.valueOf(number));
 		                button.setTag(number);
+		                button.setPadding(0, 0, 0, 0);
 		                TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(
 		                        LayoutParams.FILL_PARENT,
 		                        LayoutParams.FILL_PARENT);
 		                buttonParams.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
 		                button.setLayoutParams(buttonParams);
 		                button.setTextSize(appState.getFontSize(size));
+		                button.setTextColor(appState.getFontColor());
 		                
 		                updateButtonStatus(button, number < next.get());
 		                button.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +103,9 @@ public class DigitalSquareActivity extends Activity {
 	
 	private void updateButtonStatus(Button button, boolean passed) {
 		button.setEnabled(! passed);
+		if (passed) {
+			button.setTextColor(Color.BLACK);
+		}
 		button.setBackgroundColor(passed ? Color.GRAY : Color.CYAN);
 	}
 	

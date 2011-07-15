@@ -21,8 +21,11 @@ public class RecordsActivity extends Activity {
 	private AttentionTestApplication appState;
 	private Map<Integer, TextView> textMap = new HashMap<Integer, TextView>();
 	private boolean varSize;
+	private boolean varColor;
+	private Button stableBtn;
 	private Button varSizeBtn;
-	private Button stableSizeBtn;
+	private Button varColorBtn;
+	private Button varColorSizeBtn;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +34,62 @@ public class RecordsActivity extends Activity {
 		
 		appState = (AttentionTestApplication) getApplicationContext();
 		
+		stableBtn = (Button) findViewById(R.id.rec_stable);
+		stableBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				varSize = false;
+				varColor = false;
+				stableBtn.setEnabled(false);
+				varSizeBtn.setEnabled(true);
+				varColorBtn.setEnabled(true);
+				varColorSizeBtn.setEnabled(true);
+				updateRecords();
+			}
+		});
+		
 		varSizeBtn = (Button) findViewById(R.id.rec_var_size);
 		varSizeBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				varSize = true;
+				varColor = false;
+				stableBtn.setEnabled(true);
 				varSizeBtn.setEnabled(false);
-				stableSizeBtn.setEnabled(true);
+				varColorBtn.setEnabled(true);
+				varColorSizeBtn.setEnabled(true);
 				updateRecords();
 			}
 		});
 		
-		stableSizeBtn = (Button) findViewById(R.id.rec_stable_size);
-		stableSizeBtn.setOnClickListener(new View.OnClickListener() {
+		varColorBtn = (Button) findViewById(R.id.rec_var_color);
+		varColorBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				varSize = false;
+				varColor = true;
+				stableBtn.setEnabled(true);
 				varSizeBtn.setEnabled(true);
-				stableSizeBtn.setEnabled(false);
+				varColorBtn.setEnabled(false);
+				varColorSizeBtn.setEnabled(true);
 				updateRecords();
 			}
 		});
+		
+		varColorSizeBtn = (Button) findViewById(R.id.rec_var_color_size);
+		varColorSizeBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				varSize = true;
+				varColor = true;
+				stableBtn.setEnabled(true);
+				varSizeBtn.setEnabled(true);
+				varColorBtn.setEnabled(true);
+				varColorSizeBtn.setEnabled(false);
+				updateRecords();
+			}
+		});
+		
 
 		createRecordText((TableRow) findViewById(R.id.rec3), 3, true);
 		createRecordText((TableRow) findViewById(R.id.rec4), 4, false);
@@ -99,8 +137,15 @@ public class RecordsActivity extends Activity {
 	private void updateRecords() {
 		Map<String, Long> records = appState.getRecords();
 		for (Integer size : textMap.keySet()) {
-			Long time = records.get(appState.DIGIT_KEY_PREFIX + size + (varSize ? appState.VAR_FONT_SIZE_KEY : ""));
-			String timeStr = String.valueOf(time / 1000.0) + " "+ getString(R.string.records_sec);
+			String key = appState.DIGIT_KEY_PREFIX + size;
+			if (varColor) {
+				key += appState.VAR_FONT_COLOR_KEY;
+			}
+			if (varSize) {
+				key += appState.VAR_FONT_SIZE_KEY;
+			}
+			Long time = records.get(key);
+			String timeStr = String.valueOf(time / 1000.0) + " " + getString(R.string.records_sec);
 			if (time == -1) {
 				timeStr = "-";
 			}

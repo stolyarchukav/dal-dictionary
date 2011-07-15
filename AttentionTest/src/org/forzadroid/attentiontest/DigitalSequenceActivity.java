@@ -33,6 +33,15 @@ public class DigitalSequenceActivity extends Activity {
 			}
 		});
 		
+		CheckBox var_font_color = (CheckBox) findViewById(R.id.varFontColor);
+		var_font_color.setChecked(appState.isVarFontColor());
+		var_font_color.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				appState.setVarFontColor(isChecked);
+			}
+		});
+		
 		Button digSeq3 = (Button) findViewById(R.id.digSeq3);
 		digSeq3.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {

@@ -8,18 +8,31 @@
 		<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:id="@+id/records">
 			
-			<LinearLayout android:orientation="horizontal" 
+			<LinearLayout android:orientation="vertical" 
 				android:layout_width="fill_parent" android:layout_height="wrap_content">
-				<Button android:id="@+id/rec_stable_size" 
-					android:text="@string/records_stable_font_size" 
-					android:layout_width="fill_parent" android:layout_height="fill_parent" 
-					android:layout_weight="1" android:enabled="false"/>
-				<Button android:id="@+id/rec_var_size" 
-					android:text="@string/records_var_font_size" 
-					android:layout_width="fill_parent" android:layout_height="fill_parent" 
-					android:layout_weight="1"/>
+				<LinearLayout android:orientation="horizontal" 
+					android:layout_width="fill_parent" android:layout_height="wrap_content">
+					<Button android:id="@+id/rec_stable" 
+						android:text="@string/records_stable_font" 
+						android:layout_width="fill_parent" android:layout_height="fill_parent" 
+						android:layout_weight="1" android:enabled="false"/>
+					<Button android:id="@+id/rec_var_size" 
+						android:text="@string/records_var_font_size" 
+						android:layout_width="fill_parent" android:layout_height="fill_parent" 
+						android:layout_weight="1"/>
+				</LinearLayout>
+				<LinearLayout android:orientation="horizontal" 
+					android:layout_width="fill_parent" android:layout_height="wrap_content">
+					<Button android:id="@+id/rec_var_color" 
+						android:text="@string/records_var_font_color" 
+						android:layout_width="fill_parent" android:layout_height="fill_parent" 
+						android:layout_weight="1"/>
+					<Button android:id="@+id/rec_var_color_size" 
+						android:text="@string/records_var_font_color_size" 
+						android:layout_width="fill_parent" android:layout_height="fill_parent" 
+						android:layout_weight="1"/>
+				</LinearLayout>
 			</LinearLayout>
-			
 			<TableLayout android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" android:stretchColumns="1">
 				<TableRow android:id="@+id/rec3" 
