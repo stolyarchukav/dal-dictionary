@@ -20,7 +20,7 @@
     <string name="records_clear">Сбросить</string>
     <string name="records_sec">сек</string>
     <string name="records_var_font_size">Перем. размер</string>
-    <string name="records_stable_font">Прост. текст</string>
+    <string name="records_stable_font">Простой текст</string>
     <string name="records_var_font_color">Перем. цвет</string>
     <string name="records_var_font_color_size">Перем. цвет и размер</string>
 </resources>

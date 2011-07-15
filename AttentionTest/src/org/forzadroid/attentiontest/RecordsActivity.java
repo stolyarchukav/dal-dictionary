@@ -89,7 +89,6 @@ public class RecordsActivity extends Activity {
 				updateRecords();
 			}
 		});
-		
 
 		createRecordText((TableRow) findViewById(R.id.rec3), 3, true);
 		createRecordText((TableRow) findViewById(R.id.rec4), 4, false);

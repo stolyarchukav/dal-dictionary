@@ -81,11 +81,11 @@ public class AttentionTestApplication extends Application {
 		StringBuilder result = new StringBuilder();
 		Long time = System.currentTimeMillis() - startTime;
 		String key = DIGIT_KEY_PREFIX + size;
-		if (varFontSize) {
-			 key += VAR_FONT_SIZE_KEY;
-		}
 		if (varFontColor) {
 			key += VAR_FONT_COLOR_KEY;
+		}
+		if (varFontSize) {
+			 key += VAR_FONT_SIZE_KEY;
 		}
 		Long record = records.get(key);
 		if (time < record || record == DEFAULT_RECORD) {
@@ -109,9 +109,15 @@ public class AttentionTestApplication extends Application {
 			String key = DIGIT_KEY_PREFIX + q;
 			records.put(key, DEFAULT_RECORD);
 			editor.putLong(key, DEFAULT_RECORD);
-			key += VAR_FONT_SIZE_KEY;
-			records.put(key, DEFAULT_RECORD);
-			editor.putLong(key, DEFAULT_RECORD);
+			String keyVar = key + VAR_FONT_SIZE_KEY;
+			records.put(keyVar, DEFAULT_RECORD);
+			editor.putLong(keyVar, DEFAULT_RECORD);
+			keyVar = key + VAR_FONT_COLOR_KEY;
+			records.put(keyVar, DEFAULT_RECORD);
+			editor.putLong(keyVar, DEFAULT_RECORD);
+			keyVar = key + VAR_FONT_COLOR_KEY + VAR_FONT_SIZE_KEY;
+			records.put(keyVar, DEFAULT_RECORD);
+			editor.putLong(keyVar, DEFAULT_RECORD);
 		}
 		editor.commit();
 	}
