@@ -6,4 +6,5 @@
     <string name="browse">Просмотр</string>
     <string name="search">Поиск</string>
     <string name="word_not_found">К сожалению, искомое слово не найдено в словаре. Попробуйте ввести часть слова в строке поиска</string>
+    <string name="search_string_empty">Необходимо задать текст для поиска</string>
 </resources>

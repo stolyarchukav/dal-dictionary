@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DalDicActivity extends Activity {
 	
@@ -65,7 +66,14 @@ public class DalDicActivity extends Activity {
 	
 	private void startSearchActivity() {
 		Intent intent = new Intent(this, WordListActivity.class);
-		intent.putExtra(Constants.BEGIN, searchText.getText().toString());
-		startActivity(intent);
+		String text = searchText.getText().toString();
+		if (text.length() > 0) {
+			intent.putExtra(Constants.BEGIN, text);
+			startActivity(intent);
+		}
+		else {
+			Toast toast = Toast.makeText(this, getString(R.string.search_string_empty), 0);
+			toast.show();
+		}
 	}
 }
