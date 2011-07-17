@@ -1,65 +1,81 @@
 package org.forzaverita.daldic;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.TableLayout.LayoutParams;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-public class WordListActivity extends Activity {
+public class WordListActivity extends ListActivity {
 	
 	private static final int MARGIN = 5;
     
 	private DalDicService service;
+	private LayoutInflater inflater;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordlist);
         
+        inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        
         service = (DalDicService) getApplicationContext();
         
-        Set<String> words = null;
+        List<String> words = new ArrayList<String>();
         
         Character letter = (Character) getIntent().getExtras().get(Constants.LETTER);
         if (letter != null) {
-        	words = service.getWordsBeginWith(letter);
+        	words.addAll(service.getWordsBeginWith(letter));
         }
         else {
         	String begin = (String) getIntent().getExtras().get(Constants.BEGIN);
-        	words = service.getWordsBeginWith(begin);
-        	if (words != null && words.size() == 1) {
+        	words.addAll(service.getWordsBeginWith(begin));
+        	if (words.size() == 1) {
         		startWordActivity(words.iterator().next());
         	}
         }
         
         LinearLayout parent = (LinearLayout) findViewById(R.id.wordlist);
-        if (words != null && ! words.isEmpty()) {
-        	for (String word : words) {
-            	Button button = new Button(this);
-            	button.setText(word);
-            	button.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-            	button.setTag(word);
-            	button.setTypeface(service.getFont(), Typeface.ITALIC);
-            	button.setOnClickListener(new View.OnClickListener() {
-    				@Override
-    				public void onClick(View view) {
-    					startWordActivity((String) view.getTag());
-    				}
-    			});
-            	LayoutParams params = new LayoutParams();
-            	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
-            	button.setLayoutParams(params);
-            	parent.addView(button);
-            }
+        
+        if (! words.isEmpty()) {
+        	setListAdapter(new ArrayAdapter<String>(this, R.layout.wordlist_item, words) {
+            	@Override
+            	public View getView(int position, View convertView, ViewGroup parent) {
+            		View row;
+                    if (convertView == null) {
+                    	row =  inflater.inflate(R.layout.wordlist_item, null);
+                    }
+                    else {
+                    	row = convertView;
+                    }
+                    
+                    TextView tv = (TextView) row.findViewById(android.R.id.text1);
+                    tv.setText(getItem(position));
+                    tv.setTypeface(service.getFont());
+                    tv.setTextColor(Color.BLACK);
+                    
+                    row.setTag(getItem(position));
+                    row.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View paramView) {
+							startWordActivity((String) paramView.getTag());
+						}
+					});
+                    row.setPadding(MARGIN, MARGIN, MARGIN, MARGIN);
+                    return row;
+            	}
+            });
         }
         else {
         	TextView textView = new TextView(this);
@@ -67,6 +83,9 @@ public class WordListActivity extends Activity {
         	textView.setTypeface(service.getFont());
         	textView.setTextColor(Color.BLACK);
         	textView.setTextSize(30);
+        	LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+        	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
+        	textView.setLayoutParams(params);
         	parent.addView(textView);
         }
     }
