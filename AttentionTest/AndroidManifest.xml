@@ -27,7 +27,7 @@
         	android:label="@string/main_records">
         </activity>
         <activity android:name="com.google.ads.AdActivity"
-              android:configChanges="keyboard|keyboardHidden|orientation"/>
+            android:configChanges="keyboard|keyboardHidden|orientation"/>
     </application>
     
 </manifest>
