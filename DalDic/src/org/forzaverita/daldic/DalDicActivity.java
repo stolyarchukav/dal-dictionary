@@ -31,6 +31,7 @@ public class DalDicActivity extends Activity {
         author.setTextColor(Color.BLACK);
  
         Button browseBtn = (Button) findViewById(R.id.browse);
+        browseBtn.setTypeface(font);
         browseBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -50,6 +51,7 @@ public class DalDicActivity extends Activity {
 		});
         
         Button searchBtn = (Button) findViewById(R.id.search);
+        searchBtn.setTypeface(font);
         searchBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -11,10 +11,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DataBaseService {
 	
+	private static int DATA_VERSION = 1;
 	private static String DB_NAME = "daldic.sqlite";
 	private static String WORD = "word";
 	private static String DESCRIPTION = "description";
 	private static String FIRST_LETTER = "first_letter";
+	private static String DALDIC_METADATA = "daldic_metadata";
+	private static String DATA_VERSION_FIELD = "data_version";
     private SQLiteDatabase database;
     private Context context;
 	
@@ -24,7 +27,8 @@ public class DataBaseService {
 	
 	public void openDataBase() {
         boolean dbExist = tryOpenDataBase();
-        if (! dbExist) {
+        if (! dbExist || ! isCorrectVersion()) {
+        	close();
         	copyDataBase();
         	tryOpenDataBase();
         }
@@ -43,6 +47,22 @@ public class DataBaseService {
 		}
     }
 
+    private boolean isCorrectVersion() {
+    	boolean result = false;
+    	try {
+    		Cursor cursor = database.query(DALDIC_METADATA, new String[]{DATA_VERSION_FIELD},
+        			null, null, null, null, null);
+        	if (cursor.moveToFirst()) {
+                result = cursor.getInt(0) == DATA_VERSION;
+            }
+            cursor.close();
+    	}
+    	catch (Exception e) {
+			result = false;
+		}
+        return result;
+	}
+    
     private void copyDataBase() {
     	try {
     		InputStream is = context.getAssets().open(DB_NAME);
