@@ -25,13 +25,15 @@ public class DataBaseService {
         this.context = context;
     }
 	
-	public void openDataBase() {
-        boolean dbExist = tryOpenDataBase();
-        if (! dbExist || ! isCorrectVersion()) {
-        	close();
-        	copyDataBase();
-        	tryOpenDataBase();
-        }
+	private void openDataBase() {
+		if (database == null) {
+			boolean dbExist = tryOpenDataBase();
+	        if (! dbExist || ! isCorrectVersion()) {
+	        	close();
+	        	copyDataBase();
+	        	tryOpenDataBase();
+	        }
+		}
     }
  
     private boolean tryOpenDataBase() {
@@ -87,18 +89,21 @@ public class DataBaseService {
     }
     
     public Set<String> getWordsBeginWith(String begin) {
+    	openDataBase();
     	Cursor cursor = database.query(WORD, new String[] {WORD}, WORD + " like '" + begin + "%'",
         		null, null, null, WORD + " ASC");
         return getSetFromCursor(cursor);
     }
     
     public Set<String> getWordsBeginWith(char letter) {
+    	openDataBase();
     	Cursor cursor = database.query(WORD, new String[] {WORD}, FIRST_LETTER + " = '" + letter + "'",
         		null, null, null, WORD + " ASC");
         return getSetFromCursor(cursor);
     }
 
 	public Set<String> getDescriptions(String word) {
+		openDataBase();
 		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD + " = '" + word + "'",
         		null, null, null, null);
         return getSetFromCursor(cursor);

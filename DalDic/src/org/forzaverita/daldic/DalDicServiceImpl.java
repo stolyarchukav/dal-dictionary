@@ -15,7 +15,6 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 		super.onCreate();
 		font = Typeface.createFromAsset(getAssets(), "philosopher.otf");
 		dataBaseService = new DataBaseService(this);
-		dataBaseService.openDataBase();
 	}
 	
 	@Override

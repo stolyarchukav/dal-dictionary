@@ -23,6 +23,7 @@ public class DalDicActivity extends Activity {
         setContentView(R.layout.main);
         
         Typeface font = ((DalDicService) getApplicationContext()).getFont();
+        
         TextView title = (TextView) findViewById(R.id.title);
         title.setTypeface(font);
         title.setTextColor(Color.BLACK);
