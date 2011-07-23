@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="ad_mob_id">a14e19c37cdec0b</string>
     <string name="app_name">Attention Test</string>
     <string name="main_title">Main menu</string>
     <string name="main_digital_sequence">Sequence</string>

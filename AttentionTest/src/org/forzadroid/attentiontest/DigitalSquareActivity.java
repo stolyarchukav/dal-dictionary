@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -29,7 +29,7 @@ public class DigitalSquareActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.dig_square);
-		FrameLayout parent = (FrameLayout) findViewById(R.id.digSquare);
+		LinearLayout parent = (LinearLayout) findViewById(R.id.digSquare);
 	
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		

@@ -1,9 +1,5 @@
 package org.forzadroid.attentiontest;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 
 public class DigitalSequenceActivity extends Activity {
 
@@ -69,13 +64,6 @@ public class DigitalSequenceActivity extends Activity {
 				startDigSquare(6);
 			}
 		});
-		
-		//Advertising
-        AdView adView = new AdView(this, AdSize.BANNER, Constants.AD_MOB_ID);
-        LinearLayout layout = (LinearLayout)findViewById(R.id.dig_seq);
-        layout.addView(adView);
-        AdRequest adRequest = new AdRequest();
-        adView.loadAd(adRequest);
 	}
 	
 	private void startDigSquare(int size) {
