@@ -1,7 +1,9 @@
 package org.forzadroid.attentiontest;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
@@ -13,8 +15,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -29,7 +32,7 @@ public class DigitalSquareActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.dig_square);
-		LinearLayout parent = (LinearLayout) findViewById(R.id.digSquare);
+		final FrameLayout parent = (FrameLayout) findViewById(R.id.digSquare);
 	
 		final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		
@@ -39,65 +42,68 @@ public class DigitalSquareActivity extends Activity {
 	    appState = (AttentionTestApplication) getApplicationContext();
 	    final AtomicInteger next = appState.getNext();
 	    final List<Integer> values = appState.getValues(size);
+	    final Set<Button> buttons = new HashSet<Button>(); 
 	    
-		TableLayout layout = new TableLayout(this) {
+	    TableLayout layout = new TableLayout(this) {
 			@Override
 			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-				super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 				int width = MeasureSpec.getSize(widthMeasureSpec);
 			    int height = MeasureSpec.getSize(heightMeasureSpec);
-
-			    Iterator<Integer> iterator = values.iterator();
-			    
-			    for (int q = 0; q < size; q++) {
-		        	TableRow tableRow = new TableRow(DigitalSquareActivity.this);
-		        	tableRow.setId(q);
-		        	tableRow.setBaselineAligned(false);
-		        	tableRow.setLayoutParams(new LayoutParams(
-		                    LayoutParams.FILL_PARENT,
-		                    LayoutParams.FILL_PARENT));
-
-		        	for (int w = 0; w < size; w++) {
-		        		final Button button = new Button(DigitalSquareActivity.this);
-		        		button.setWidth(width / size - MARGIN * 2);
-		        		button.setHeight(height / size - MARGIN * 2);
-		        		int number = iterator.next();
-		                button.setText(String.valueOf(number));
-		                button.setTag(number);
-		                button.setPadding(0, 0, 0, 0);
-		                TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(
-		                        LayoutParams.FILL_PARENT,
-		                        LayoutParams.FILL_PARENT);
-		                buttonParams.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
-		                button.setLayoutParams(buttonParams);
-		                button.setTextSize(appState.getFontSize(size));
-		                button.setTextColor(appState.getFontColor());
-		                
-		                updateButtonStatus(button, number < next.get());
-		                button.setOnClickListener(new View.OnClickListener() {
-		                	public void onClick(View view) {
-		                		if (button.getTag().equals(next.get())) {
-		                			updateButtonStatus(button, true);
-		                			if (next.incrementAndGet() > count) {
-		                				finishGame();
-		                			}
-		                		}
-		                		else {
-		                			vibrator.vibrate(200);
-		                		}
-		                	}
-		                });
-		                tableRow.addView(button);
-		        	}
-		        	
-		            addView(tableRow, new TableLayout.LayoutParams(
-		                    LayoutParams.FILL_PARENT,
-		                    LayoutParams.FILL_PARENT));
-		        }
+			    for (Button button : buttons) {
+			    	button.setWidth(width / size - MARGIN * 2);
+	        		button.setHeight(height / size - MARGIN * 2);
+			    }
+			    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 			}
-			
 		};
-		parent.addView(layout);
+		
+		Iterator<Integer> iterator = values.iterator();
+	    
+	    for (int q = 0; q < size; q++) {
+        	TableRow tableRow = new TableRow(this);
+        	tableRow.setId(q);
+        	tableRow.setBaselineAligned(false);
+        	tableRow.setLayoutParams(new ViewGroup.LayoutParams(
+        			ViewGroup.LayoutParams.FILL_PARENT,
+        			ViewGroup.LayoutParams.FILL_PARENT));
+
+        	for (int w = 0; w < size; w++) {
+        		final Button button = new Button(this);
+        		buttons.add(button);
+        		int number = iterator.next();
+                button.setText(String.valueOf(number));
+                button.setTag(number);
+                button.setPadding(0, 0, 0, 0);
+                TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(
+                		ViewGroup.LayoutParams.FILL_PARENT,
+                		ViewGroup.LayoutParams.FILL_PARENT);
+                buttonParams.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
+                button.setLayoutParams(buttonParams);
+                button.setTextSize(appState.getFontSize(size));
+                button.setTextColor(appState.getFontColor());
+                
+                updateButtonStatus(button, number < next.get());
+                button.setOnClickListener(new View.OnClickListener() {
+                	public void onClick(View view) {
+                		if (button.getTag().equals(next.get())) {
+                			updateButtonStatus(button, true);
+                			if (next.incrementAndGet() > count) {
+                				finishGame();
+                			}
+                		}
+                		else {
+                			vibrator.vibrate(200);
+                		}
+                	}
+                });
+                tableRow.addView(button);
+        	}
+        	layout.addView(tableRow, new TableLayout.LayoutParams(
+        			ViewGroup.LayoutParams.FILL_PARENT,
+        			ViewGroup.LayoutParams.FILL_PARENT));
+        }
+		
+	    parent.addView(layout);
 		appState.startDigitTest();
 	}
 	

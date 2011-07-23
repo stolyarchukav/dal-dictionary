@@ -21,7 +21,8 @@
         	android:label="@string/main_digital_sequence">
         </activity>
         <activity android:name="DigitalSquareActivity"
-        	android:label="@string/dig_square_title">
+        	android:label="@string/dig_square_title"
+        	android:configChanges="orientation">
         </activity>
         <activity android:name="RecordsActivity"
         	android:label="@string/main_records">
