@@ -1,9 +1,9 @@
 package org.forzaverita.daldic;
 
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.zip.ZipInputStream;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,8 +11,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DataBaseService {
 	
-	private static int DATA_VERSION = 1;
-	private static String DB_NAME = "daldic.sqlite";
+	private static int DATA_VERSION = 2;
+	private static String ASSET_FILE = "daldic.jet";
+	private static String DB_NAME = "daldic.sqllite";
 	private static String WORD = "word";
 	private static String DESCRIPTION = "description";
 	private static String FIRST_LETTER = "first_letter";
@@ -35,7 +36,7 @@ public class DataBaseService {
 	        }
 		}
     }
- 
+
     private boolean tryOpenDataBase() {
     	try {
     		String path = context.getFilesDir() + "/" + DB_NAME;
@@ -67,15 +68,17 @@ public class DataBaseService {
     
     private void copyDataBase() {
     	try {
-    		InputStream is = context.getAssets().open(DB_NAME);
-            FileOutputStream os = context.openFileOutput(DB_NAME, Context.MODE_PRIVATE);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0){
-            	os.write(buffer, 0, length);
-            }
-            os.close();
-            is.close();
+    		ZipInputStream zis = new ZipInputStream(context.getAssets().open(ASSET_FILE));
+    		FileOutputStream os = context.openFileOutput(DB_NAME, Context.MODE_PRIVATE);
+    		if (zis.getNextEntry() != null) {
+    			byte[] buffer = new byte[1024];
+                int length;
+                while ((length = zis.read(buffer)) > 0){
+                	os.write(buffer, 0, length);
+                }
+                os.close();
+    		}
+            zis.close();
     	}
     	catch (Exception e) {
 			e.printStackTrace();

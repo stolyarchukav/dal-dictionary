@@ -41,7 +41,6 @@ public class AttentionTest extends Activity {
         LinearLayout layout = (LinearLayout)findViewById(R.id.main_layout);
         layout.addView(adView);
         AdRequest adRequest = new AdRequest();
-        //adRequest.setTesting(true);
         adView.loadAd(adRequest);
     }
 }

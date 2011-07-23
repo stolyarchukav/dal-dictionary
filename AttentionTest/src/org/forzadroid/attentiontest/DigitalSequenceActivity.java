@@ -75,7 +75,6 @@ public class DigitalSequenceActivity extends Activity {
         LinearLayout layout = (LinearLayout)findViewById(R.id.dig_seq);
         layout.addView(adView);
         AdRequest adRequest = new AdRequest();
-        adRequest.setTesting(true);
         adView.loadAd(adRequest);
 	}
 	

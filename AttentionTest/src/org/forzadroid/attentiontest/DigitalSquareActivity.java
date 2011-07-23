@@ -106,7 +106,7 @@ public class DigitalSquareActivity extends Activity {
 		if (passed) {
 			button.setTextColor(Color.BLACK);
 		}
-		button.setBackgroundColor(passed ? Color.GRAY : Color.CYAN);
+		button.setBackgroundColor(passed ? Color.GRAY : Color.rgb(105, 214, 241));
 	}
 	
 	private void finishGame() {

@@ -149,22 +149,11 @@ public class AttentionTestApplication extends Application {
 	}
 
 	public int getFontColor() {
-		int color = 0;
+		int color = Color.BLACK;
 		if (varFontColor) {
-			color = random.nextInt(5);
+			color = Color.rgb(random.nextInt(255), random.nextInt(200), random.nextInt(200));
 		}
-		switch (color) {
-		case 0:
-			return Color.BLACK;
-		case 1:
-			return Color.MAGENTA;
-		case 2:
-			return Color.RED;
-		case 3:
-			return Color.YELLOW;
-		default:
-			return Color.rgb(0, 0, 128);
-		} 		
+		return color; 		
 	}
 	
 }
