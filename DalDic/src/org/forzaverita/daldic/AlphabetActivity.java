@@ -59,6 +59,7 @@ public class AlphabetActivity extends Activity {
 					});
                 	row.addView(button);
                 }
+			    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         	}
         };
         parent.addView(layout);

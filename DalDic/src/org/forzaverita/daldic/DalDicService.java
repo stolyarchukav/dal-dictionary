@@ -14,4 +14,12 @@ public interface DalDicService {
 
 	Set<String> getDescriptions(String word);
 
+	String getRandomWord();
+
+	String getCurrentWord();
+	
+	void setWidgetRefreshTask(WidgetRefreshTask task);
+	
+	WidgetRefreshTask getWidgetRefreshTask();
+	
 }

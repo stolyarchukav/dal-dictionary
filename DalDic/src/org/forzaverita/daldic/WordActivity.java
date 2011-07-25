@@ -22,7 +22,15 @@ public class WordActivity extends Activity {
         
         service = (DalDicService) getApplicationContext();
         
-        String word = (String) getIntent().getExtras().get(Constants.WORD);
+        String word = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+        	word = (String) extras.get(Constants.WORD);
+        }
+        else {
+        	word = service.getCurrentWord();
+        }
+        
         LinearLayout parent = (LinearLayout) findViewById(R.id.word);
         Set<String> descriptions = service.getDescriptions(word);
         for (String desc : descriptions) {
