@@ -3,8 +3,11 @@ package org.forzaverita.daldic;
 import java.util.Set;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ public class WordActivity extends Activity {
         
         service = (DalDicService) getApplicationContext();
         
+        boolean fromWidget = false;
         String word = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -29,6 +33,7 @@ public class WordActivity extends Activity {
         }
         else {
         	word = service.getCurrentWord();
+        	fromWidget = true;
         }
         
         LinearLayout parent = (LinearLayout) findViewById(R.id.word);
@@ -43,6 +48,24 @@ public class WordActivity extends Activity {
         	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
         	text.setLayoutParams(params);
         	parent.addView(text);
+        }
+        
+        if (fromWidget) {
+        	Button button = new Button(this);
+        	button.setText(getString(R.string.goto_menu));
+        	button.setTypeface(service.getFont());
+        	button.setTextColor(Color.BLACK);
+        	button.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(WordActivity.this, DalDicActivity.class);
+					startActivity(intent);
+				}
+			});
+        	LayoutParams params = new LayoutParams();
+        	params.setMargins(MARGIN, MARGIN * 3, MARGIN, MARGIN);
+        	button.setLayoutParams(params);
+        	parent.addView(button);
         }
         
     }

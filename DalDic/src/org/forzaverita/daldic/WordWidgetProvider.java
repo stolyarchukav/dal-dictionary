@@ -1,8 +1,5 @@
 package org.forzaverita.daldic;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -31,8 +28,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		if (task == null) {
 			task = new RefreshTask(context, appWidgetManager, views);
 			service.setWidgetRefreshTask(task);
-			Timer timer = new Timer();
-			timer.scheduleAtFixedRate((TimerTask) task, 3000, 3000);	
+			new Thread((Runnable) task).start();
 		}
 		else {
 			task.refresh();
@@ -45,7 +41,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 	
-	private class RefreshTask extends TimerTask implements WidgetRefreshTask {
+	private class RefreshTask implements Runnable, WidgetRefreshTask {
 		RemoteViews views;
 		AppWidgetManager appWidgetManager;
 		Context context;
@@ -59,7 +55,16 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		@Override
 		public void run() {
-			refresh();
+			while (true) {
+				refresh();
+				try {
+					Thread.sleep(10000);
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+					Thread.interrupted();
+				}
+			}
 		}
 		
 		@Override

@@ -123,7 +123,7 @@ public class DataBaseService {
     
     public Set<String> getWordsBeginWith(String begin) {
     	openDataBase();
-    	Cursor cursor = database.query(WORD, new String[] {WORD}, WORD + " like '" + begin + "%'",
+    	Cursor cursor = database.query(WORD, new String[] {WORD}, "upper(" + WORD + ") like '" + begin.trim().toUpperCase() + "%'",
         		null, null, null, WORD + " asc");
         return getSetFromCursor(cursor);
     }
