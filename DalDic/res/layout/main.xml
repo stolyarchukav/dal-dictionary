@@ -8,7 +8,8 @@
     <ScrollView	android:layout_width="fill_parent" 
     	android:layout_height="fill_parent">
 		
-		<LinearLayout android:orientation="vertical" 
+		<LinearLayout android:id="@+id/main_layout"
+			android:orientation="vertical" 
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent">
     
@@ -56,6 +57,15 @@
     					android:text="@string/search" />    	
     			</TableRow>
     		</TableLayout>
+    		
+    		<Button android:id="@+id/rate_app" 
+    			android:layout_width="fill_parent" 
+    			android:layout_height="wrap_content"
+    			android:text="@string/rate_app"
+    			android:gravity="center_horizontal|center_vertical" 
+    			android:layout_marginTop="20px"
+    			android:layout_margin="10px"
+    			android:background="@null" />
     		
     	</LinearLayout>
     	

@@ -11,4 +11,5 @@
     <string name="progress_title">Загрузка</string>
     <string name="progress_text">Подождите, идет загрузка...</string>
     <string name="goto_menu">Перейти в меню поиска</string>
+    <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
 </resources>
