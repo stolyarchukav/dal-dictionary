@@ -1,6 +1,7 @@
 package org.forzaverita.daldic;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -66,8 +67,12 @@ public class DalDicActivity extends Activity {
         rateBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
-				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
-						getApplicationInfo().packageName)));
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
+							getApplicationInfo().packageName)));
+				}
+				catch (ActivityNotFoundException e) {
+				}
 			}
 		});
     }
