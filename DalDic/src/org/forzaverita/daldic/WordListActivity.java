@@ -1,7 +1,8 @@
 package org.forzaverita.daldic;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -33,7 +34,7 @@ public class WordListActivity extends ListActivity {
         inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final LinearLayout parent = (LinearLayout) findViewById(R.id.wordlist);
         
-        new AsyncTask<Void, Void, List<String>>() {
+        new AsyncTask<Void, Void, Map<Integer, String>>() {
         	
         	ProgressDialog dialog;
         	
@@ -44,28 +45,30 @@ public class WordListActivity extends ListActivity {
         	}
         	
         	@Override
-        	protected List<String> doInBackground(Void... paramArrayOfParams) {
+        	protected Map<Integer, String> doInBackground(Void... paramArrayOfParams) {
         		service = (DalDicService) getApplicationContext();
-                List<String> words = new ArrayList<String>();
+        		Map<Integer, String> words = null;
                 Character letter = (Character) getIntent().getExtras().get(Constants.LETTER);
                 if (letter != null) {
-                	words.addAll(service.getWordsBeginWith(letter));
+                	words = service.getWordsBeginWith(letter);
                 }
                 else {
                 	String begin = (String) getIntent().getExtras().get(Constants.BEGIN);
-                	words.addAll(service.getWordsBeginWith(begin));
-                	if (words.size() == 1) {
-                		startWordActivity(words.iterator().next());
-                	}
+                	words = service.getWordsBeginWith(begin);
                 }
+                if (words.size() == 1) {
+            		startWordActivity(words.entrySet().iterator().next().getKey());
+            	}
                 return words;
         	}
         	
         	@Override
-        	protected void onPostExecute(List<String> words) {
+        	protected void onPostExecute(Map<Integer, String> words) {
         		dialog.dismiss();
         		if (words != null && ! words.isEmpty()) {
-                	setListAdapter(new ArrayAdapter<String>(WordListActivity.this, R.layout.wordlist_item, words) {
+        			ArrayList<Entry<Integer, String>> wordList = new ArrayList<Entry<Integer, String>>(
+        					words.entrySet());
+        			setListAdapter(new ArrayAdapter<Entry<Integer, String>>(WordListActivity.this, R.layout.wordlist_item, wordList) {
                     	@Override
                     	public View getView(int position, View convertView, ViewGroup parent) {
                     		View row;
@@ -77,15 +80,15 @@ public class WordListActivity extends ListActivity {
                             }
                             
                             TextView tv = (TextView) row.findViewById(android.R.id.text1);
-                            tv.setText(getItem(position));
+                            tv.setText(getItem(position).getValue());
                             tv.setTypeface(service.getFont());
                             tv.setTextColor(Color.BLACK);
                             
-                            row.setTag(getItem(position));
+                            row.setTag(getItem(position).getKey());
                             row.setOnClickListener(new View.OnClickListener() {
         						@Override
         						public void onClick(View paramView) {
-        							startWordActivity((String) paramView.getTag());
+        							startWordActivity((Integer) paramView.getTag());
         						}
         					});
                             row.setPadding(MARGIN, MARGIN, MARGIN, MARGIN);
@@ -108,9 +111,9 @@ public class WordListActivity extends ListActivity {
 		}.execute();
     }
 	
-	private void startWordActivity(String word) {
+	private void startWordActivity(Integer wordId) {
 		Intent intent = new Intent(this, WordActivity.class);
-		intent.putExtra(Constants.WORD, word);
+		intent.putExtra(Constants.WORD_ID, wordId);
 		startActivity(intent);
 	}
 	

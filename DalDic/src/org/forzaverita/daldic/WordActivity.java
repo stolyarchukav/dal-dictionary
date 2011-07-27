@@ -1,5 +1,6 @@
 package org.forzaverita.daldic;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import android.app.Activity;
@@ -26,18 +27,21 @@ public class WordActivity extends Activity {
         service = (DalDicService) getApplicationContext();
         
         boolean fromWidget = false;
-        String word = null;
+        Set<String> descriptions = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-        	word = (String) extras.get(Constants.WORD);
+        	Integer wordId = (Integer) extras.get(Constants.WORD_ID);
+        	descriptions = service.getDescriptions(wordId);
         }
         else {
-        	word = service.getCurrentWord();
+        	String[] wordAndDesc = service.getCurrentWord();
+        	descriptions = new HashSet<String>();
+        	descriptions.add(wordAndDesc[1]);
         	fromWidget = true;
         }
         
         LinearLayout parent = (LinearLayout) findViewById(R.id.word);
-        Set<String> descriptions = service.getDescriptions(word);
+        
         for (String desc : descriptions) {
         	TextView text = new TextView(this);
         	text.setText(desc);

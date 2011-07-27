@@ -1,5 +1,6 @@
 package org.forzaverita.daldic;
 
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	private Typeface font;
 	private DataBaseService dataBaseService;
 	private Random random = new Random();
-	private String randomWord;
+	private String[] randomWord;
 	private WidgetRefreshTask widgetRefreshTask;
 	
 	@Override
@@ -33,18 +34,18 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	}
 	
 	@Override
-	public Set<String> getWordsBeginWith(char letter) {
+	public Map<Integer, String> getWordsBeginWith(char letter) {
 		return dataBaseService.getWordsBeginWith(letter);
 	}
 	
 	@Override
-	public Set<String> getWordsBeginWith(String begin) {
+	public Map<Integer, String> getWordsBeginWith(String begin) {
 		return dataBaseService.getWordsBeginWith(begin);
 	}
 	
 	@Override
-	public Set<String> getDescriptions(String word) {
-		return dataBaseService.getDescriptions(word);
+	public Set<String> getDescriptions(Integer id) {
+		return dataBaseService.getDescriptions(id);
 	}
 	
 	@Override
@@ -55,7 +56,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 			int id = random.nextInt(count) + 1;
 			String[] wordAndDesc = dataBaseService.getWordAndDescriptionById(id);
 			if (wordAndDesc != null) {
-				randomWord = wordAndDesc[0];
+				randomWord = wordAndDesc;
 				result = wordAndDesc[1];
 			}
 		}
@@ -63,7 +64,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	}
 	
 	@Override
-	public String getCurrentWord() {
+	public String[] getCurrentWord() {
 		return randomWord;
 	}
 	

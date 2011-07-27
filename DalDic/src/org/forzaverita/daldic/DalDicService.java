@@ -1,5 +1,6 @@
 package org.forzaverita.daldic;
 
+import java.util.Map;
 import java.util.Set;
 
 import android.graphics.Typeface;
@@ -8,15 +9,15 @@ public interface DalDicService {
 
 	Typeface getFont();
 
-	Set<String> getWordsBeginWith(char letter);
+	Map<Integer, String> getWordsBeginWith(char letter);
 	
-	Set<String> getWordsBeginWith(String begin);
+	Map<Integer, String> getWordsBeginWith(String begin);
 
-	Set<String> getDescriptions(String word);
+	Set<String> getDescriptions(Integer id);
 
 	String getRandomWord();
 
-	String getCurrentWord();
+	String[] getCurrentWord();
 	
 	void setWidgetRefreshTask(WidgetRefreshTask task);
 	

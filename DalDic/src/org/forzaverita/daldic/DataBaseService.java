@@ -3,7 +3,9 @@ package org.forzaverita.daldic;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.zip.ZipInputStream;
 
@@ -14,7 +16,7 @@ import android.os.Environment;
 
 public class DataBaseService {
 	
-	private static int DATA_VERSION = 2;
+	private static int DATA_VERSION = 3;
 	private static int WORDS_COUNT = 44652;
 	private static String ASSET_FILE = "daldic.jet";
 	private static String SD_PATH = "Android/data/org.forzaverita.daldic/";
@@ -121,30 +123,30 @@ public class DataBaseService {
         }
     }
     
-    public Set<String> getWordsBeginWith(String begin) {
+    public Map<Integer, String> getWordsBeginWith(String begin) {
     	openDataBase();
-    	Cursor cursor = database.query(WORD, new String[] {WORD}, "upper(" + WORD + ") like '" + begin.trim().toUpperCase() + "%'",
+    	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, WORD + " like '" + begin.trim().toUpperCase() + "%'",
         		null, null, null, WORD + " asc");
-        return getSetFromCursor(cursor);
+        return getMapFromCursor(cursor);
     }
     
-    public Set<String> getWordsBeginWith(char letter) {
+    public Map<Integer, String> getWordsBeginWith(char letter) {
     	openDataBase();
-    	Cursor cursor = database.query(WORD, new String[] {WORD}, FIRST_LETTER + " = '" + letter + "'",
+    	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, FIRST_LETTER + " = '" + letter + "'",
         		null, null, null, WORD + " asc");
-        return getSetFromCursor(cursor);
+        return getMapFromCursor(cursor);
     }
 
-	public Set<String> getDescriptions(String word) {
+	public Set<String> getDescriptions(Integer id) {
 		openDataBase();
-		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD + " = '" + word + "'",
+		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + id,
         		null, null, null, null);
         return getSetFromCursor(cursor);
 	}
 	
 	public String[] getWordAndDescriptionById(long id) {
 		openDataBase();
-		Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION}, WORD_ID + " = " + id + "",
+		Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION}, WORD_ID + " = " + id,
         		null, null, null, null);
 		String[] result = null;
 		if (cursor.moveToFirst()) {
@@ -163,6 +165,18 @@ public class DataBaseService {
 		if (cursor.moveToFirst()) {
             do {
                 result.add(cursor.getString(0));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        return result;
+	}
+	
+	private Map<Integer, String> getMapFromCursor(Cursor cursor) {
+		Map<Integer, String> result = new TreeMap<Integer, String>();
+		if (cursor.moveToFirst()) {
+            do {
+                result.put(cursor.getInt(0), cursor.getString(1));
             }
             while (cursor.moveToNext());
         }

@@ -1,5 +1,8 @@
 package org.forzaverita.daldic;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -21,14 +24,11 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.word_widget);
 		
-		if (service == null) {
-			service = ((DalDicService) context.getApplicationContext());
-		}
-		WidgetRefreshTask task = service.getWidgetRefreshTask();
+		WidgetRefreshTask task = getRefreshTask(context);
 		if (task == null) {
 			task = new RefreshTask(context, appWidgetManager, views);
 			service.setWidgetRefreshTask(task);
-			new Thread((Runnable) task).start();
+			((Thread) task).start();
 		}
 		else {
 			task.refresh();
@@ -41,10 +41,11 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 	
-	private class RefreshTask implements Runnable, WidgetRefreshTask {
-		RemoteViews views;
-		AppWidgetManager appWidgetManager;
-		Context context;
+	private class RefreshTask extends Thread implements WidgetRefreshTask {
+		private RemoteViews views;
+		private AppWidgetManager appWidgetManager;
+		private Context context;
+		private Lock lock = new ReentrantLock();
 		
 		public RefreshTask(Context context, AppWidgetManager appWidgetManager, 
 				RemoteViews views) {
@@ -55,16 +56,32 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		@Override
 		public void run() {
-			while (true) {
-				refresh();
+			while (! isInterrupted()) {
+				lock.lock();
 				try {
-					Thread.sleep(10000);
+					refresh();
+				}
+				finally {
+					lock.unlock();
+				}
+				try {
+					sleep(10000);
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
-					Thread.interrupted();
+					interrupt();
 				}
 			}
+		}
+		
+		@Override
+		public void pauseTask() {
+			lock.lock();
+		}
+		
+		@Override
+		public void resumeTask() {
+			lock.unlock();
 		}
 		
 		@Override
@@ -104,6 +121,32 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
 		    onUpdate(context, appWidgetManager, appWidgetIds);
 		}
+	}
+	
+	@Override
+	public void onDisabled(Context context) {
+		super.onDisabled(context);
+		WidgetRefreshTask task = getRefreshTask(context);
+		if (task != null) {
+			task.pauseTask();
+		}
+	}
+
+	@Override
+	public void onEnabled(Context context) {
+		super.onEnabled(context);
+		WidgetRefreshTask task = getRefreshTask(context);
+		if (task != null) {
+			task.resumeTask();
+		}
+	}
+	
+	private WidgetRefreshTask getRefreshTask(Context context) {
+		if (service == null) {
+			service = ((DalDicService) context.getApplicationContext());
+		}
+		WidgetRefreshTask task = service.getWidgetRefreshTask();
+		return task;
 	}
 		
 }
