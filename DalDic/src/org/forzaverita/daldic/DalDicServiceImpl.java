@@ -49,7 +49,12 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	}
 	
 	@Override
-	public String getRandomWord() {
+	public String getNewRandomWord() {
+		generateRandomWord();
+		return randomWord[1];
+	}
+
+	private void generateRandomWord() {
 		int count = dataBaseService.getWordsCount();
 		String result = null;
 		while (result == null) {
@@ -60,11 +65,13 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 				result = wordAndDesc[1];
 			}
 		}
-		return result;
 	}
 	
 	@Override
 	public String[] getCurrentWord() {
+		if (randomWord == null) {
+			generateRandomWord();
+		}
 		return randomWord;
 	}
 	

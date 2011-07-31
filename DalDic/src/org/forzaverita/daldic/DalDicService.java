@@ -15,7 +15,7 @@ public interface DalDicService {
 
 	Set<String> getDescriptions(Integer id);
 
-	String getRandomWord();
+	String getNewRandomWord();
 
 	String[] getCurrentWord();
 	

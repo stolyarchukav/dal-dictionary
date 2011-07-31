@@ -86,7 +86,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		@Override
 		public void refresh() {
-			String word = service.getRandomWord();
+			String word = service.getNewRandomWord();
 			Intent intent = new Intent(context, WordActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             
