@@ -156,4 +156,17 @@ public class AttentionTestApplication extends Application {
 		return color; 		
 	}
 	
+	public String getDigitalSquareTitle() {
+		StringBuilder text = new StringBuilder(getString(R.string.dig_square_title));
+		text.append(" [ ");
+		text.append(next.get());
+		text.append(" ]");
+		if (startTime != null) {
+			long time = System.currentTimeMillis() - startTime;
+			text.append(". Time ");
+			text.append(time / 100 / 10.0);
+		}
+		return text.toString();
+	}
+	
 }

@@ -12,7 +12,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ public class DigitalSquareActivity extends Activity {
 	private static final int MARGIN = 2;
 	private AttentionTestApplication appState;
 	private int size;
+	private AsyncTask<Void, String, Void> titleTimerTask;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,23 @@ public class DigitalSquareActivity extends Activity {
         }
 		
 	    parent.addView(layout);
+	    
+	    titleTimerTask = new AsyncTask<Void, String, Void>() {
+	    	@Override
+	    	protected Void doInBackground(Void... params) {
+	    		while (! isCancelled()) {
+	    			publishProgress(appState.getDigitalSquareTitle());
+	    			SystemClock.sleep(100);
+	    		}
+	    		return null;
+	    	}
+	    	@Override
+	    	protected void onProgressUpdate(String... params) {
+	    		setTitle(params[0]);
+	    	}
+	    	
+		}.execute(new Void[0]);
+	    
 		appState.startDigitTest();
 	}
 	
@@ -117,6 +137,7 @@ public class DigitalSquareActivity extends Activity {
 	
 	private void finishGame() {
 		String resultString = appState.finishDigitTest(size);
+		titleTimerTask.cancel(false);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(resultString)

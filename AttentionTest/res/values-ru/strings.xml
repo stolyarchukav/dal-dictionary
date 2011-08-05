@@ -4,6 +4,7 @@
     <string name="main_title">Главное меню</string>
     <string name="main_digital_sequence">Последовательность чисел</string>
     <string name="main_records">Лучшие результаты</string>
+    <string name="main_more_apps"><u>Другие приложения</u></string>
     <string name="dig_seq_level">Выберите уровень сложности</string>
     <string name="dig_seq_var_font_size">переменный размер шрифта</string>
     <string name="dig_seq_var_font_color">переменный цвет шрифта</string>

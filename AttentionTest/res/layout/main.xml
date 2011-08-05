@@ -26,6 +26,14 @@
 		android:textSize="20sp"
 		android:layout_margin="15px" />
 		
+	<Button android:id="@+id/moreAppsButton"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:text="@string/main_more_apps" 
+		android:textSize="15sp"
+		android:layout_margin="15px"
+		android:background="@null" />
+		
 	<com.google.ads.AdView android:id="@+id/adView"
     	android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
