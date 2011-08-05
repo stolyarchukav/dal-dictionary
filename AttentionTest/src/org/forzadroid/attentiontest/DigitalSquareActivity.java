@@ -108,21 +108,8 @@ public class DigitalSquareActivity extends Activity {
 		
 	    parent.addView(layout);
 	    
-	    titleTimerTask = new AsyncTask<Void, String, Void>() {
-	    	@Override
-	    	protected Void doInBackground(Void... params) {
-	    		while (! isCancelled()) {
-	    			publishProgress(appState.getDigitalSquareTitle());
-	    			SystemClock.sleep(100);
-	    		}
-	    		return null;
-	    	}
-	    	@Override
-	    	protected void onProgressUpdate(String... params) {
-	    		setTitle(params[0]);
-	    	}
-	    	
-		}.execute(new Void[0]);
+	    titleTimerTask = new TitleTimerTask();
+	    titleTimerTask.execute(new Void[0]);
 	    
 		appState.startDigitTest();
 	}
@@ -158,6 +145,29 @@ public class DigitalSquareActivity extends Activity {
 		alert.show();
 		
 		appState.clearDigSequence();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onStop();
+		titleTimerTask.cancel(true);
+	}
+	
+	private final class TitleTimerTask extends AsyncTask<Void, String, Void> {
+		
+		@Override
+		protected Void doInBackground(Void... params) {
+			while (! isCancelled()) {
+				publishProgress(appState.getDigitalSquareTitle());
+				SystemClock.sleep(100);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(String... params) {
+			setTitle(params[0]);
+		}
 	}
 	
 }
