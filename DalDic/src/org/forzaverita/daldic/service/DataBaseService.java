@@ -1,4 +1,4 @@
-package org.forzaverita.daldic;
+package org.forzaverita.daldic.service;
 
 import java.io.File;
 import java.io.FileOutputStream;

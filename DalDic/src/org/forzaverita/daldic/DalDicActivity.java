@@ -1,5 +1,8 @@
 package org.forzaverita.daldic;
 
+import org.forzaverita.daldic.service.Constants;
+import org.forzaverita.daldic.service.DalDicService;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;

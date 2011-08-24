@@ -1,9 +1,11 @@
-package org.forzaverita.daldic;
+package org.forzaverita.daldic.widget;
 
 public interface WidgetRefreshTask {
 
-	void refresh();
+	void next();
 
+	void previous();
+	
 	void pauseTask();
 
 	void resumeTask();

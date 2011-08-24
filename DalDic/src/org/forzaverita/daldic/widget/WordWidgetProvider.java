@@ -1,7 +1,11 @@
-package org.forzaverita.daldic;
+package org.forzaverita.daldic.widget;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import org.forzaverita.daldic.R;
+import org.forzaverita.daldic.WordActivity;
+import org.forzaverita.daldic.service.DalDicService;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -14,7 +18,8 @@ import android.widget.RemoteViews;
 
 public class WordWidgetProvider extends AppWidgetProvider {
 	
-	private static String ACTION_WIDGET_REFRESH = "org.forzaverita.daldic.ACTION_WIDGET_REFRESH";
+	private static String ACTION_WIDGET_PREVIOUS = "org.forzaverita.daldic.ACTION_WIDGET_PREVIOUS";
+	private static String ACTION_WIDGET_NEXT = "org.forzaverita.daldic.ACTION_WIDGET_NEXT";
 	
 	private DalDicService service;
 	
@@ -29,15 +34,19 @@ public class WordWidgetProvider extends AppWidgetProvider {
 			task = new RefreshTask(context, appWidgetManager, views);
 			service.setWidgetRefreshTask(task);
 			((Thread) task).start();
-		}
-		else {
-			task.refresh();
+			task.next();
 		}
 		
-		Intent refreshIntent = new Intent(context, WordWidgetProvider.class);
-		refreshIntent.setAction(ACTION_WIDGET_REFRESH);
-		PendingIntent pendingRefreshIntent = PendingIntent.getBroadcast(context, 0, refreshIntent, 0);
-		views.setOnClickPendingIntent(R.id.widget_refresh, pendingRefreshIntent);
+		Intent previousIntent = new Intent(context, WordWidgetProvider.class);
+		previousIntent.setAction(ACTION_WIDGET_PREVIOUS);
+		PendingIntent pendingPreviuosIntent = PendingIntent.getBroadcast(context, 0, previousIntent, 0);
+		views.setOnClickPendingIntent(R.id.widget_left, pendingPreviuosIntent);
+		
+		Intent nextIntent = new Intent(context, WordWidgetProvider.class);
+		nextIntent.setAction(ACTION_WIDGET_NEXT);
+		PendingIntent pendingNextIntent = PendingIntent.getBroadcast(context, 0, nextIntent, 0);
+		views.setOnClickPendingIntent(R.id.widget_right, pendingNextIntent);
+		
 		appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 	
@@ -59,13 +68,13 @@ public class WordWidgetProvider extends AppWidgetProvider {
 			while (! isInterrupted()) {
 				lock.lock();
 				try {
-					refresh();
+					next();
 				}
 				finally {
 					lock.unlock();
 				}
 				try {
-					sleep(10000);
+					sleep(service.getRefreshInterval());
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
@@ -85,8 +94,18 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		}
 		
 		@Override
-		public void refresh() {
-			String word = service.getNewRandomWord();
+		public void next() {
+			String word = service.getNextWord();
+			refreshWord(word);
+		}
+		
+		@Override
+		public void previous() {
+			String word = service.getPreviuosWord();
+			refreshWord(word);
+		}
+
+		private void refreshWord(String word) {
 			Intent intent = new Intent(context, WordActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             
@@ -102,24 +121,20 @@ public class WordWidgetProvider extends AppWidgetProvider {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// v1.5 fix that doesn't call onDelete Action
+		super.onReceive(context, intent);
 		final String action = intent.getAction();
-		if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-			final int appWidgetId = intent.getExtras().getInt(
-					AppWidgetManager.EXTRA_APPWIDGET_ID,
-					AppWidgetManager.INVALID_APPWIDGET_ID);
-			if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-				this.onDeleted(context, new int[] { appWidgetId });
+		// previous/next word handling
+		if (action.equals(ACTION_WIDGET_PREVIOUS) || action.equals(ACTION_WIDGET_NEXT)) {
+			WidgetRefreshTask task = getRefreshTask(context);
+			if (task != null) {
+				if (action.equals(ACTION_WIDGET_PREVIOUS)) {
+					task.previous();
+				}
+				else {
+					task.next();
+				}
 			}
-		}
-		else {
-			super.onReceive(context, intent);
-		}
-		if (intent.getAction().equals(ACTION_WIDGET_REFRESH)) {
-			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		    ComponentName thisAppWidget = new ComponentName(context, WordWidgetProvider.class);
-		    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
-		    onUpdate(context, appWidgetManager, appWidgetIds);
+			updateWidget(context);
 		}
 	}
 	
@@ -147,6 +162,13 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		}
 		WidgetRefreshTask task = service.getWidgetRefreshTask();
 		return task;
+	}
+	
+	private void updateWidget(Context context) {
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		ComponentName thisAppWidget = new ComponentName(context, WordWidgetProvider.class);
+		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
+		onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 		
 }

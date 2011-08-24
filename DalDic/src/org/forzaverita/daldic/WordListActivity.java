@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.forzaverita.daldic.service.Constants;
+import org.forzaverita.daldic.service.DalDicService;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;

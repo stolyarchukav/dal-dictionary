@@ -1,4 +1,4 @@
-package org.forzaverita.daldic;
+package org.forzaverita.daldic.service;
 
 public class Constants {
 

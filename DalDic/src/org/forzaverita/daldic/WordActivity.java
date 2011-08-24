@@ -3,6 +3,9 @@ package org.forzaverita.daldic;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.forzaverita.daldic.service.Constants;
+import org.forzaverita.daldic.service.DalDicService;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;

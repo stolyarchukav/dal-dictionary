@@ -1,7 +1,9 @@
-package org.forzaverita.daldic;
+package org.forzaverita.daldic.service;
 
 import java.util.Map;
 import java.util.Set;
+
+import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
 import android.graphics.Typeface;
 
@@ -15,12 +17,16 @@ public interface DalDicService {
 
 	Set<String> getDescriptions(Integer id);
 
-	String getNewRandomWord();
+	String getNextWord();
 
+	String getPreviuosWord();
+	
 	String[] getCurrentWord();
 	
 	void setWidgetRefreshTask(WidgetRefreshTask task);
 	
 	WidgetRefreshTask getWidgetRefreshTask();
+
+	long getRefreshInterval();
 	
 }
