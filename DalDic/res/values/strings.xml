@@ -12,4 +12,7 @@
     <string name="progress_text">Подождите, идет загрузка...</string>
     <string name="goto_menu">Перейти в меню поиска</string>
     <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
+    <string name="error_db_open">Ошибка при открытии базы данных. Попробуйте переустановить приложение</string>
+    <string name="error_db_install">Не удалось установить базу данных. Убедитесь что устройство содержит не менее 35 МБайт свободной памяти (внутренней или на карте)</string>
+    <string name="database_init">Подготовка базы данных</string>
 </resources>

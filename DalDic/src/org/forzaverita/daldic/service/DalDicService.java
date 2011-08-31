@@ -28,5 +28,9 @@ public interface DalDicService {
 	WidgetRefreshTask getWidgetRefreshTask();
 
 	long getRefreshInterval();
+
+	boolean isDatabaseReady();
+
+	void openDatabase();
 	
 }

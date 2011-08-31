@@ -1,14 +1,19 @@
 package org.forzaverita.daldic;
 
+import org.forzaverita.daldic.exception.DatabaseException;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -78,6 +83,48 @@ public class DalDicActivity extends Activity {
 				}
 			}
 		});
+        
+        // Check and prepare database
+        final DalDicService service = (DalDicService) getApplicationContext();
+        if (! service.isDatabaseReady()) {
+        	new AsyncTask<Void, Void, String>() {
+            	ProgressDialog dialog;
+            	
+            	@Override
+            	protected void onPreExecute() {
+            		dialog = ProgressDialog.show(DalDicActivity.this, 
+            				getString(R.string.progress_title), getString(R.string.database_init));
+            	}
+            	
+            	@Override
+            	protected String doInBackground(Void... params) {
+            		String error = null;
+            		try {
+            			service.openDatabase();
+            		}
+            		catch (DatabaseException e) {
+						error = e.getMessage();
+					}
+            		return error;
+            	}
+            	
+            	@Override
+            	protected void onPostExecute(String error) {
+            		dialog.dismiss();
+            		if (error != null) {
+            			new AlertDialog.Builder(DalDicActivity.this).
+            				setMessage(error).
+            				setOnCancelListener(new DialogInterface.OnCancelListener() {
+								@Override
+								public void onCancel(DialogInterface paramDialogInterface) {
+									finish();
+								}
+							}).
+            				create().show();
+            		}
+            	}
+    		}.execute();
+        }
     }
 
 	private void startBrowseActivity() {
