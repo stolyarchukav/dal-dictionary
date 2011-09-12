@@ -3,7 +3,6 @@ package org.forzaverita.daldic;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public class AlphabetActivity extends Activity {
+public class AlphabetActivity extends AbstractActivity {
     
 	private static final int MARGIN = 5;
 	private DalDicService service;

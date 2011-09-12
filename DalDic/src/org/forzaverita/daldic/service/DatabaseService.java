@@ -1,15 +1,14 @@
 package org.forzaverita.daldic.service;
 
 import java.util.Map;
-import java.util.Set;
 
 public interface DatabaseService {
 
-	Map<Integer, String> getWordsBeginWith(String begin);
+	Map<Integer, String> getWordsBeginWith(String begin, boolean capitalLetters);
 
-	Map<Integer, String> getWordsBeginWith(char letter);
+	Map<Integer, String> getWordsBeginWith(char letter, boolean capitalLetters);
 
-	Set<String> getDescriptions(Integer id);
+	String getDescription(Integer id);
 
 	String[] getWordAndDescriptionById(long id);
 

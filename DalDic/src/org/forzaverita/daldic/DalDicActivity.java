@@ -4,7 +4,6 @@ import org.forzaverita.daldic.exception.DatabaseException;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -23,7 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DalDicActivity extends Activity {
+public class DalDicActivity extends AbstractActivity {
 	
 	private EditText searchText;
     
@@ -84,7 +83,11 @@ public class DalDicActivity extends Activity {
 			}
 		});
         
-        // Check and prepare database
+        checkDatabase();
+    }
+
+	private void checkDatabase() {
+		// Check and prepare database
         final DalDicService service = (DalDicService) getApplicationContext();
         if (! service.isDatabaseReady()) {
         	new AsyncTask<Void, Void, String>() {
@@ -125,7 +128,7 @@ public class DalDicActivity extends Activity {
             	}
     		}.execute();
         }
-    }
+	}
 
 	private void startBrowseActivity() {
 		Intent intent = new Intent(this, AlphabetActivity.class);
@@ -144,4 +147,5 @@ public class DalDicActivity extends Activity {
 			toast.show();
 		}
 	}
+	
 }

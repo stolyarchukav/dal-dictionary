@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="@string/pref_widget"
+		android:summary="@string/pref_widget">
+
+		<CheckBoxPreference android:key="pref_widget_refresh_auto"
+			android:title="@string/pref_widget_refresh_auto" 
+			android:summary="@string/pref_widget_refresh_auto_summary"
+			android:defaultValue="true" />
+		
+		<org.forzaverita.daldic.preferences.SliderPreference 
+			android:dependency="pref_widget_refresh_auto"
+            android:key="pref_widget_refresh_interval"
+            android:title="@string/pref_widget_refresh_interval"
+            android:summary="@string/pref_widget_refresh_interval_summary" />
+
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/pref_text"
+		android:summary="@string/pref_text">
+		
+		<CheckBoxPreference android:key="pref_text_capital_letters"
+			android:title="@string/pref_text_capital_letters" 
+			android:summary="@string/pref_text_capital_letters_summary" />
+			
+		<CheckBoxPreference android:key="pref_text_align_justify"
+			android:title="@string/pref_text_align_justify" 
+			android:summary="@string/pref_text_align_justify_summary"
+			android:defaultValue="true" />
+		
+	</PreferenceCategory>
+	
+</PreferenceScreen>

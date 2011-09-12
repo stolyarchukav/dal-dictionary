@@ -2,7 +2,6 @@ package org.forzaverita.daldic.service.impl;
 
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import org.forzaverita.daldic.service.DalDicService;
 import org.forzaverita.daldic.service.DatabaseService;
@@ -19,7 +18,6 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	private DatabaseService dataBaseService;
 	private Random random = new Random();
 	private WidgetRefreshTask widgetRefreshTask;
-	private long refreshInterval = 10000;
 	private WordsCache wordsCache = new WordsCache();
 	private PreferencesService preferencesService;
 	
@@ -54,17 +52,17 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	
 	@Override
 	public Map<Integer, String> getWordsBeginWith(char letter) {
-		return dataBaseService.getWordsBeginWith(letter);
+		return dataBaseService.getWordsBeginWith(letter, preferencesService.isCapitalLetters());
 	}
 	
 	@Override
 	public Map<Integer, String> getWordsBeginWith(String begin) {
-		return dataBaseService.getWordsBeginWith(begin);
+		return dataBaseService.getWordsBeginWith(begin, preferencesService.isCapitalLetters());
 	}
 	
 	@Override
-	public Set<String> getDescriptions(Integer id) {
-		return dataBaseService.getDescriptions(id);
+	public String getDescription(Integer id) {
+		return dataBaseService.getDescription(id);
 	}
 	
 	@Override
@@ -118,8 +116,13 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	}
 	
 	@Override
-	public long getRefreshInterval() {
-		return refreshInterval;
+	public boolean isAutoRefresh() {
+		return preferencesService.isAutoRefresh();
+	}
+	
+	@Override
+	public int getRefreshInterval() {
+		return preferencesService.getRefreshInterval();
 	}
 	
 }

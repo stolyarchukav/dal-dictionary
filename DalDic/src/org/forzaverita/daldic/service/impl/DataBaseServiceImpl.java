@@ -1,9 +1,7 @@
 package org.forzaverita.daldic.service.impl;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import org.forzaverita.daldic.R;
 import org.forzaverita.daldic.exception.DatabaseException;
@@ -95,27 +93,27 @@ public class DataBaseServiceImpl implements DatabaseService {
     }
     
     @Override
-    public Map<Integer, String> getWordsBeginWith(String begin) {
+    public Map<Integer, String> getWordsBeginWith(String begin, boolean capitalLetters) {
     	openDataBase();
     	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, WORD + " like '" + begin.trim().toUpperCase() + "%'",
-        		null, null, null, WORD + " asc");
-        return getMapFromCursor(cursor);
+        		null, null, null, null);
+        return getIdWordMapFromCursor(cursor, capitalLetters);
     }
     
     @Override
-    public Map<Integer, String> getWordsBeginWith(char letter) {
+    public Map<Integer, String> getWordsBeginWith(char letter, boolean capitalLetters) {
     	openDataBase();
     	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, FIRST_LETTER + " = '" + letter + "'",
-        		null, null, null, WORD + " asc");
-        return getMapFromCursor(cursor);
+        		null, null, null, null);
+        return getIdWordMapFromCursor(cursor, capitalLetters);
     }
 
     @Override
-	public Set<String> getDescriptions(Integer id) {
+	public String getDescription(Integer id) {
 		openDataBase();
 		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + id,
         		null, null, null, null);
-        return getSetFromCursor(cursor);
+        return getDescriptionFromCursor(cursor);
 	}
 	
     @Override
@@ -136,23 +134,24 @@ public class DataBaseServiceImpl implements DatabaseService {
 		return WORDS_COUNT;
 	}
 	
-	private Set<String> getSetFromCursor(Cursor cursor) {
-		Set<String> result = new TreeSet<String>();
+	private String getDescriptionFromCursor(Cursor cursor) {
+		String result = null;
 		if (cursor.moveToFirst()) {
-            do {
-                result.add(cursor.getString(0));
-            }
-            while (cursor.moveToNext());
+			 result = cursor.getString(0);
         }
         cursor.close();
         return result;
 	}
 	
-	private Map<Integer, String> getMapFromCursor(Cursor cursor) {
-		Map<Integer, String> result = new TreeMap<Integer, String>();
+	private Map<Integer, String> getIdWordMapFromCursor(Cursor cursor, boolean capitalLetters) {
+		Map<Integer, String> result = new HashMap<Integer, String>();
 		if (cursor.moveToFirst()) {
             do {
-                result.put(cursor.getInt(0), cursor.getString(1));
+            	String word = cursor.getString(1);
+            	if (! capitalLetters) {
+            		word = word.charAt(0) + word.substring(1).toLowerCase();
+            	}
+            	result.put(cursor.getInt(0), word);
             }
             while (cursor.moveToNext());
         }

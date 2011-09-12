@@ -1,7 +1,6 @@
 package org.forzaverita.daldic.service;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
@@ -15,7 +14,7 @@ public interface DalDicService {
 	
 	Map<Integer, String> getWordsBeginWith(String begin);
 
-	Set<String> getDescriptions(Integer id);
+	String getDescription(Integer id);
 
 	String getNextWord();
 
@@ -27,7 +26,9 @@ public interface DalDicService {
 	
 	WidgetRefreshTask getWidgetRefreshTask();
 
-	long getRefreshInterval();
+	boolean isAutoRefresh();
+	
+	int getRefreshInterval();
 
 	boolean isDatabaseReady();
 

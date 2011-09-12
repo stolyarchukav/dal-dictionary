@@ -1,9 +1,12 @@
 package org.forzaverita.daldic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.forzaverita.daldic.preferences.AppPreferenceActivity;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
@@ -14,6 +17,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +75,13 @@ public class WordListActivity extends ListActivity {
         		if (words != null && ! words.isEmpty()) {
         			ArrayList<Entry<Integer, String>> wordList = new ArrayList<Entry<Integer, String>>(
         					words.entrySet());
+        			Collections.sort(wordList, new Comparator<Entry<Integer, String>>() {
+        				@Override
+        				public int compare(Entry<Integer, String> object1,
+        						Entry<Integer, String> object2) {
+        					return object1.getValue().compareTo(object2.getValue());
+        				}
+					});
         			setListAdapter(new ArrayAdapter<Entry<Integer, String>>(WordListActivity.this, R.layout.wordlist_item, wordList) {
                     	@Override
                     	public View getView(int position, View convertView, ViewGroup parent) {
@@ -118,6 +129,14 @@ public class WordListActivity extends ListActivity {
 		Intent intent = new Intent(this, WordActivity.class);
 		intent.putExtra(Constants.WORD_ID, wordId);
 		startActivity(intent);
+	}
+	
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+			startActivity(new Intent(this, AppPreferenceActivity.class));
+		}
+		return true;
 	}
 	
 }

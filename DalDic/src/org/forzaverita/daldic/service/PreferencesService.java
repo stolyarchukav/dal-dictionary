@@ -10,4 +10,10 @@ public interface PreferencesService {
 	
 	void setDatabasePath(String databasePath);
 
+	boolean isCapitalLetters();
+
+	boolean isAutoRefresh();
+
+	int getRefreshInterval();
+
 }

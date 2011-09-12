@@ -1,12 +1,8 @@
 package org.forzaverita.daldic;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TextView;
 
-public class WordActivity extends Activity {
+public class WordActivity extends AbstractActivity {
 	
 	private static final int MARGIN = 5;
     
@@ -30,24 +26,23 @@ public class WordActivity extends Activity {
         service = (DalDicService) getApplicationContext();
         
         boolean fromWidget = false;
-        Set<String> descriptions = null;
+        String description = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
         	Integer wordId = (Integer) extras.get(Constants.WORD_ID);
-        	descriptions = service.getDescriptions(wordId);
+        	description = service.getDescription(wordId);
         }
         else {
         	String[] wordAndDesc = service.getCurrentWord();
-        	descriptions = new HashSet<String>();
-        	descriptions.add(wordAndDesc[1]);
+        	description = wordAndDesc[1];
         	fromWidget = true;
         }
         
         LinearLayout parent = (LinearLayout) findViewById(R.id.word);
         
-        for (String desc : descriptions) {
+        if (description != null) {
         	TextView text = new TextView(this);
-        	text.setText(desc);
+        	text.setText(description);
         	text.setTypeface(service.getFont());
         	text.setTextColor(Color.BLACK);
         	text.setTextSize(25);
