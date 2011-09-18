@@ -39,7 +39,7 @@ public class AlphabetActivity extends AbstractActivity {
 				int colums = width / 100;
 			    TableRow row = null;
 			    int w = 0;
-			    for (char q = 'À'; q <= 'ß'; q++) {
+			    for (char q = 'Ð'; q <= 'Ð¯'; q++) {
                 	if (w++ % colums == 0) {
                 		row = new TableRow(AlphabetActivity.this);
                         addView(row);

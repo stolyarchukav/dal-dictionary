@@ -1,5 +1,6 @@
 package org.forzaverita.daldic.service.impl;
 
+import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.PreferencesService;
 
@@ -9,6 +10,7 @@ import android.preference.PreferenceManager;
 
 public class PreferencesServiceImpl implements PreferencesService {
 
+	private static final String PREF_TEXT_ALIGN = "pref_text_align";
 	private static final String PREF_TEXT_CAPITAL_LETTERS = "pref_text_capital_letters";
 	private static final String PREF_WIDGET_REFRESH_INTERVAL = "pref_widget_refresh_interval";
 	private static final String PREF_WIDGET_REFRESH_AUTO = "pref_widget_refresh_auto";
@@ -54,6 +56,11 @@ public class PreferencesServiceImpl implements PreferencesService {
 	@Override
 	public boolean isAutoRefresh() {
 		return preferences.getBoolean(PREF_WIDGET_REFRESH_AUTO, Constants.PREF_REFRESH_AUTO);
+	}
+	
+	@Override
+	public TextAlignment getWordTextAlign() {
+		return TextAlignment.valueOf(preferences.getString(PREF_TEXT_ALIGN, TextAlignment.JUSTIFY.name()));
 	}
 	
 }

@@ -1,5 +1,7 @@
 package org.forzaverita.daldic.service;
 
+import org.forzaverita.daldic.preferences.TextAlignment;
+
 public interface PreferencesService {
 
 	boolean isInteranalStorage();
@@ -15,5 +17,7 @@ public interface PreferencesService {
 	boolean isAutoRefresh();
 
 	int getRefreshInterval();
+
+	TextAlignment getWordTextAlign();
 
 }

@@ -3,6 +3,7 @@ package org.forzaverita.daldic.service.impl;
 import java.util.Map;
 import java.util.Random;
 
+import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.service.DalDicService;
 import org.forzaverita.daldic.service.DatabaseService;
 import org.forzaverita.daldic.service.PreferencesService;
@@ -123,6 +124,11 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	@Override
 	public int getRefreshInterval() {
 		return preferencesService.getRefreshInterval();
+	}
+	
+	@Override
+	public TextAlignment getWordTextAlign() {
+		return preferencesService.getWordTextAlign();
 	}
 	
 }

@@ -23,11 +23,13 @@
 		<CheckBoxPreference android:key="pref_text_capital_letters"
 			android:title="@string/pref_text_capital_letters" 
 			android:summary="@string/pref_text_capital_letters_summary" />
-			
-		<CheckBoxPreference android:key="pref_text_align_justify"
-			android:title="@string/pref_text_align_justify" 
-			android:summary="@string/pref_text_align_justify_summary"
-			android:defaultValue="true" />
+		
+		<ListPreference android:key="pref_text_align"
+			android:title="@string/pref_text_align" 
+			android:summary="@string/pref_text_align_summary"
+			android:entries="@array/pref_text_align_names"
+			android:entryValues="@array/pref_text_align_values"
+			android:defaultValue="JUSTIFY" />
 		
 	</PreferenceCategory>
 	

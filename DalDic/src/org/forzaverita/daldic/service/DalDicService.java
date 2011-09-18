@@ -2,6 +2,7 @@ package org.forzaverita.daldic.service;
 
 import java.util.Map;
 
+import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
 import android.graphics.Typeface;
@@ -33,5 +34,7 @@ public interface DalDicService {
 	boolean isDatabaseReady();
 
 	void openDatabase();
+
+	TextAlignment getWordTextAlign();
 	
 }
