@@ -1,9 +1,11 @@
 package org.forzaverita.daldic;
 
 import org.forzaverita.daldic.exception.DatabaseException;
+import org.forzaverita.daldic.preferences.AppPreferenceActivity;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -15,6 +17,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -22,7 +27,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DalDicActivity extends AbstractActivity {
+public class DalDicActivity extends Activity {
 	
 	private EditText searchText;
     
@@ -85,6 +90,27 @@ public class DalDicActivity extends AbstractActivity {
         
         checkDatabase();
     }
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_menu, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			startActivity(new Intent(this, AppPreferenceActivity.class));
+			return true;
+		case R.id.menu_seacrh:
+			onSearchRequested();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
 	private void checkDatabase() {
 		// Check and prepare database

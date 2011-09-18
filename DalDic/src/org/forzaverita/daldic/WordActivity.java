@@ -6,6 +6,7 @@ import java.io.InputStream;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -15,7 +16,7 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.Button;
 
-public class WordActivity extends AbstractActivity {
+public class WordActivity extends Activity {
 	
 	private static final String UTF_8 = "UTF-8";
 	private static final String FILE_ANDROID_ASSET = "file:///android_asset/";
@@ -43,8 +44,14 @@ public class WordActivity extends AbstractActivity {
         	fromWidget = true;
         }
         
-        if (description != null) {
-        	final WebView text = (WebView) findViewById(R.id.word_text);
+        configureWordView(description);
+        
+        configureGotoMain(fromWidget);
+    }
+
+	private void configureWordView(String description) {
+		if (description != null) {
+        	WebView text = (WebView) findViewById(R.id.word_text);
         	text.setBackgroundColor(0x00000000);
         	text.getSettings().setDefaultFontSize(25);
         	text.getSettings().setSupportZoom(true);
@@ -66,8 +73,10 @@ public class WordActivity extends AbstractActivity {
         	text.loadDataWithBaseURL(FILE_ANDROID_ASSET + WORD_TEMPLATE_HTML, data,
         			"text/html", UTF_8, "about:blank");
         }
-        
-        Button button = (Button) findViewById(R.id.word_goto_main);
+	}
+
+	private void configureGotoMain(boolean fromWidget) {
+		Button button = (Button) findViewById(R.id.word_goto_main);
         if (fromWidget) {
         	button.setVisibility(View.VISIBLE);
         	button.setTypeface(service.getFont());
@@ -83,6 +92,6 @@ public class WordActivity extends AbstractActivity {
         else {
         	button.setVisibility(View.GONE);
         }
-    }
+	}
 	
 }
