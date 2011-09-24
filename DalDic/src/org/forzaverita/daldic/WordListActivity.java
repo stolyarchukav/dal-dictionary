@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.forzaverita.daldic.preferences.AppPreferenceActivity;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
@@ -18,11 +19,15 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class WordListActivity extends ListActivity {
@@ -36,6 +41,7 @@ public class WordListActivity extends ListActivity {
 	private class SearchTask extends AsyncTask<Void, Void, Map<Integer, String>> {
     	
     	ProgressDialog dialog;
+    	String queryString;
     	
     	@Override
     	protected void onPreExecute() {
@@ -51,15 +57,18 @@ public class WordListActivity extends ListActivity {
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             	String query = intent.getStringExtra(SearchManager.QUERY);
             	words = service.getWordsBeginWith(query);
+            	queryString = query;
             }
             else {
             	Character letter = (Character) intent.getExtras().get(Constants.LETTER);
                 if (letter != null) {
                 	words = service.getWordsBeginWith(letter);
+                	queryString = String.valueOf(letter);
                 }
                 else {
                 	String begin = (String) intent.getExtras().get(Constants.BEGIN);
                 	words = service.getWordsBeginWith(begin);
+                	queryString = begin;
                 }
             }
             return words;
@@ -68,6 +77,7 @@ public class WordListActivity extends ListActivity {
     	@Override
     	protected void onPostExecute(Map<Integer, String> words) {
     		dialog.dismiss();
+    		TextView textView = (TextView) parent.findViewById(R.id.word_not_found);
     		if (words != null && ! words.isEmpty()) {
     			ArrayList<Entry<Integer, String>> wordList = new ArrayList<Entry<Integer, String>>(
     					words.entrySet());
@@ -105,20 +115,28 @@ public class WordListActivity extends ListActivity {
                         return row;
                 	}
                 });
+    			textView.setVisibility(View.GONE);
             }
             else {
-            	TextView textView = new TextView(WordListActivity.this);
-            	textView.setText(getString(R.string.word_not_found));
+            	textView.setText(getString(R.string.word_not_found) + ": " + queryString);
             	textView.setTypeface(service.getFont());
-            	textView.setTextColor(Color.BLACK);
-            	textView.setTextSize(30);
-            	LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-            	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
-            	textView.setLayoutParams(params);
-            	parent.addView(textView);
+            	textView.setVisibility(View.VISIBLE);
             }
-    		parent.requestLayout();
+    		configureSearchFullButton();
     	}
+
+		private void configureSearchFullButton() {
+			Button searchFull = (Button) parent.findViewById(R.id.search_full);
+    		searchFull.setTypeface(service.getFont());
+    		searchFull.setVisibility(View.VISIBLE);
+    		searchFull.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View paramView) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		}
 	}
 	
 	@Override
@@ -133,8 +151,24 @@ public class WordListActivity extends ListActivity {
     }
 	
 	@Override
-	protected void onNewIntent(Intent intent) {
-		new SearchTask().execute();
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_menu, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			startActivity(new Intent(this, AppPreferenceActivity.class));
+			return true;
+		case R.id.menu_seacrh:
+			onSearchRequested();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	private void startWordActivity(Integer wordId) {

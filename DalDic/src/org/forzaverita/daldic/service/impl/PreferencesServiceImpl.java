@@ -1,5 +1,10 @@
 package org.forzaverita.daldic.service.impl;
 
+import static org.forzaverita.daldic.service.Constants.NAME_PREF_TEXT_ALIGN;
+import static org.forzaverita.daldic.service.Constants.NAME_PREF_TEXT_CAPITAL_LETTERS;
+import static org.forzaverita.daldic.service.Constants.NAME_PREF_WIDGET_REFRESH_AUTO;
+import static org.forzaverita.daldic.service.Constants.NAME_PREF_WIDGET_REFRESH_INTERVAL;
+
 import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.PreferencesService;
@@ -10,10 +15,6 @@ import android.preference.PreferenceManager;
 
 public class PreferencesServiceImpl implements PreferencesService {
 
-	private static final String PREF_TEXT_ALIGN = "pref_text_align";
-	private static final String PREF_TEXT_CAPITAL_LETTERS = "pref_text_capital_letters";
-	private static final String PREF_WIDGET_REFRESH_INTERVAL = "pref_widget_refresh_interval";
-	private static final String PREF_WIDGET_REFRESH_AUTO = "pref_widget_refresh_auto";
 	private static final String INTERNAL_STORAGE = "internalStorage";
 	private static final String DATABASE_PATH = "databasePath";
 	
@@ -45,22 +46,22 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public boolean isCapitalLetters() {
-		return preferences.getBoolean(PREF_TEXT_CAPITAL_LETTERS, Constants.PREF_TEXT_CAPITAL_LETTERS);
+		return preferences.getBoolean(NAME_PREF_TEXT_CAPITAL_LETTERS, Constants.PREF_TEXT_CAPITAL_LETTERS);
 	}
 	
 	@Override
 	public int getRefreshInterval() {
-		return preferences.getInt(PREF_WIDGET_REFRESH_INTERVAL, Constants.PREF_REFRESH_INTERVAL);
+		return preferences.getInt(NAME_PREF_WIDGET_REFRESH_INTERVAL, Constants.PREF_REFRESH_INTERVAL);
 	}
 	
 	@Override
 	public boolean isAutoRefresh() {
-		return preferences.getBoolean(PREF_WIDGET_REFRESH_AUTO, Constants.PREF_REFRESH_AUTO);
+		return preferences.getBoolean(NAME_PREF_WIDGET_REFRESH_AUTO, Constants.PREF_REFRESH_AUTO);
 	}
 	
 	@Override
 	public TextAlignment getWordTextAlign() {
-		return TextAlignment.valueOf(preferences.getString(PREF_TEXT_ALIGN, TextAlignment.JUSTIFY.name()));
+		return TextAlignment.valueOf(preferences.getString(NAME_PREF_TEXT_ALIGN, TextAlignment.JUSTIFY.name()));
 	}
 	
 }

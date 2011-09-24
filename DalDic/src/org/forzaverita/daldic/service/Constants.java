@@ -13,4 +13,9 @@ public class Constants {
 	public static final boolean PREF_TEXT_CAPITAL_LETTERS = false;
 	public static final boolean PREF_TEXT_ALIGN_JUSTIFY = true;
 	
+	public static final String NAME_PREF_TEXT_ALIGN = "pref_text_align";
+	public static final String NAME_PREF_TEXT_CAPITAL_LETTERS = "pref_text_capital_letters";
+	public static final String NAME_PREF_WIDGET_REFRESH_INTERVAL = "pref_widget_refresh_interval";
+	public static final String NAME_PREF_WIDGET_REFRESH_AUTO = "pref_widget_refresh_auto";
+	
 }
