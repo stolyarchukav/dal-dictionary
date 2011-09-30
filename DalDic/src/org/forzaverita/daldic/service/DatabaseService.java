@@ -8,6 +8,8 @@ public interface DatabaseService {
 
 	Map<Integer, String> getWordsBeginWith(char letter, boolean capitalLetters);
 
+	Map<Integer, String> getWordsFullSearch(String query, boolean capitalLetters);
+	
 	String getDescription(Integer id);
 
 	String[] getWordAndDescriptionById(long id);
@@ -18,6 +20,6 @@ public interface DatabaseService {
 
 	boolean isDatabaseReady();
 
-	void open();
+	void open();	
 
 }

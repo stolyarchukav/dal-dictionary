@@ -14,6 +14,8 @@ public interface DalDicService {
 	Map<Integer, String> getWordsBeginWith(char letter);
 	
 	Map<Integer, String> getWordsBeginWith(String begin);
+	
+	Map<Integer, String> getWordsFullSearch(String query);
 
 	String getDescription(Integer id);
 

@@ -3,11 +3,11 @@ package org.forzaverita.daldic.service.impl;
 import java.util.Map;
 import java.util.Random;
 
+import org.forzaverita.daldic.data.WordsCache;
 import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.service.DalDicService;
 import org.forzaverita.daldic.service.DatabaseService;
 import org.forzaverita.daldic.service.PreferencesService;
-import org.forzaverita.daldic.service.WordsCache;
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
 import android.app.Application;
@@ -59,6 +59,11 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	@Override
 	public Map<Integer, String> getWordsBeginWith(String begin) {
 		return dataBaseService.getWordsBeginWith(begin, preferencesService.isCapitalLetters());
+	}
+	
+	@Override
+	public Map<Integer, String> getWordsFullSearch(String query) {
+		return dataBaseService.getWordsFullSearch(query, preferencesService.isCapitalLetters());
 	}
 	
 	@Override

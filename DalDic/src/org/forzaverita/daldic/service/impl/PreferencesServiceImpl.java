@@ -1,12 +1,12 @@
 package org.forzaverita.daldic.service.impl;
 
-import static org.forzaverita.daldic.service.Constants.NAME_PREF_TEXT_ALIGN;
-import static org.forzaverita.daldic.service.Constants.NAME_PREF_TEXT_CAPITAL_LETTERS;
-import static org.forzaverita.daldic.service.Constants.NAME_PREF_WIDGET_REFRESH_AUTO;
-import static org.forzaverita.daldic.service.Constants.NAME_PREF_WIDGET_REFRESH_INTERVAL;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_ALIGN;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_CAPITAL_LETTERS;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_AUTO;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_INTERVAL;
 
+import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.preferences.TextAlignment;
-import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.PreferencesService;
 
 import android.content.Context;

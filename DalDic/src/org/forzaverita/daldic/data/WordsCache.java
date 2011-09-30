@@ -1,4 +1,4 @@
-package org.forzaverita.daldic.service;
+package org.forzaverita.daldic.data;
 
 
 public class WordsCache {

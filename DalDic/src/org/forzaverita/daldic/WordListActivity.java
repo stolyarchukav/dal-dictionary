@@ -6,8 +6,9 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.forzaverita.daldic.data.Constants;
+import org.forzaverita.daldic.data.SearchType;
 import org.forzaverita.daldic.preferences.AppPreferenceActivity;
-import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
 import android.app.ListActivity;
@@ -18,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +44,7 @@ public class WordListActivity extends ListActivity {
     	
     	ProgressDialog dialog;
     	String queryString;
+    	SearchType searchType;
     	
     	@Override
     	protected void onPreExecute() {
@@ -58,17 +61,20 @@ public class WordListActivity extends ListActivity {
             	String query = intent.getStringExtra(SearchManager.QUERY);
             	words = service.getWordsBeginWith(query);
             	queryString = query;
+            	searchType = SearchType.BEGIN;
             }
             else {
-            	Character letter = (Character) intent.getExtras().get(Constants.LETTER);
+            	Character letter = (Character) intent.getExtras().get(Constants.SEARCH_LETTER);
                 if (letter != null) {
                 	words = service.getWordsBeginWith(letter);
                 	queryString = String.valueOf(letter);
+                	searchType = SearchType.FIRST_LETTER;
                 }
                 else {
-                	String begin = (String) intent.getExtras().get(Constants.BEGIN);
-                	words = service.getWordsBeginWith(begin);
-                	queryString = begin;
+                	String query = (String) intent.getExtras().get(Constants.SEARCH_QUERY_FULL);
+                	words = service.getWordsFullSearch(query);
+                	queryString = query;
+                	searchType = SearchType.FULL;
                 }
             }
             return words;
@@ -100,7 +106,7 @@ public class WordListActivity extends ListActivity {
                         }
                         
                         TextView tv = (TextView) row.findViewById(android.R.id.text1);
-                        tv.setText(getItem(position).getValue());
+                        tv.setText(Html.fromHtml(getItem(position).getValue()));
                         tv.setTypeface(service.getFont());
                         tv.setTextColor(Color.BLACK);
                         
@@ -127,15 +133,21 @@ public class WordListActivity extends ListActivity {
 
 		private void configureSearchFullButton() {
 			Button searchFull = (Button) parent.findViewById(R.id.search_full);
-    		searchFull.setTypeface(service.getFont());
-    		searchFull.setVisibility(View.VISIBLE);
-    		searchFull.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View paramView) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+			if (searchType == SearchType.BEGIN && queryString.length() > 2) {
+				searchFull.setTypeface(service.getFont());
+	    		searchFull.setVisibility(View.VISIBLE);
+	    		searchFull.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View paramView) {
+						Intent intent = new Intent(WordListActivity.this, WordListActivity.class);
+						intent.putExtra(Constants.SEARCH_QUERY_FULL, queryString);
+						startActivity(intent);
+					}
+				});
+			}
+			else {
+				searchFull.setVisibility(View.GONE);
+			}
 		}
 	}
 	

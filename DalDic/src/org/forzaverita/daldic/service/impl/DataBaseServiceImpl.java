@@ -12,6 +12,7 @@ import org.forzaverita.daldic.service.PreferencesService;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DataBaseServiceImpl implements DatabaseService {
 	
@@ -107,8 +108,16 @@ public class DataBaseServiceImpl implements DatabaseService {
         		null, null, null, null);
         return getIdWordMapFromCursor(cursor, capitalLetters);
     }
-
+    
     @Override
+    public Map<Integer, String> getWordsFullSearch(String query, boolean capitalLetters) {
+    	openDataBase();
+    	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, DESCRIPTION}, "upper(" + DESCRIPTION + ") like '%" + query.trim().toUpperCase() + "%'",
+        		null, null, null, null);
+        return getIdWordDescMapFromCursor(cursor, capitalLetters, query);
+    }
+
+	@Override
 	public String getDescription(Integer id) {
 		openDataBase();
 		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + id,
@@ -157,6 +166,42 @@ public class DataBaseServiceImpl implements DatabaseService {
         }
         cursor.close();
         return result;
+	}
+	
+	 private Map<Integer, String> getIdWordDescMapFromCursor(Cursor cursor,	boolean capitalLetters, String query) {
+		 Map<Integer, String> result = new HashMap<Integer, String>();
+		 if (cursor.moveToFirst()) {
+			 do {
+				 String word = cursor.getString(1);
+				 String desc = cursor.getString(2);
+				 StringBuilder wordDesc = new StringBuilder();
+				 if (capitalLetters) {
+					 wordDesc.append(word);
+				 }
+				 else {
+					 wordDesc.append(word.charAt(0));
+					 wordDesc.append(word.substring(1).toLowerCase());
+				 }
+				 int index = desc.toUpperCase().indexOf(query.toUpperCase());
+				 int begin = index >= 10 ? index - 10 : 0;
+				 Log.w("DalDic", index + " " + begin);
+				 String prefix = desc.substring(begin, index);
+				 int end = index < desc.length() - 25 ? index + 25 : desc.length() - 1;
+				 String body = desc.substring(index, index + query.length());
+				 String postfix = desc.substring(index + query.length(), end);
+				 wordDesc.append("</br><small><i> ...");
+				 wordDesc.append(prefix);
+				 wordDesc.append("<font color='green'>");
+				 wordDesc.append(body);
+				 wordDesc.append("</font>");
+				 wordDesc.append(postfix);
+				 wordDesc.append("...</i></small>");
+				 result.put(cursor.getInt(0), wordDesc.toString());
+			 }
+			 while (cursor.moveToNext());
+		 }
+	     cursor.close();
+	     return result;
 	}
 	
 }

@@ -1,7 +1,7 @@
 package org.forzaverita.daldic.preferences;
 
 import org.forzaverita.daldic.R;
-import org.forzaverita.daldic.service.Constants;
+import org.forzaverita.daldic.data.Constants;
 
 import android.content.Context;
 import android.preference.Preference;

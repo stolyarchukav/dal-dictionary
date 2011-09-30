@@ -1,7 +1,7 @@
 package org.forzaverita.daldic;
 
+import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.preferences.AppPreferenceActivity;
-import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
 import android.app.Activity;
@@ -95,7 +95,7 @@ public class AlphabetActivity extends Activity {
 	
 	private void startWordListActivity(char letter) {
 		Intent intent = new Intent(this, WordListActivity.class);
-		intent.putExtra(Constants.LETTER, letter);
+		intent.putExtra(Constants.SEARCH_LETTER, letter);
 		startActivity(intent);
 	}
 	

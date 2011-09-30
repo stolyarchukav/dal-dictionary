@@ -3,8 +3,8 @@ package org.forzaverita.daldic;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.preferences.AppPreferenceActivity;
-import org.forzaverita.daldic.service.Constants;
 import org.forzaverita.daldic.service.DalDicService;
 
 import android.app.Activity;
