@@ -14,6 +14,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.view.View;
 import android.widget.RemoteViews;
 
 public class WordWidgetProvider extends AppWidgetProvider {
@@ -99,26 +100,40 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		@Override
 		public void next() {
+			showLoading();
 			String word = service.getNextWord();
 			refreshWord(word);
 		}
 		
 		@Override
 		public void previous() {
+			showLoading();
 			String word = service.getPreviuosWord();
 			refreshWord(word);
+		}
+		
+		private void showLoading() {
+			views.setViewVisibility(R.id.widget_word, View.GONE);
+			views.setViewVisibility(R.id.widget_loading, View.VISIBLE);
+			updateWidget();
 		}
 
 		private void refreshWord(String word) {
 			Intent intent = new Intent(context, WordActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             
+            views.setViewVisibility(R.id.widget_loading, View.GONE);
+            views.setViewVisibility(R.id.widget_word, View.VISIBLE);
             views.setTextViewText(R.id.widget_word, word);
             views.setTextColor(R.id.widget_word, Color.BLACK);
             views.setOnClickPendingIntent(R.id.widget_word, pendingIntent);
             
-            ComponentName widget = new ComponentName(context, WordWidgetProvider.class);
-            appWidgetManager.updateAppWidget(widget, views);
+            updateWidget();
+		}
+		
+		private void updateWidget() {
+			ComponentName widget = new ComponentName(context, WordWidgetProvider.class);
+			appWidgetManager.updateAppWidget(widget, views);
 		}
 		
 	}

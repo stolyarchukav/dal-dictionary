@@ -17,7 +17,7 @@ public interface DalDicService {
 	
 	Map<Integer, String> getWordsFullSearch(String query);
 
-	String getDescription(Integer id);
+	String[] getDescription(Integer id);
 
 	String getNextWord();
 

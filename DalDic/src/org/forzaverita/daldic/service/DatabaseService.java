@@ -10,7 +10,7 @@ public interface DatabaseService {
 
 	Map<Integer, String> getWordsFullSearch(String query, boolean capitalLetters);
 	
-	String getDescription(Integer id);
+	String[] getDescription(Integer id);
 
 	String[] getWordAndDescriptionById(long id);
 

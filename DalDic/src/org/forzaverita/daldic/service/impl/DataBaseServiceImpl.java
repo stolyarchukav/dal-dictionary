@@ -12,7 +12,6 @@ import org.forzaverita.daldic.service.PreferencesService;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class DataBaseServiceImpl implements DatabaseService {
 	
@@ -20,6 +19,7 @@ public class DataBaseServiceImpl implements DatabaseService {
 	private static int WORDS_COUNT = 44652;
 	private static String WORD_ID = "word_id";
 	private static String WORD = "word";
+	private static String WORD_REF = "word_ref";
 	private static String DESCRIPTION = "description";
 	private static String FIRST_LETTER = "first_letter";
 	private static String DALDIC_METADATA = "daldic_metadata";
@@ -117,10 +117,10 @@ public class DataBaseServiceImpl implements DatabaseService {
         return getIdWordDescMapFromCursor(cursor, capitalLetters, query);
     }
 
-	@Override
-	public String getDescription(Integer id) {
+    @Override
+	public String[] getDescription(Integer id) {
 		openDataBase();
-		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + id,
+		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION, WORD_REF}, WORD_ID + " = " + id,
         		null, null, null, null);
         return getDescriptionFromCursor(cursor);
 	}
@@ -143,10 +143,19 @@ public class DataBaseServiceImpl implements DatabaseService {
 		return WORDS_COUNT;
 	}
 	
-	private String getDescriptionFromCursor(Cursor cursor) {
-		String result = null;
+   private String[] getDescriptionFromCursor(Cursor cursor) {
+		String[] result = new String[2];
 		if (cursor.moveToFirst()) {
-			 result = cursor.getString(0);
+			 result[0] = cursor.getString(0);
+			 Integer ref = cursor.getInt(1);
+			 if (ref != null) {
+				 Cursor cursorRef = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + ref,
+			        		null, null, null, null);
+				 if (cursorRef.moveToFirst()) {
+					 result[1] = cursorRef.getString(0);
+				 }
+				 cursorRef.close(); 
+			 }
         }
         cursor.close();
         return result;
@@ -184,7 +193,6 @@ public class DataBaseServiceImpl implements DatabaseService {
 				 }
 				 int index = desc.toUpperCase().indexOf(query.toUpperCase());
 				 int begin = index >= 10 ? index - 10 : 0;
-				 Log.w("DalDic", index + " " + begin);
 				 String prefix = desc.substring(begin, index);
 				 int end = index < desc.length() - 25 ? index + 25 : desc.length() - 1;
 				 String body = desc.substring(index, index + query.length());

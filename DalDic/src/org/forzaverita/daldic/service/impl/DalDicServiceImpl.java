@@ -67,7 +67,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	}
 	
 	@Override
-	public String getDescription(Integer id) {
+	public String[] getDescription(Integer id) {
 		return dataBaseService.getDescription(id);
 	}
 	

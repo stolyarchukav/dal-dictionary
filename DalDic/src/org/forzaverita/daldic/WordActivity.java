@@ -40,7 +40,20 @@ public class WordActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
         	Integer wordId = (Integer) extras.get(Constants.WORD_ID);
-        	description = service.getDescription(wordId);
+        	String[] desc = service.getDescription(wordId);
+        	StringBuilder descBuilder = new StringBuilder();
+        	if (desc[0] != null) {
+        		descBuilder.append(desc[0]);
+        	} 
+        	if (desc[1] != null) {
+        		if (descBuilder.length() > 0) {
+        			descBuilder.append("<hr>");
+        		}
+        		descBuilder.append(desc[1]);
+        	}
+        	if (descBuilder.length() > 0) {
+        		description = descBuilder.toString();
+        	}
         }
         else {
         	String[] wordAndDesc = service.getCurrentWord();
