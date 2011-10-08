@@ -34,11 +34,8 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		if (task == null) {
 			task = new RefreshTask(context, appWidgetManager, views);
 			service.setWidgetRefreshTask(task);
-			if (! service.isAutoRefresh()) {
-				task.next();
-				
-			}
 			((Thread) task).start();
+			task.next();
 		}
 		
 		Intent previousIntent = new Intent(context, WordWidgetProvider.class);
@@ -173,6 +170,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		WidgetRefreshTask task = getRefreshTask(context);
 		if (task != null) {
 			task.resumeTask();
+			task.next();
 		}
 	}
 	
