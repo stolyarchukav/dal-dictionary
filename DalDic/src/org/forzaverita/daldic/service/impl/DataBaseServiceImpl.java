@@ -15,7 +15,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DataBaseServiceImpl implements DatabaseService {
 	
-	private static int DATA_VERSION = 3;
+	private static int DATA_VERSION = 7;
 	private static int WORDS_COUNT = 44652;
 	private static String WORD_ID = "word_id";
 	private static String WORD = "word";
@@ -96,46 +96,73 @@ public class DataBaseServiceImpl implements DatabaseService {
     @Override
     public Map<Integer, String> getWordsBeginWith(String begin, boolean capitalLetters) {
     	openDataBase();
-    	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, WORD + " like '" + begin.trim().toUpperCase() + "%'",
-        		null, null, null, null);
-        return getIdWordMapFromCursor(cursor, capitalLetters);
+    	try {
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, WORD + " like '" + begin.trim().toUpperCase() + "%'",
+            		null, null, null, null);
+            return getIdWordMapFromCursor(cursor, capitalLetters);
+    	}
+    	catch (Exception e) {
+			throw searchError();
+		}
     }
     
     @Override
     public Map<Integer, String> getWordsBeginWith(char letter, boolean capitalLetters) {
     	openDataBase();
-    	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, FIRST_LETTER + " = '" + letter + "'",
-        		null, null, null, null);
-        return getIdWordMapFromCursor(cursor, capitalLetters);
+    	try {
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, FIRST_LETTER + " = '" + letter + "'",
+            		null, null, null, null);
+            return getIdWordMapFromCursor(cursor, capitalLetters);
+    	}
+    	catch (Exception e) {
+			throw searchError();
+		}
     }
     
     @Override
     public Map<Integer, String> getWordsFullSearch(String query, boolean capitalLetters) {
     	openDataBase();
-    	Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, DESCRIPTION}, "upper(" + DESCRIPTION + ") like '%" + query.trim().toUpperCase() + "%'",
-        		null, null, null, null);
-        return getIdWordDescMapFromCursor(cursor, capitalLetters, query);
+    	try {
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, DESCRIPTION}, "upper(" + DESCRIPTION + ") like '%" + query.trim().toUpperCase() + "%'",
+            		null, null, null, null);
+            return getIdWordDescMapFromCursor(cursor, capitalLetters, query);
+    	}
+    	catch (Exception e) {
+			throw searchError();
+		}
     }
 
     @Override
 	public String[] getDescription(Integer id) {
 		openDataBase();
-		Cursor cursor = database.query(WORD, new String[] {DESCRIPTION, WORD_REF}, WORD_ID + " = " + id,
-        		null, null, null, null);
-        return getDescriptionFromCursor(cursor);
+		try {
+			Cursor cursor = database.query(WORD, new String[] {DESCRIPTION, WORD_REF}, WORD_ID + " = " + id,
+	        		null, null, null, null);
+	        return getDescriptionFromCursor(cursor);
+		}
+		catch (Exception e) {
+			throw searchError();
+		}
 	}
 	
     @Override
 	public String[] getWordAndDescriptionById(long id) {
 		openDataBase();
-		Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION}, WORD_ID + " = " + id,
-        		null, null, null, null);
-		String[] result = null;
-		if (cursor.moveToFirst()) {
-			result = new String[] {cursor.getString(0), cursor.getString(1)};
+		try {
+			Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION, WORD_REF}, WORD_ID + " = " + id,
+	        		null, null, null, null);
+			String[] result = null;
+			if (cursor.moveToFirst()) {
+				Integer ref = cursor.getInt(2);
+				String refDesc = getReferenceDesc(ref);
+				result = new String[] {cursor.getString(0), cursor.getString(1), refDesc};
+			}
+			cursor.close();
+			return result;
 		}
-		cursor.close();
-		return result;
+		catch (Exception e) {
+			throw searchError();
+		}
 	}
 	
     @Override
@@ -143,24 +170,30 @@ public class DataBaseServiceImpl implements DatabaseService {
 		return WORDS_COUNT;
 	}
 	
-   private String[] getDescriptionFromCursor(Cursor cursor) {
+    private String[] getDescriptionFromCursor(Cursor cursor) {
 		String[] result = new String[2];
 		if (cursor.moveToFirst()) {
 			 result[0] = cursor.getString(0);
 			 Integer ref = cursor.getInt(1);
-			 if (ref != null) {
-				 Cursor cursorRef = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + ref,
-			        		null, null, null, null);
-				 if (cursorRef.moveToFirst()) {
-					 result[1] = cursorRef.getString(0);
-				 }
-				 cursorRef.close(); 
-			 }
+			 result[1] = getReferenceDesc(ref);
         }
         cursor.close();
         return result;
 	}
-	
+    
+   	private String getReferenceDesc(Integer referenceId){
+   		String result = null;
+   		if (referenceId != null && referenceId != 0) {
+   			Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + referenceId,
+   					null, null, null, null);
+   			if (cursor.moveToFirst()) {
+   				result = cursor.getString(0);
+   			}
+   			cursor.close(); 
+   		}
+   		return result;
+   	}
+
 	private Map<Integer, String> getIdWordMapFromCursor(Cursor cursor, boolean capitalLetters) {
 		Map<Integer, String> result = new HashMap<Integer, String>();
 		if (cursor.moveToFirst()) {
@@ -177,7 +210,7 @@ public class DataBaseServiceImpl implements DatabaseService {
         return result;
 	}
 	
-	 private Map<Integer, String> getIdWordDescMapFromCursor(Cursor cursor,	boolean capitalLetters, String query) {
+	private Map<Integer, String> getIdWordDescMapFromCursor(Cursor cursor,	boolean capitalLetters, String query) {
 		 Map<Integer, String> result = new HashMap<Integer, String>();
 		 if (cursor.moveToFirst()) {
 			 do {
@@ -210,6 +243,11 @@ public class DataBaseServiceImpl implements DatabaseService {
 		 }
 	     cursor.close();
 	     return result;
+	}
+	
+	private DatabaseException searchError() {
+		database = null;
+		throw new DatabaseException(context.getString(R.string.error_search_try_again));
 	}
 	
 }

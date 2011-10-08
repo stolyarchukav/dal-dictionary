@@ -41,23 +41,11 @@ public class WordActivity extends Activity {
         if (extras != null) {
         	Integer wordId = (Integer) extras.get(Constants.WORD_ID);
         	String[] desc = service.getDescription(wordId);
-        	StringBuilder descBuilder = new StringBuilder();
-        	if (desc[0] != null) {
-        		descBuilder.append(desc[0]);
-        	} 
-        	if (desc[1] != null) {
-        		if (descBuilder.length() > 0) {
-        			descBuilder.append("<hr>");
-        		}
-        		descBuilder.append(desc[1]);
-        	}
-        	if (descBuilder.length() > 0) {
-        		description = descBuilder.toString();
-        	}
+        	description = buildDescription(desc);
         }
         else {
         	String[] wordAndDesc = service.getCurrentWord();
-        	description = wordAndDesc[1];
+        	description = buildDescription(new String[] {wordAndDesc[1], wordAndDesc[2]});
         	fromWidget = true;
         }
         
@@ -65,6 +53,24 @@ public class WordActivity extends Activity {
         
         configureGotoMain(fromWidget);
     }
+
+	private String buildDescription(String[] desc) {
+		String description = null;
+		StringBuilder descBuilder = new StringBuilder();
+		if (desc[0] != null) {
+			descBuilder.append(desc[0]);
+		} 
+		if (desc[1] != null) {
+			if (descBuilder.length() > 0) {
+				descBuilder.append("<hr>");
+			}
+			descBuilder.append(desc[1]);
+		}
+		if (descBuilder.length() > 0) {
+			description = descBuilder.toString();
+		}
+		return description;
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
