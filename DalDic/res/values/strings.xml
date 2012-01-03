@@ -35,4 +35,5 @@
     	<item>По правому краю</item>
     	<item>По центру</item>
     </string-array>
+    <string name="donate"><u>Помочь разработчикам...</u></string>
 </resources>

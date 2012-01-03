@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -63,6 +64,20 @@ public class DalDicActivity extends Activity {
 							getApplicationInfo().packageName)));
 				}
 				catch (ActivityNotFoundException e) {
+				}
+			}
+		});
+        
+        Button donateBtn = (Button) findViewById(R.id.donate);
+        donateBtn.setTypeface(font);
+        donateBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View paramView) {
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=org.forzaverita.donate")));
+				}
+				catch (ActivityNotFoundException e) {
+					Log.e("daldic", e.getMessage(), e);
 				}
 			}
 		});

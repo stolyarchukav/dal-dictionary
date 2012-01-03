@@ -12,11 +12,12 @@ import org.forzaverita.daldic.service.PreferencesService;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DataBaseServiceImpl implements DatabaseService {
 	
-	private static int DATA_VERSION = 7;
-	private static int WORDS_COUNT = 44652;
+	private static int DATA_VERSION = 8;
+	private static int WORDS_COUNT = 45034;
 	private static String WORD_ID = "word_id";
 	private static String WORD = "word";
 	private static String WORD_REF = "word_ref";
@@ -97,12 +98,13 @@ public class DataBaseServiceImpl implements DatabaseService {
     public Map<Integer, String> getWordsBeginWith(String begin, boolean capitalLetters) {
     	openDataBase();
     	try {
-    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, WORD + " like '" + begin.trim().toUpperCase() + "%'",
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, 
+    				WORD + " like '" + begin.trim().toUpperCase() + "%'",
             		null, null, null, null);
             return getIdWordMapFromCursor(cursor, capitalLetters);
     	}
     	catch (Exception e) {
-			throw searchError();
+			throw searchError(e);
 		}
     }
     
@@ -110,12 +112,13 @@ public class DataBaseServiceImpl implements DatabaseService {
     public Map<Integer, String> getWordsBeginWith(char letter, boolean capitalLetters) {
     	openDataBase();
     	try {
-    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, FIRST_LETTER + " = '" + letter + "'",
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, 
+    				FIRST_LETTER + " = '" + letter + "'",
             		null, null, null, null);
             return getIdWordMapFromCursor(cursor, capitalLetters);
     	}
     	catch (Exception e) {
-			throw searchError();
+			throw searchError(e);
 		}
     }
     
@@ -123,12 +126,13 @@ public class DataBaseServiceImpl implements DatabaseService {
     public Map<Integer, String> getWordsFullSearch(String query, boolean capitalLetters) {
     	openDataBase();
     	try {
-    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, DESCRIPTION}, "upper(" + DESCRIPTION + ") like '%" + query.trim().toUpperCase() + "%'",
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, DESCRIPTION}, 
+    				"upper(" + DESCRIPTION + ") like '%" + query.trim().toUpperCase() + "%'",
             		null, null, null, null);
             return getIdWordDescMapFromCursor(cursor, capitalLetters, query);
     	}
     	catch (Exception e) {
-			throw searchError();
+			throw searchError(e);
 		}
     }
 
@@ -136,12 +140,13 @@ public class DataBaseServiceImpl implements DatabaseService {
 	public String[] getDescription(Integer id) {
 		openDataBase();
 		try {
-			Cursor cursor = database.query(WORD, new String[] {DESCRIPTION, WORD_REF}, WORD_ID + " = " + id,
+			Cursor cursor = database.query(WORD, new String[] {DESCRIPTION, WORD_REF}, 
+					WORD_ID + " = " + id,
 	        		null, null, null, null);
 	        return getDescriptionFromCursor(cursor);
 		}
 		catch (Exception e) {
-			throw searchError();
+			throw searchError(e);
 		}
 	}
 	
@@ -149,7 +154,8 @@ public class DataBaseServiceImpl implements DatabaseService {
 	public String[] getWordAndDescriptionById(long id) {
 		openDataBase();
 		try {
-			Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION, WORD_REF}, WORD_ID + " = " + id,
+			Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION, WORD_REF}, 
+					WORD_ID + " = " + id,
 	        		null, null, null, null);
 			String[] result = null;
 			if (cursor.moveToFirst()) {
@@ -161,7 +167,7 @@ public class DataBaseServiceImpl implements DatabaseService {
 			return result;
 		}
 		catch (Exception e) {
-			throw searchError();
+			throw searchError(e);
 		}
 	}
 	
@@ -184,7 +190,8 @@ public class DataBaseServiceImpl implements DatabaseService {
    	private String getReferenceDesc(Integer referenceId){
    		String result = null;
    		if (referenceId != null && referenceId != 0) {
-   			Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, WORD_ID + " = " + referenceId,
+   			Cursor cursor = database.query(WORD, new String[] {DESCRIPTION}, 
+   					WORD_ID + " = " + referenceId,
    					null, null, null, null);
    			if (cursor.moveToFirst()) {
    				result = cursor.getString(0);
@@ -245,8 +252,9 @@ public class DataBaseServiceImpl implements DatabaseService {
 	     return result;
 	}
 	
-	private DatabaseException searchError() {
+	private DatabaseException searchError(Exception e) {
 		database = null;
+		Log.d("daldic", e.getMessage(), e);
 		throw new DatabaseException(context.getString(R.string.error_search_try_again));
 	}
 	

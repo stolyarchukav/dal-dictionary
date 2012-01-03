@@ -71,7 +71,15 @@
     			android:text="@string/rate_app"
     			android:gravity="center_horizontal|center_vertical" 
     			android:layout_margin="30px"
-    			android:background="@null" />    			
+    			android:background="@null" />
+    		
+    		<Button android:id="@+id/donate" 
+    			android:layout_width="fill_parent" 
+    			android:layout_height="wrap_content"
+    			android:text="@string/donate"
+    			android:gravity="center_horizontal|center_vertical" 
+    			android:layout_margin="30px"
+    			android:background="@null" />
     		 
     	</LinearLayout>
     	
