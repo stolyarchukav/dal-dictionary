@@ -1,6 +1,7 @@
 package org.forzaverita.daldic;
 
 import org.forzaverita.daldic.exception.DatabaseException;
+import org.forzaverita.daldic.history.HistoryActivity;
 import org.forzaverita.daldic.preferences.AppPreferenceActivity;
 import org.forzaverita.daldic.service.DalDicService;
 
@@ -100,6 +101,9 @@ public class DalDicActivity extends Activity {
 			return true;
 		case R.id.menu_seacrh:
 			onSearchRequested();
+			return true;
+		case R.id.menu_history:
+			startActivity(new Intent(this, HistoryActivity.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

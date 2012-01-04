@@ -14,12 +14,14 @@ public interface DatabaseService {
 
 	String[] getWordAndDescriptionById(long id);
 
+	String getWordById(Integer wordId);
+	
 	int getWordsCount();
 
 	void close();
 
 	boolean isDatabaseReady();
 
-	void open();	
+	void open();
 
 }

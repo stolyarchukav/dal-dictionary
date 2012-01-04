@@ -136,4 +136,19 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 		return preferencesService.getWordTextAlign();
 	}
 	
+	@Override
+	public Map<Integer, String> getHistory() {
+		return preferencesService.getHistory();
+	}
+	
+	@Override
+	public void addToHistory(Integer id, String word) {
+		preferencesService.addToHistory(id, word);
+	}
+	
+	@Override
+	public String getWordById(Integer wordId) {
+		return dataBaseService.getWordById(wordId);
+	}
+	
 }

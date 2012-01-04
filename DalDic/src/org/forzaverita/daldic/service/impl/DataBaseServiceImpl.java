@@ -258,4 +258,23 @@ public class DataBaseServiceImpl implements DatabaseService {
 		throw new DatabaseException(context.getString(R.string.error_search_try_again));
 	}
 	
+	@Override
+	public String getWordById(Integer wordId) {
+		openDataBase();
+		try {
+			Cursor cursor = database.query(WORD, new String[] {WORD}, 
+					WORD_ID + " = " + wordId,
+	        		null, null, null, null);
+			String result = null;
+			if (cursor.moveToFirst()) {
+				result = cursor.getString(0);
+			}
+			cursor.close();
+			return result;
+		}
+		catch (Exception e) {
+			throw searchError(e);
+		}
+	}
+	
 }

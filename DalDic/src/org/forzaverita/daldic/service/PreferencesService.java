@@ -1,5 +1,7 @@
 package org.forzaverita.daldic.service;
 
+import java.util.Map;
+
 import org.forzaverita.daldic.preferences.TextAlignment;
 
 public interface PreferencesService {
@@ -19,5 +21,9 @@ public interface PreferencesService {
 	int getRefreshInterval();
 
 	TextAlignment getWordTextAlign();
+
+	Map<Integer, String> getHistory();
+
+	void addToHistory(Integer id, String word);
 
 }

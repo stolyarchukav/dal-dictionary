@@ -38,5 +38,11 @@ public interface DalDicService {
 	void openDatabase();
 
 	TextAlignment getWordTextAlign();
+
+	Map<Integer, String> getHistory();
+
+	void addToHistory(Integer id, String word);
+
+	String getWordById(Integer wordId);
 	
 }
