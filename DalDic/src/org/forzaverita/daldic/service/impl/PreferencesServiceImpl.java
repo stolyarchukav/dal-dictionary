@@ -1,14 +1,10 @@
 package org.forzaverita.daldic.service.impl;
 
-import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_ALIGN;
-import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_CAPITAL_LETTERS;
-import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_AUTO;
-import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_INTERVAL;
+import static org.forzaverita.daldic.data.Constants.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.service.PreferencesService;
 
@@ -50,17 +46,17 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public boolean isCapitalLetters() {
-		return preferences.getBoolean(NAME_PREF_TEXT_CAPITAL_LETTERS, Constants.PREF_TEXT_CAPITAL_LETTERS);
+		return preferences.getBoolean(NAME_PREF_TEXT_CAPITAL_LETTERS, PREF_TEXT_CAPITAL_LETTERS);
 	}
 	
 	@Override
 	public int getRefreshInterval() {
-		return preferences.getInt(NAME_PREF_WIDGET_REFRESH_INTERVAL, Constants.PREF_REFRESH_INTERVAL);
+		return preferences.getInt(NAME_PREF_WIDGET_REFRESH_INTERVAL, PREF_REFRESH_INTERVAL);
 	}
 	
 	@Override
 	public boolean isAutoRefresh() {
-		return preferences.getBoolean(NAME_PREF_WIDGET_REFRESH_AUTO, Constants.PREF_REFRESH_AUTO);
+		return preferences.getBoolean(NAME_PREF_WIDGET_REFRESH_AUTO, PREF_REFRESH_AUTO);
 	}
 	
 	@Override
