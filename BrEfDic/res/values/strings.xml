@@ -13,7 +13,7 @@
     <string name="rate_app"><u>Very appreciate for your comments and rates</u></string>
     <string name="error_search_try_again">Error on search. Please, try again</string>
     <string name="error_db_open">Error on opening database. Please, try to reinstall application</string>
-    <string name="error_db_install">Error on database installation. Please, check that device has at least 35 MB of free memory (internal or SD-card)</string>
+    <string name="error_db_install">Error on database installation. Please, check that device has at least 40 MB of free memory (internal or SD-card)</string>
     <string name="database_init">Preparing database</string>
     <string name="search_full">Full text search \n(requires more time than regular search)</string>
     <!-- Preferences -->
