@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/word"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/texture">
+    
+    <WebView android:id="@+id/word_text"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_margin="5px"
+    	android:layout_weight="0.9" />
+    		
+    <Button android:id="@+id/word_goto_main"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:text="@string/goto_menu"
+    	android:layout_margin="5px"
+    	android:layout_marginTop="15px" />
+    
+    <com.google.ads.AdView android:id="@+id/adView"
+    	android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		ads:adUnitId="@string/ad_mob_id"
+        ads:adSize="BANNER"
+        ads:loadAdOnCreate="true"/>
+    
+</LinearLayout>

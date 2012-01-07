@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string-array name="pref_text_align_values">
+    	<item>JUSTIFY</item>
+    	<item>LEFT</item>
+    	<item>RIGHT</item>
+    	<item>CENTER</item>
+    </string-array>
+</resources>
