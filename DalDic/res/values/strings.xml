@@ -35,7 +35,8 @@
     	<item>Right side</item>
     	<item>Center</item>
     </string-array>
-    <string name="donate"><u>Donate</u></string>
+    <string name="main_more_apps"><u>Get more applications</u></string>
     <string name="history">Search history</string>
     <string name="history_empty">Search history is empty</string>
+    <string name="ad_mob_id">a14f11ed24b1489</string>
 </resources>

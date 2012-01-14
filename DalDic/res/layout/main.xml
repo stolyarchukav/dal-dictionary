@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -73,13 +74,22 @@
     			android:layout_margin="30px"
     			android:background="@null" />
     		
-    		<Button android:id="@+id/donate" 
-    			android:layout_width="fill_parent" 
-    			android:layout_height="wrap_content"
-    			android:text="@string/donate"
-    			android:gravity="center_horizontal|center_vertical" 
-    			android:layout_margin="30px"
-    			android:background="@null" />
+    		<Button android:id="@+id/moreAppsButton"
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content"
+				android:text="@string/main_more_apps" 
+				android:gravity="center_horizontal|center_vertical" 
+				android:layout_marginTop="15px"
+				android:layout_marginBottom="40px"
+				android:background="@null" />
+    		
+    		<com.google.ads.AdView android:id="@+id/adView"
+    			android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				ads:adUnitId="@string/ad_mob_id"
+        		ads:adSize="BANNER"
+        		ads:loadAdOnCreate="true"
+        		ads:testDevices="HT12WTD02717" />
     		 
     	</LinearLayout>
     	
