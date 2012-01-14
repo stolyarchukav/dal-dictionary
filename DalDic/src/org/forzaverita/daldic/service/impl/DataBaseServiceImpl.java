@@ -9,9 +9,11 @@ import org.forzaverita.daldic.service.DatabaseDeployer;
 import org.forzaverita.daldic.service.DatabaseService;
 import org.forzaverita.daldic.service.PreferencesService;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import android.util.Log;
 
 public class DataBaseServiceImpl implements DatabaseService {
@@ -85,6 +87,11 @@ public class DataBaseServiceImpl implements DatabaseService {
 	@Override
 	public void open() {
 		openDataBase();
+		new Thread() {
+			public void run() {
+				getWordsBeginWith("КАРП", true);
+			};
+		}.start();
 	}
     
     @Override
@@ -275,6 +282,17 @@ public class DataBaseServiceImpl implements DatabaseService {
 		catch (Exception e) {
 			throw searchError(e);
 		}
+	}
+	
+	@Override
+	public Cursor getCursorOfWordsBeginWith(String begin) {
+		return database.query(WORD, new String[] {
+				WORD_ID + " as " + BaseColumns._ID,
+				WORD_ID + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID,
+				WORD + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1,
+				WORD + " as " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA},
+				WORD + " like '" + begin.trim().toUpperCase() + "%'", 
+				null, null, null, null);
 	}
 	
 }

@@ -57,5 +57,9 @@
 					android:resource="@xml/word_widget" />
 		</receiver>
 		
+		<provider android:name=".provider.WordSuggestionProvider"
+		     android:authorities="org.forzaverita.daldic.provider.WordSuggestionProvider" >
+		</provider>
+		
     </application>
 </manifest>

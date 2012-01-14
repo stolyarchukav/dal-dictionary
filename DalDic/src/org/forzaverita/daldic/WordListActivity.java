@@ -3,6 +3,7 @@ package org.forzaverita.daldic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -63,6 +64,15 @@ public class WordListActivity extends ListActivity {
             	words = service.getWordsBeginWith(query);
             	queryString = query;
             	searchType = SearchType.BEGIN;
+            }
+            else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            	String idStr = intent.getData().getLastPathSegment();
+            	if (idStr != null) {
+            		Integer id = Integer.parseInt(idStr);
+            		words = new HashMap<Integer, String>();
+            		words.put(id, intent.getExtras().getString(SearchManager.EXTRA_DATA_KEY));
+            		startWordActivity(id);
+            	}
             }
             else {
             	Character letter = (Character) intent.getExtras().get(Constants.SEARCH_LETTER);

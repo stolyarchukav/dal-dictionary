@@ -2,6 +2,8 @@ package org.forzaverita.daldic.service;
 
 import java.util.Map;
 
+import android.database.Cursor;
+
 public interface DatabaseService {
 
 	Map<Integer, String> getWordsBeginWith(String begin, boolean capitalLetters);
@@ -23,5 +25,7 @@ public interface DatabaseService {
 	boolean isDatabaseReady();
 
 	void open();
+
+	Cursor getCursorOfWordsBeginWith(String begin);
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
+import android.database.Cursor;
 import android.graphics.Typeface;
 
 public interface DalDicService {
@@ -44,5 +45,7 @@ public interface DalDicService {
 	void addToHistory(Integer id, String word);
 
 	String getWordById(Integer wordId);
+
+	Cursor getCursorOfWordsBeginWith(String string);
 	
 }

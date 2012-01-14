@@ -11,6 +11,7 @@ import org.forzaverita.daldic.service.PreferencesService;
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
 import android.app.Application;
+import android.database.Cursor;
 import android.graphics.Typeface;
 
 public class DalDicServiceImpl extends Application implements DalDicService {
@@ -149,6 +150,11 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	@Override
 	public String getWordById(Integer wordId) {
 		return dataBaseService.getWordById(wordId);
+	}
+	
+	@Override
+	public Cursor getCursorOfWordsBeginWith(String begin) {
+		return dataBaseService.getCursorOfWordsBeginWith(begin);
 	}
 	
 }
