@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<context-param>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>forzaverita.daldic.CloudApplicationContextInitializer</param-value>
+	</context-param>
+	
+	<context-param>
+      	<param-name>contextClass</param-name>
+      	<param-value>
+          	org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+      	</param-value>
+  	</context-param>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			WEB-INF/app-context.xml
+			forzaverita.daldic.config.LocalConfig
+		</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<listener>
+    	<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+   	</listener>
+   	
+   	<servlet>
+   		<servlet-name>jersey</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-param>
+   	</servlet>
+   	
+   	<servlet-mapping>
+   		<servlet-name>jersey</servlet-name>
+   		<url-pattern>/api/*</url-pattern>
+   	</servlet-mapping>
+   	
+</web-app>
