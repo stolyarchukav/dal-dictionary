@@ -14,9 +14,9 @@
 		
 		<context:property-placeholder location="classpath:config-cloud.properties"/>
 		
-		<cloud:rabbit-connection-factory id="rabbit">
-			<cloud:rabbit-options channel-cache-size="100" />
-		</cloud:rabbit-connection-factory>
+		<cloud:mongo-db-factory id="mongo"> 
+			<cloud:mongo-options />
+		</cloud:mongo-db-factory>
 		
 	</beans>
 	

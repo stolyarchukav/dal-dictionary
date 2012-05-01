@@ -18,8 +18,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			WEB-INF/app-context.xml
-			forzaverita.daldic.config.LocalConfig
+			forzaverita.daldic.config.AppConfig
 		</param-value>
 	</context-param>
 
