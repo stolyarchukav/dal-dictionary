@@ -15,7 +15,7 @@
     	android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		ads:adUnitId="@string/ad_mob_id"
-        ads:adSize="BANNER"
+        ads:adSize="SMART_BANNER"
         ads:loadAdOnCreate="true"
         ads:testDevices="HT12WTD02717" />
 

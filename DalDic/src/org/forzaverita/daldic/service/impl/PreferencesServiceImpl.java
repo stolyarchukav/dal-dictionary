@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.forzaverita.daldic.preferences.TextAlignment;
+import org.forzaverita.daldic.preferences.TextFont;
 import org.forzaverita.daldic.service.PreferencesService;
 
 import android.content.Context;
@@ -62,6 +63,11 @@ public class PreferencesServiceImpl implements PreferencesService {
 	@Override
 	public TextAlignment getWordTextAlign() {
 		return TextAlignment.valueOf(preferences.getString(NAME_PREF_TEXT_ALIGN, TextAlignment.JUSTIFY.name()));
+	}
+	
+	@Override
+	public TextFont getTextFont() {
+		return TextFont.valueOf(preferences.getString(NAME_PREF_TEXT_FONT, TextFont.PHILOSOPHER.name()));
 	}
 	
 	@Override

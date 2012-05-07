@@ -1,5 +1,7 @@
 package org.forzaverita.daldic;
 
+import java.util.Date;
+
 import org.forzaverita.daldic.exception.DatabaseException;
 import org.forzaverita.daldic.history.HistoryActivity;
 import org.forzaverita.daldic.preferences.AppPreferenceActivity;
@@ -24,10 +26,23 @@ import android.widget.TextView;
 
 public class DalDicActivity extends Activity {
 	
+	private DalDicService service;
+	private Date lastPreferencesCheck = new Date();
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        service = (DalDicService) getApplicationContext();
         
         Typeface font = ((DalDicService) getApplicationContext()).getFont();
         

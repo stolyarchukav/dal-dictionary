@@ -87,11 +87,6 @@ public class DataBaseServiceImpl implements DatabaseService {
 	@Override
 	public void open() {
 		openDataBase();
-		new Thread() {
-			public void run() {
-				getWordsBeginWith("КАРП", true);
-			};
-		}.start();
 	}
     
     @Override
@@ -292,7 +287,7 @@ public class DataBaseServiceImpl implements DatabaseService {
 				WORD + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1,
 				WORD + " as " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA},
 				WORD + " like '" + begin.trim().toUpperCase() + "%'", 
-				null, null, null, null);
+				null, null, null, null, "10");
 	}
 	
 }

@@ -7,6 +7,6 @@
     android:searchSuggestAuthority="org.forzaverita.daldic.provider.WordSuggestionProvider"
     android:searchSuggestIntentAction="android.intent.action.VIEW"
     android:searchSuggestIntentData="content://org.forzaverita.daldic/suggestion"
-    android:searchSuggestThreshold="1"
+    android:searchSuggestThreshold="2"
     android:searchSuggestSelection=" ?">
 </searchable>

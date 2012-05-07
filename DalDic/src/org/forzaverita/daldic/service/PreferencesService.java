@@ -3,6 +3,7 @@ package org.forzaverita.daldic.service;
 import java.util.Map;
 
 import org.forzaverita.daldic.preferences.TextAlignment;
+import org.forzaverita.daldic.preferences.TextFont;
 
 public interface PreferencesService {
 
@@ -25,5 +26,7 @@ public interface PreferencesService {
 	Map<Integer, String> getHistory();
 
 	void addToHistory(Integer id, String word);
+
+	TextFont getTextFont();
 
 }

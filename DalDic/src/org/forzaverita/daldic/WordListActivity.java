@@ -3,6 +3,7 @@ package org.forzaverita.daldic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,6 +42,7 @@ public class WordListActivity extends ListActivity {
 	private DalDicService service;
 	private LayoutInflater inflater;
 	private LinearLayout parent;
+	private Date lastPreferencesCheck = new Date();
 	
 	private class SearchTask extends AsyncTask<Void, Void, Map<Integer, String>> {
     	
@@ -56,7 +58,6 @@ public class WordListActivity extends ListActivity {
     	
     	@Override
     	protected Map<Integer, String> doInBackground(Void... paramArrayOfParams) {
-    		service = (DalDicService) getApplicationContext();
     		Map<Integer, String> words = null;
     		Intent intent = getIntent();
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -163,9 +164,19 @@ public class WordListActivity extends ListActivity {
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
+	
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordlist);
+        service = (DalDicService) getApplicationContext();
         
         inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         parent = (LinearLayout) findViewById(R.id.wordlist);

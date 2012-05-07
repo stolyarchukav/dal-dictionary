@@ -1,5 +1,7 @@
 package org.forzaverita.daldic;
 
+import java.util.Date;
+
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.history.HistoryActivity;
 import org.forzaverita.daldic.preferences.AppPreferenceActivity;
@@ -22,7 +24,17 @@ public class AlphabetActivity extends Activity {
     
 	private static final int MARGIN = 5;
 	private DalDicService service;
+	private Date lastPreferencesCheck = new Date();
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

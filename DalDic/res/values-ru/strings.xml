@@ -35,6 +35,16 @@
     	<item>По правому краю</item>
     	<item>По центру</item>
     </string-array>
+    <string name="pref_text_font">Шрифт</string>
+    <string name="pref_text_font_summary">Шрифт текста</string>
+    <string-array name="pref_text_font_names">
+    	<item>Philosopher</item>
+    	<item>Flow</item>
+    	<item>Cuprum</item>
+    	<item>Serif</item>
+    	<item>Sans Serif</item>
+    	<item>Monospace</item>
+    </string-array>
     <string name="main_more_apps"><u>Другие приложения</u></string>
     <string name="history">История поиска</string>
     <string name="history_empty">История поиска пуста</string>

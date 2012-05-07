@@ -1,8 +1,10 @@
 package org.forzaverita.daldic.service;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.forzaverita.daldic.preferences.TextAlignment;
+import org.forzaverita.daldic.preferences.TextFont;
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
 import android.database.Cursor;
@@ -47,5 +49,11 @@ public interface DalDicService {
 	String getWordById(Integer wordId);
 
 	Cursor getCursorOfWordsBeginWith(String string);
+
+	TextFont resolveTypeface(Typeface typeface);
+
+	boolean isPreferencesChanged(Date lastPreferencesCheck);
+
+	void preferencesChanged();
 	
 }

@@ -1,10 +1,12 @@
 package org.forzaverita.daldic.service.impl;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
 import org.forzaverita.daldic.data.WordsCache;
 import org.forzaverita.daldic.preferences.TextAlignment;
+import org.forzaverita.daldic.preferences.TextFont;
 import org.forzaverita.daldic.service.DalDicService;
 import org.forzaverita.daldic.service.DatabaseService;
 import org.forzaverita.daldic.service.PreferencesService;
@@ -16,17 +18,22 @@ import android.graphics.Typeface;
 
 public class DalDicServiceImpl extends Application implements DalDicService {
 	
-	private Typeface font;
+	private Typeface fontPhilosopher;
+	private Typeface fontCuprum;
+	private Typeface fontFlow;
 	private DatabaseService dataBaseService;
 	private Random random = new Random();
 	private WidgetRefreshTask widgetRefreshTask;
 	private WordsCache wordsCache = new WordsCache();
 	private PreferencesService preferencesService;
+	private Date preferenceChangeDate;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		font = Typeface.createFromAsset(getAssets(), "philosopher.otf");
+		fontPhilosopher = Typeface.createFromAsset(getAssets(), "PHILOSOPHER.otf");
+		fontCuprum = Typeface.createFromAsset(getAssets(), "CUPRUM.otf");
+		fontFlow = Typeface.createFromAsset(getAssets(), "FLOW.otf");
 		preferencesService = new PreferencesServiceImpl(this);
 		dataBaseService = new DataBaseServiceImpl(this, preferencesService);
 	}
@@ -49,7 +56,38 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	
 	@Override
 	public Typeface getFont() {
-		return font;
+		switch (preferencesService.getTextFont()) {
+			case PHILOSOPHER : return fontPhilosopher;
+			case MONOSPACE : return Typeface.MONOSPACE;
+			case SERIF : return Typeface.SERIF;
+			case SANS_SERIF : return Typeface.SANS_SERIF;
+			case FLOW : return fontFlow;
+			case CUPRUM : return fontCuprum;
+			default : return Typeface.DEFAULT; 
+		}
+	}
+	
+	@Override
+	public TextFont resolveTypeface(Typeface typeface) {
+		if (typeface == fontPhilosopher) {
+			return TextFont.PHILOSOPHER;
+		}
+		else if (typeface == fontCuprum) {
+			return TextFont.CUPRUM;
+		}
+		else if (typeface == fontFlow) {
+			return TextFont.FLOW;
+		}
+		else if (typeface == Typeface.MONOSPACE) {
+			return TextFont.MONOSPACE;
+		}
+		else if (typeface == Typeface.SANS_SERIF) {
+			return TextFont.SANS_SERIF;
+		}
+		else if (typeface == Typeface.SERIF) {
+			return TextFont.SERIF;
+		}
+		else 	return TextFont.MONOSPACE;
 	}
 	
 	@Override
@@ -136,7 +174,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	public TextAlignment getWordTextAlign() {
 		return preferencesService.getWordTextAlign();
 	}
-	
+
 	@Override
 	public Map<Integer, String> getHistory() {
 		return preferencesService.getHistory();
@@ -155,6 +193,16 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	@Override
 	public Cursor getCursorOfWordsBeginWith(String begin) {
 		return dataBaseService.getCursorOfWordsBeginWith(begin);
+	}
+	
+	@Override
+	public boolean isPreferencesChanged(Date lastPreferencesCheck) {
+		return preferenceChangeDate != null && preferenceChangeDate.after(lastPreferencesCheck);
+	}
+	
+	@Override
+	public void preferencesChanged() {
+		preferenceChangeDate = new Date();
 	}
 	
 }

@@ -2,6 +2,7 @@ package org.forzaverita.daldic;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.history.HistoryActivity;
@@ -28,6 +29,16 @@ public class WordActivity extends Activity {
 	private static final String WORD_TEMPLATE_HTML = "word_template.html";
 	
 	private DalDicService service;
+	private Date lastPreferencesCheck = new Date();
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +125,9 @@ public class WordActivity extends Activity {
         	    InputStream inputStream = assetManager.open(WORD_TEMPLATE_HTML);
         	    byte[] b = new byte[inputStream.available()];
         	    inputStream.read(b);
-        	    data = String.format(new String(b), service.getWordTextAlign(), description);
+        	    String fontName = service.resolveTypeface(service.getFont()).name();
+        	    data = String.format(new String(b), fontName, fontName, fontName,
+        	    		service.getWordTextAlign(), description);
         	    inputStream.close();
         	}
         	catch (IOException e) {
