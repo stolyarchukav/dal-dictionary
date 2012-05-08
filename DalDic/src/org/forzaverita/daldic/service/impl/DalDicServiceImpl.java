@@ -28,6 +28,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	private WordsCache wordsCache = new WordsCache();
 	private PreferencesService preferencesService;
 	private Date preferenceChangeDate;
+	private boolean bookmarksChanged;
 	
 	@Override
 	public void onCreate() {
@@ -109,7 +110,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	@Override
 	public Word getWord(Integer id) {
 		String[] word = dataBaseService.getWordAndDescriptionById(id);
-		return new Word(id, word[0], word[1], word[2]);
+		return word != null ? new Word(id, word[0], word[1], word[2]) : null;
 	}
 	
 	@Override
@@ -218,16 +219,25 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	@Override
 	public void addBookmark(Integer id, String word) {
 		preferencesService.addBookmark(id, word);
+		bookmarksChanged = true;
 	}
 	
 	@Override
 	public void removeBookmark(Integer id) {
 		preferencesService.removeBookmark(id);
+		bookmarksChanged = true;
 	}
 	
 	@Override
 	public boolean isBookmarked(Integer wordId) {
 		return preferencesService.isBookmarked(wordId);
+	}
+	
+	@Override
+	public boolean isBookmarksChanged() {
+		boolean result = bookmarksChanged;
+		bookmarksChanged = false;
+		return result;
 	}
 	
 }

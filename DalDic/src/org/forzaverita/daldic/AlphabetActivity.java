@@ -61,6 +61,7 @@ public class AlphabetActivity extends Activity {
                         addView(row);
                 	}
                 	final Button button = new Button(AlphabetActivity.this);
+                	button.setBackgroundResource(R.drawable.selector_dashboard_button);
                 	button.setText("" + q);
                 	button.setTag(q);
                 	button.setWidth(width / colums - MARGIN * 2); 
@@ -69,6 +70,7 @@ public class AlphabetActivity extends Activity {
                 	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
                 	button.setLayoutParams(params);
                 	button.setTypeface(service.getFont(), Typeface.ITALIC);
+                	button.setTextSize(20);
                 	button.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {

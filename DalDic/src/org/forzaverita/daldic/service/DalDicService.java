@@ -64,5 +64,7 @@ public interface DalDicService {
 	void removeBookmark(Integer id);
 
 	boolean isBookmarked(Integer wordId);
+
+	boolean isBookmarksChanged();
 	
 }

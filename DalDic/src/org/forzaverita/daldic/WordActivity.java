@@ -121,24 +121,34 @@ public class WordActivity extends Activity {
 		buttonPrevious.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Word word = service.getWord(calibrateId(wordId + 1));
-				configureWord(word);
+				configureWord(getPreviousWord(wordId));
 			}
 		});
 		final Button buttonNext = (Button) findViewById(R.id.word_next);
 		buttonNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Word word = service.getWord(calibrateId(wordId - 1));
-				configureWord(word);
+				configureWord(getNextWord(wordId));
 			}
 		});
 	}
 	
-	private int calibrateId(int id) {
-		return id % Constants.WORDS_COUNT;
+	private Word getPreviousWord(int wordId) {
+		if (wordId <= 0) {
+			wordId = Constants.WORDS_COUNT;
+		}
+		Word word = service.getWord(--wordId);
+		return word != null ? word : getPreviousWord(wordId - 1);
 	}
 
+	protected Word getNextWord(Integer wordId) {
+		if (wordId > Constants.WORDS_COUNT) {
+			wordId = 1;
+		}
+		Word word = service.getWord(++wordId);
+		return word != null ? word : getNextWord(wordId + 1);
+	}
+	
 	private void configureBookmark(final boolean bookmarked, Button button) {
 		button.setBackgroundResource(bookmarked ? R.drawable.bookmark_on : R.drawable.bookmark_off);
 	}
