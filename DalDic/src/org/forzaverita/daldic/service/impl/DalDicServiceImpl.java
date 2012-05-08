@@ -107,8 +107,9 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	}
 	
 	@Override
-	public String[] getDescription(Integer id) {
-		return dataBaseService.getDescription(id);
+	public Word getWord(Integer id) {
+		String[] word = dataBaseService.getWordAndDescriptionById(id);
+		return new Word(id, word[0], word[1], word[2]);
 	}
 	
 	@Override

@@ -12,14 +12,14 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
     			
-    	<Button android:id="@+id/previous"
+    	<Button android:id="@+id/word_previous"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_weight="0.4"
         	android:layout_gravity="left"
-		    android:drawableLeft="@drawable/selector_left_arrow"
-		    android:background="@null"
-        	android:textSize="12sp"
+		    android:background="@drawable/selector_word_button"
+        	android:drawableLeft="@drawable/left_arrow_64"
+		    android:textSize="14sp"
         	android:textColor="#000000"
 		    android:drawablePadding="-10sp"
         	android:text="@string/word_previous" />
@@ -30,14 +30,14 @@
         	android:layout_gravity="center"
 		    android:background="@drawable/bookmark_on" />
     	
-    	<Button android:id="@+id/next"
+    	<Button android:id="@+id/word_next"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_weight="0.4"
 			android:layout_gravity="right"
-			android:drawableRight="@drawable/selector_right_arrow"
-			android:background="@null"
-        	android:textSize="12sp"
+			android:background="@drawable/selector_word_button"
+        	android:drawableRight="@drawable/right_arrow_64"
+        	android:textSize="14sp"
         	android:textColor="#000000"
 			android:drawablePadding="-10sp"
         	android:text="@string/word_next" />

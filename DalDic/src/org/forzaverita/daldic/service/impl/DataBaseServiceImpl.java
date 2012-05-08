@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.forzaverita.daldic.R;
+import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.exception.DatabaseException;
 import org.forzaverita.daldic.service.DatabaseDeployer;
 import org.forzaverita.daldic.service.DatabaseService;
@@ -19,7 +20,6 @@ import android.util.Log;
 public class DataBaseServiceImpl implements DatabaseService {
 	
 	private static int DATA_VERSION = 8;
-	private static int WORDS_COUNT = 45034;
 	private static String WORD_ID = "word_id";
 	private static String WORD = "word";
 	private static String WORD_REF = "word_ref";
@@ -137,20 +137,6 @@ public class DataBaseServiceImpl implements DatabaseService {
 			throw searchError(e);
 		}
     }
-
-    @Override
-	public String[] getDescription(Integer id) {
-		openDataBase();
-		try {
-			Cursor cursor = database.query(WORD, new String[] {DESCRIPTION, WORD_REF}, 
-					WORD_ID + " = " + id,
-	        		null, null, null, null);
-	        return getDescriptionFromCursor(cursor);
-		}
-		catch (Exception e) {
-			throw searchError(e);
-		}
-	}
 	
     @Override
 	public String[] getWordAndDescriptionById(long id) {
@@ -175,18 +161,7 @@ public class DataBaseServiceImpl implements DatabaseService {
 	
     @Override
 	public int getWordsCount() {
-		return WORDS_COUNT;
-	}
-	
-    private String[] getDescriptionFromCursor(Cursor cursor) {
-		String[] result = new String[2];
-		if (cursor.moveToFirst()) {
-			 result[0] = cursor.getString(0);
-			 Integer ref = cursor.getInt(1);
-			 result[1] = getReferenceDesc(ref);
-        }
-        cursor.close();
-        return result;
+		return Constants.WORDS_COUNT;
 	}
     
    	private String getReferenceDesc(Integer referenceId){

@@ -6,6 +6,8 @@ public class Constants {
 	public static final String SEARCH_QUERY_FULL = "query_full";
 	public static final String WORD_ID = "word_id";
 	
+	public static int WORDS_COUNT = 45034;
+	
 	public static final String AD_MOB_ID = "a14f11ed24b1489";
 	
 	public static final int PREF_REFRESH_INTERVAL = 15;

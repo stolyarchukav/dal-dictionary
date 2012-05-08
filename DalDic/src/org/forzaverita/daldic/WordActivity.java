@@ -21,7 +21,6 @@ import android.view.View;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 public class WordActivity extends Activity {
 	
@@ -45,44 +44,45 @@ public class WordActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word);
-        
         service = (DalDicService) getApplicationContext();
-        
-        boolean fromWidget = false;
-        String description;
-        Integer wordId;
-        String wordName;
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-        	wordId = (Integer) extras.get(Constants.WORD_ID);
-        	String[] desc = service.getDescription(wordId);
-        	description = buildDescription(desc);
-        	wordName = service.getWordById(wordId);
-        	service.addToHistory(wordId, wordName);
-        }
-        else {
-        	Word word = service.getCurrentWord();
-        	wordId = word.getId();
-        	wordName = word.getWord();
-        	description = buildDescription(new String[] {word.getDescription(), word.getDescriptionRef()});
-        	fromWidget = true;
-        }
-        configureTopPanel(wordId, wordName);
-        configureWordView(description);
-        configureGotoMain(fromWidget);
+        configureActivity();
     }
 
-	private String buildDescription(String[] desc) {
+	private void configureActivity() {
+		boolean fromWidget = false;
+        Word word;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+        	int wordId = (Integer) extras.get(Constants.WORD_ID);
+        	word = service.getWord(wordId);
+        }
+        else {
+        	word = service.getCurrentWord();
+        	fromWidget = true;
+        }
+        configureWord(word);
+        configureGotoMain(fromWidget);
+	}
+
+	private void configureWord(Word word) {
+		int wordId = word.getId();
+        String description = buildDescription(word);
+    	service.addToHistory(wordId, word.getWord());
+    	configureTopPanel(wordId, word.getWord());
+        configureWordView(description);
+	}
+
+	private String buildDescription(Word word) {
 		String description = null;
 		StringBuilder descBuilder = new StringBuilder();
-		if (desc[0] != null) {
-			descBuilder.append(desc[0]);
+		if (word.getDescription() != null) {
+			descBuilder.append(word.getDescription());
 		} 
-		if (desc[1] != null) {
+		if (word.getDescriptionRef() != null) {
 			if (descBuilder.length() > 0) {
 				descBuilder.append("<hr>");
 			}
-			descBuilder.append(desc[1]);
+			descBuilder.append(word.getDescriptionRef());
 		}
 		if (descBuilder.length() > 0) {
 			description = descBuilder.toString();
@@ -102,9 +102,9 @@ public class WordActivity extends Activity {
 
 	private void configureTopPanel(final Integer wordId, final String word) {
 		final AtomicBoolean bookmarked = new AtomicBoolean(service.isBookmarked(wordId));
-		final Button button = (Button) findViewById(R.id.bookmark);
-		configureBookmark(bookmarked.get(), button);
-		button.setOnClickListener(new View.OnClickListener() {
+		final Button buttonBookmark = (Button) findViewById(R.id.bookmark);
+		configureBookmark(bookmarked.get(), buttonBookmark);
+		buttonBookmark.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (bookmarked.get()) {
@@ -114,9 +114,29 @@ public class WordActivity extends Activity {
 					service.addBookmark(wordId, word);
 				}
 				bookmarked.set(! bookmarked.get());
-				configureBookmark(bookmarked.get(), button);
+				configureBookmark(bookmarked.get(), buttonBookmark);
 			}
 		});
+		final Button buttonPrevious = (Button) findViewById(R.id.word_previous);
+		buttonPrevious.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Word word = service.getWord(calibrateId(wordId + 1));
+				configureWord(word);
+			}
+		});
+		final Button buttonNext = (Button) findViewById(R.id.word_next);
+		buttonNext.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Word word = service.getWord(calibrateId(wordId - 1));
+				configureWord(word);
+			}
+		});
+	}
+	
+	private int calibrateId(int id) {
+		return id % Constants.WORDS_COUNT;
 	}
 
 	private void configureBookmark(final boolean bookmarked, Button button) {
@@ -148,10 +168,6 @@ public class WordActivity extends Activity {
         	}
         	text.loadDataWithBaseURL(FILE_ANDROID_ASSET + WORD_TEMPLATE_HTML, data,
         			"text/html", UTF_8, "about:blank");
-        	
-        	ImageButton button = new ImageButton(this);
-        	button.setBackgroundResource(R.drawable.bookmark_off);    
-        	text.addView(button);
         }
 	}
 
