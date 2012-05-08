@@ -18,6 +18,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	private static final String INTERNAL_STORAGE = "internalStorage";
 	private static final String DATABASE_PATH = "databasePath";
 	private static final String HISTORY_KEY = "searchHistory";
+	private static final String BOOKMARK_KEY = "bookmark";
 	
 	private SharedPreferences preferences;
 	
@@ -72,14 +73,39 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public Map<Integer, String> getHistory() {
-		return loadHistory();
+		return loadWords(HISTORY_KEY);
+	}
+	
+	@Override
+	public void addToHistory(Integer id, String word) {
+		addToWords(id, word, HISTORY_KEY, 30);
+	}
+	
+	@Override
+	public Map<Integer, String> getBookmarks() {
+		return loadWords(BOOKMARK_KEY);
+	}
+	
+	@Override
+	public void addBookmark(Integer id, String word) {
+		addToWords(id, word, BOOKMARK_KEY, 30);
+	}
+	
+	@Override
+	public void removeBookmark(Integer id) {
+		removeFromWords(id, BOOKMARK_KEY);
+	}
+	
+	@Override
+	public boolean isBookmarked(Integer id) {
+		return loadWords(BOOKMARK_KEY).containsKey(id);
 	}
 
-	private Map<Integer, String> loadHistory() {
+	private Map<Integer, String> loadWords(String prefKey) {
 		Map<Integer, String> result = new LinkedHashMap<Integer, String>();
-		String historyStr = preferences.getString(HISTORY_KEY, "");
-		String[] history = historyStr.split(";");
-		for (String token : history) {
+		String wordsStr = preferences.getString(prefKey, "");
+		String[] words = wordsStr.split(";");
+		for (String token : words) {
 			String[] pair = token.split(":");
 			if (pair.length == 2) {
 				result.put(Integer.parseInt(pair[0]), pair[1]);
@@ -88,24 +114,33 @@ public class PreferencesServiceImpl implements PreferencesService {
 		return result;
 	}
 	
-	@Override
-	public void addToHistory(Integer id, String word) {
-		Map<Integer, String> history = loadHistory();
-		if (history.size() >= 30) {
-			if  (history.keySet().iterator().hasNext()) {
-				history.remove(history.keySet().iterator().next());
+	private void addToWords(Integer id, String word, String prefKey, int maxSize) {
+		Map<Integer, String> words = loadWords(prefKey);
+		if (words.size() >= maxSize) {
+			if  (words.keySet().iterator().hasNext()) {
+				words.remove(words.keySet().iterator().next());
 			}
 		}
-		history.remove(id);
-		history.put(id, word);
+		words.remove(id);
+		words.put(id, word);
+		buildAndSaveWords(prefKey, words);
+	}
+	
+	private void removeFromWords(Integer id, String prefKey) {
+		Map<Integer, String> words = loadWords(prefKey);
+		words.remove(id);
+		buildAndSaveWords(prefKey, words);
+	}
+
+	private void buildAndSaveWords(String prefKey, Map<Integer, String> words) {
 		StringBuilder builder = new StringBuilder();
-		for (Integer key : history.keySet()) {
+		for (Integer key : words.keySet()) {
 			builder.append(key);
 			builder.append(":");
-			builder.append(history.get(key));
+			builder.append(words.get(key));
 			builder.append(";");
 		}
-		preferences.edit().putString(HISTORY_KEY, builder.toString()).commit();
+		preferences.edit().putString(prefKey, builder.toString()).commit();
 	}
 	
 }

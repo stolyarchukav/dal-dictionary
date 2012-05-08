@@ -4,16 +4,16 @@ import java.util.Map;
 
 import org.forzaverita.daldic.R;
 
-public class HistoryActivity extends AbstractListActivity {
+public class BookmarksActivity extends AbstractListActivity {
 
 	@Override
 	protected Map<Integer, String> getResultList() {
-		return getService().getHistory();
+		return getService().getBookmarks();
 	}
 	
 	@Override
 	protected String getEmptyText() {
-		return getString(R.string.history_empty);
+		return getString(R.string.bookmarks_empty);
 	}
 	
 }

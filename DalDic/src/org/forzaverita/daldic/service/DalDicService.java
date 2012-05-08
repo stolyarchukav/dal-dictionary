@@ -3,6 +3,7 @@ package org.forzaverita.daldic.service;
 import java.util.Date;
 import java.util.Map;
 
+import org.forzaverita.daldic.data.Word;
 import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.preferences.TextFont;
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
@@ -26,7 +27,7 @@ public interface DalDicService {
 
 	String getPreviuosWord();
 	
-	String[] getCurrentWord();
+	Word getCurrentWord();
 	
 	void setWidgetRefreshTask(WidgetRefreshTask task);
 	
@@ -55,5 +56,13 @@ public interface DalDicService {
 	boolean isPreferencesChanged(Date lastPreferencesCheck);
 
 	void preferencesChanged();
+
+	Map<Integer, String> getBookmarks();
+	
+	void addBookmark(Integer id, String word);
+
+	void removeBookmark(Integer id);
+
+	boolean isBookmarked(Integer wordId);
 	
 }

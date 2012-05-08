@@ -3,10 +3,11 @@ package org.forzaverita.daldic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.forzaverita.daldic.data.Constants;
-import org.forzaverita.daldic.history.HistoryActivity;
-import org.forzaverita.daldic.preferences.AppPreferenceActivity;
+import org.forzaverita.daldic.data.Word;
+import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
 
 import android.app.Activity;
@@ -15,12 +16,12 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class WordActivity extends Activity {
 	
@@ -48,23 +49,26 @@ public class WordActivity extends Activity {
         service = (DalDicService) getApplicationContext();
         
         boolean fromWidget = false;
-        String description = null;
+        String description;
+        Integer wordId;
+        String wordName;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-        	Integer wordId = (Integer) extras.get(Constants.WORD_ID);
+        	wordId = (Integer) extras.get(Constants.WORD_ID);
         	String[] desc = service.getDescription(wordId);
         	description = buildDescription(desc);
-        	String word = service.getWordById(wordId);
-        	service.addToHistory(wordId, word);
+        	wordName = service.getWordById(wordId);
+        	service.addToHistory(wordId, wordName);
         }
         else {
-        	String[] wordAndDesc = service.getCurrentWord();
-        	description = buildDescription(new String[] {wordAndDesc[1], wordAndDesc[2]});
+        	Word word = service.getCurrentWord();
+        	wordId = word.getId();
+        	wordName = word.getWord();
+        	description = buildDescription(new String[] {word.getDescription(), word.getDescriptionRef()});
         	fromWidget = true;
         }
-        
+        configureTopPanel(wordId, wordName);
         configureWordView(description);
-        
         configureGotoMain(fromWidget);
     }
 
@@ -88,28 +92,37 @@ public class WordActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_menu, menu);
-	    return true;
+		return MenuUtils.createOptionsMenu(menu, this);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(this, AppPreferenceActivity.class));
-			return true;
-		case R.id.menu_seacrh:
-			onSearchRequested();
-			return true;
-		case R.id.menu_history:
-			startActivity(new Intent(this, HistoryActivity.class));
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		return MenuUtils.optionsItemSelected(item, this);
 	}
 
+	private void configureTopPanel(final Integer wordId, final String word) {
+		final AtomicBoolean bookmarked = new AtomicBoolean(service.isBookmarked(wordId));
+		final Button button = (Button) findViewById(R.id.bookmark);
+		configureBookmark(bookmarked.get(), button);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (bookmarked.get()) {
+					service.removeBookmark(wordId);					
+				}
+				else {
+					service.addBookmark(wordId, word);
+				}
+				bookmarked.set(! bookmarked.get());
+				configureBookmark(bookmarked.get(), button);
+			}
+		});
+	}
+
+	private void configureBookmark(final boolean bookmarked, Button button) {
+		button.setBackgroundResource(bookmarked ? R.drawable.bookmark_on : R.drawable.bookmark_off);
+	}
+	
 	private void configureWordView(String description) {
 		if (description != null) {
         	WebView text = (WebView) findViewById(R.id.word_text);
@@ -135,6 +148,10 @@ public class WordActivity extends Activity {
         	}
         	text.loadDataWithBaseURL(FILE_ANDROID_ASSET + WORD_TEMPLATE_HTML, data,
         			"text/html", UTF_8, "about:blank");
+        	
+        	ImageButton button = new ImageButton(this);
+        	button.setBackgroundResource(R.drawable.bookmark_off);    
+        	text.addView(button);
         }
 	}
 

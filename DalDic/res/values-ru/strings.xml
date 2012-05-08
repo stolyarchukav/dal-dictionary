@@ -48,4 +48,8 @@
     <string name="main_more_apps"><u>Другие приложения</u></string>
     <string name="history">История поиска</string>
     <string name="history_empty">История поиска пуста</string>
+    <string name="bookmarks">Закладки</string>
+    <string name="bookmarks_empty">Список закладок пуст</string>
+    <string name="word_previous">Предыдущее</string>
+    <string name="word_next">Следующее</string>
 </resources>

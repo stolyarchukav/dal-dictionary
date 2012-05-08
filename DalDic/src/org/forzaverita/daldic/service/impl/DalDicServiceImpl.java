@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
+import org.forzaverita.daldic.data.Word;
 import org.forzaverita.daldic.data.WordsCache;
 import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.preferences.TextFont;
@@ -112,37 +113,40 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	
 	@Override
 	public String getNextWord() {
-		String[] word = wordsCache.next();
+		Word word = wordsCache.next();
 		if (word == null) {
 			word = generateRandomWord();
 			wordsCache.addToEnd(word);
 		}
-		return word[1];
+		return word.getDescription();
 	}
 	
 	@Override
 	public String getPreviuosWord() {
-		String[] word = wordsCache.previuos();
+		Word word = wordsCache.previuos();
 		if (word == null) {
 			word = generateRandomWord();
 			wordsCache.addToBegin(word);
 		}
-		return word[1];
+		return word.getDescription();
 	}
 
-	private String[] generateRandomWord() {
+	private Word generateRandomWord() {
 		int count = dataBaseService.getWordsCount();
-		String[] wordAndDesc = null;
-		while (wordAndDesc == null) {
+		Word word = null;
+		while (word == null) {
 			int id = random.nextInt(count) + 1;
-			wordAndDesc = dataBaseService.getWordAndDescriptionById(id);
+			String[] wordAndDesc = dataBaseService.getWordAndDescriptionById(id);
+			if (wordAndDesc != null) {
+				word = new Word(id, wordAndDesc[0], wordAndDesc[1], wordAndDesc[2]);
+			}
 		}
-		return wordAndDesc;
+		return word;
 	}
 	
 	@Override
-	public String[] getCurrentWord() {
-		String[] word = wordsCache.current();
+	public Word getCurrentWord() {
+		Word word = wordsCache.current();
 		if (word == null) {
 			word = generateRandomWord();
 			wordsCache.addToEnd(word);
@@ -203,6 +207,26 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	@Override
 	public void preferencesChanged() {
 		preferenceChangeDate = new Date();
+	}
+	
+	@Override
+	public Map<Integer, String> getBookmarks() {
+		return preferencesService.getBookmarks();
+	}
+	
+	@Override
+	public void addBookmark(Integer id, String word) {
+		preferencesService.addBookmark(id, word);
+	}
+	
+	@Override
+	public void removeBookmark(Integer id) {
+		preferencesService.removeBookmark(id);
+	}
+	
+	@Override
+	public boolean isBookmarked(Integer wordId) {
+		return preferencesService.isBookmarked(wordId);
 	}
 	
 }

@@ -48,5 +48,9 @@
     <string name="main_more_apps"><u>Get more applications</u></string>
     <string name="history">Search history</string>
     <string name="history_empty">Search history is empty</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="bookmarks_empty">Bookmarks list is empty</string>
+    <string name="word_previous">Previous</string>
+    <string name="word_next">Next</string>
     <string name="ad_mob_id">903a81e524a842e7</string>
 </resources>

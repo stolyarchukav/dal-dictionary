@@ -3,8 +3,7 @@ package org.forzaverita.daldic;
 import java.util.Date;
 
 import org.forzaverita.daldic.data.Constants;
-import org.forzaverita.daldic.history.HistoryActivity;
-import org.forzaverita.daldic.preferences.AppPreferenceActivity;
+import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
 
 import android.app.Activity;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -87,26 +85,12 @@ public class AlphabetActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_menu, menu);
-	    return true;
+		return MenuUtils.createOptionsMenu(menu, this);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(this, AppPreferenceActivity.class));
-			return true;
-		case R.id.menu_seacrh:
-			onSearchRequested();
-			return true;
-		case R.id.menu_history:
-			startActivity(new Intent(this, HistoryActivity.class));
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		return MenuUtils.optionsItemSelected(item, this);
 	}
 	
 	private void startWordListActivity(char letter) {

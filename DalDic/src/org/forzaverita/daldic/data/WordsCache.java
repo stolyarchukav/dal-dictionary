@@ -1,41 +1,40 @@
 package org.forzaverita.daldic.data;
 
-
 public class WordsCache {
 
 	private static final int SIZE = 20;
 	
-	private String[][] cache = new String[SIZE][];
+	private Word[] cache = new Word[SIZE];
 	
 	private int index = 0;
 	
-	public String[] current() {
+	public Word current() {
 		return cache[index];
 	}
 	
-	public String[] next() {
-		String[] result = cache[getNextIndex()];
-		if (result != null) {
+	public Word next() {
+		Word word = cache[getNextIndex()];
+		if (word != null) {
 			index = getNextIndex();
 		}
-		return result;
+		return word;
 	}
 	
-	public String[] previuos() {
-		String[] result = cache[getPreviousIndex()];
-		if (result != null) {
+	public Word previuos() {
+		Word word = cache[getPreviousIndex()];
+		if (word != null) {
 			index = getPreviousIndex();
 		}
-		return result;
+		return word;
 	}
 	
-	public void addToBegin(String[] word) {
+	public void addToBegin(Word word) {
 		index = getPreviousIndex();
 		cache[index] = word;
 		cache[getPreviousIndex()] = null;
 	}
 	
-	public void addToEnd(String[] word) {
+	public void addToEnd(Word word) {
 		index = getNextIndex();
 		cache[index] = word;
 		cache[getNextIndex()] = null;

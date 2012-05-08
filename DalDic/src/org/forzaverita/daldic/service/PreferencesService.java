@@ -29,4 +29,12 @@ public interface PreferencesService {
 
 	TextFont getTextFont();
 
+	Map<Integer, String> getBookmarks();
+
+	void addBookmark(Integer id, String word);
+
+	void removeBookmark(Integer id);
+
+	boolean isBookmarked(Integer id);
+
 }
