@@ -84,7 +84,7 @@ public class StatisticUploader {
 			String url = "http://daldic.cloudfoundry.com/api/statistic/" + urlPath;
 			String result = restTemplate.postForObject(url, event, String.class);
 			Log.i("daldic", "Uploaded searches " + urlPath + " : " + result);
-			if (result == null) {
+			if (result == null || searchStrings.length > 300) {
 				return true;
 			}
 		}
@@ -99,7 +99,7 @@ public class StatisticUploader {
 			String url = "http://daldic.cloudfoundry.com/api/statistic/" + urlPath;
 			String result = restTemplate.postForObject(url, event, String.class);
 			Log.i("daldic", "Uploaded words " + urlPath + " : " + result);
-			if (result == null) {
+			if (result == null || ids.length > 300) {
 				return true;
 			}
 		}
