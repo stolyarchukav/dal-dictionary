@@ -176,7 +176,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	private void addEvent(String prefKey, Object id) {
 		String str = preferences.getString(prefKey, "");
-		if (! str.isEmpty()) {
+		if (str.length() != 0) {
 			str += ";";
 		}
 		str += id;
