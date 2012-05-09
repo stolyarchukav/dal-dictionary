@@ -8,8 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import forzaverita.daldic.data.OpenWordEvent;
-import forzaverita.daldic.data.SearchEvent;
+import forzaverita.daldic.core.event.SearchEvents;
+import forzaverita.daldic.core.event.WordEvents;
 
 @Path("/statistic")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -18,19 +18,26 @@ public interface StatService {
 
 	@POST
 	@Path("/search")
-	Response searchEvent(SearchEvent event);
+	Response searchEvents(SearchEvents events);
 
 	@POST
 	@Path("/full_search")
-	Response fullSearchEvent(SearchEvent event);
+	Response fullSearchEvents(SearchEvents events);
 
 	@POST
 	@Path("/open_word")
-	Response openWordEvent(OpenWordEvent event);
+	Response openWordEvents(WordEvents events);
+	
+	@POST
+	@Path("/open_word_widget")
+	Response openWordWidgetEvents(WordEvents events);
+	
+	@POST
+	@Path("/bookmark_word")
+	Response bookmarkWordEvents(WordEvents events);
 	
 	@GET
 	@Path("/popular_words")
-	
 	Response getPopularWords();
 
 	@GET

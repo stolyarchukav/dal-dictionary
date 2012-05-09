@@ -38,6 +38,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 		fontFlow = Typeface.createFromAsset(getAssets(), "FLOW.otf");
 		preferencesService = new PreferencesServiceImpl(this);
 		dataBaseService = new DataBaseServiceImpl(this, preferencesService);
+		new StatisticUploader(this, preferencesService);
 	}
 	
 	@Override
@@ -99,16 +100,19 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	
 	@Override
 	public Map<Integer, String> getWordsBeginWith(String begin) {
+		preferencesService.searchWordEvent(begin);
 		return dataBaseService.getWordsBeginWith(begin, preferencesService.isCapitalLetters());
 	}
 	
 	@Override
 	public Map<Integer, String> getWordsFullSearch(String query) {
+		preferencesService.fullSearchWordEvent(query);
 		return dataBaseService.getWordsFullSearch(query, preferencesService.isCapitalLetters());
 	}
 	
 	@Override
 	public Word getWord(Integer id) {
+		preferencesService.openWordEvent(id);
 		String[] word = dataBaseService.getWordAndDescriptionById(id);
 		return word != null ? new Word(id, word[0], word[1], word[2]) : null;
 	}
@@ -153,6 +157,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 			word = generateRandomWord();
 			wordsCache.addToEnd(word);
 		}
+		preferencesService.openWordWidgetEvent(word.getId());
 		return word;
 	}
 	
@@ -220,6 +225,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	public void addBookmark(Integer id, String word) {
 		preferencesService.addBookmark(id, word);
 		bookmarksChanged = true;
+		preferencesService.bookmarkWordEvent(id);
 	}
 	
 	@Override

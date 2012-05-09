@@ -2,18 +2,18 @@ package forzaverita.daldic.data;
 
 public class OpenWordEvent extends BaseEvent {
 
-	private Long wordId;
+	private Integer wordId;
 	
 	@Override
 	public String toString() {
-		return "OpenWordEvent [wordId=" + wordId + ", super: " + super.toString() + "]";
+		return getClass().getSimpleName() + " [wordId=" + wordId + ", super: " + super.toString() + "]";
 	}
 
-	public Long getWordId() {
+	public Integer getWordId() {
 		return wordId;
 	}
 
-	public void setWordId(Long wordId) {
+	public void setWordId(Integer wordId) {
 		this.wordId = wordId;
 	}
 	

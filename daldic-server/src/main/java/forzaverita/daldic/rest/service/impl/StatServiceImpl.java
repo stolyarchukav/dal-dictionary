@@ -8,7 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import forzaverita.daldic.core.event.BaseEvents;
+import forzaverita.daldic.core.event.SearchEvents;
+import forzaverita.daldic.core.event.WordEvents;
+import forzaverita.daldic.data.BaseEvent;
+import forzaverita.daldic.data.BookmarkWordEvent;
+import forzaverita.daldic.data.FullSearchEvent;
 import forzaverita.daldic.data.OpenWordEvent;
+import forzaverita.daldic.data.OpenWordWidgetEvent;
 import forzaverita.daldic.data.SearchEvent;
 import forzaverita.daldic.repo.StatRepository;
 import forzaverita.daldic.rest.service.StatService;
@@ -23,23 +30,68 @@ public class StatServiceImpl implements StatService {
 	private StatRepository repository;
 	
 	@Override
-	public Response searchEvent(SearchEvent event) {
-		LOG.info(event.toString());
-		repository.saveEvent(event);
+	public Response searchEvents(SearchEvents events) {
+		LOG.info("Search events: " + events.toString());
+		for (String str : events.getSearchStrings()) {
+			SearchEvent event = new SearchEvent();
+			fillBaseEvent(events, event);
+			event.setSearchString(str);
+			repository.saveEvent(event);
+		}
 		return Response.ok().build();
 	}
 	
 	@Override
-	public Response fullSearchEvent(SearchEvent event) {
-		LOG.info(event.toString());
-		repository.saveEvent(event);
+	public Response fullSearchEvents(SearchEvents events) {
+		LOG.info("Full search events: " +events.toString());
+		for (String str : events.getSearchStrings()) {
+			FullSearchEvent event = new FullSearchEvent();
+			fillBaseEvent(events, event);
+			event.setSearchString(str);
+			repository.saveEvent(event);
+		}
+		return Response.ok().build();
+	}
+
+	private void fillBaseEvent(BaseEvents events, BaseEvent event) {
+		event.setCountry(events.getCountry());
+		event.setDeviceModel(events.getDeviceModel());
+		event.setEventDate(events.getEventDate());
+	}
+	
+	@Override
+	public Response openWordEvents(WordEvents events) {
+		LOG.info("Open word events: " + events.toString());
+		for (Integer id : events.getWordIds()) {
+			OpenWordEvent event = new OpenWordEvent();
+			fillBaseEvent(events, event);
+			event.setWordId(id);
+			repository.saveEvent(event);
+		}
 		return Response.ok().build();
 	}
 	
 	@Override
-	public Response openWordEvent(OpenWordEvent event) {
-		LOG.info(event.toString());
-		repository.saveEvent(event);
+	public Response openWordWidgetEvents(WordEvents events) {
+		LOG.info("Open word widget events: " + events.toString());
+		for (Integer id : events.getWordIds()) {
+			OpenWordWidgetEvent event = new OpenWordWidgetEvent();
+			fillBaseEvent(events, event);
+			event.setWordId(id);
+			repository.saveEvent(event);
+		}
+		return Response.ok().build();
+	}
+	
+	@Override
+	public Response bookmarkWordEvents(WordEvents events) {
+		LOG.info("Bookmark word events: " + events.toString());
+		for (Integer id : events.getWordIds()) {
+			BookmarkWordEvent event = new BookmarkWordEvent();
+			fillBaseEvent(events, event);
+			event.setWordId(id);
+			repository.saveEvent(event);
+		}
 		return Response.ok().build();
 	}
 	

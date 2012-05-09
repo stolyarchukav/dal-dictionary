@@ -6,7 +6,7 @@ public class SearchEvent extends BaseEvent {
 	
 	@Override
 	public String toString() {
-		return "SearchEvent [searchString=" + searchString + ", super: " + super.toString() + "]";
+		return getClass().getSimpleName() + " [searchString=" + searchString + ", super: " + super.toString() + "]";
 	}
 
 	public String getSearchString() {

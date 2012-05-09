@@ -37,4 +37,34 @@ public interface PreferencesService {
 
 	boolean isBookmarked(Integer id);
 
+	void openWordEvent(int id);
+
+	void searchWordEvent(String begin);
+
+	void fullSearchWordEvent(String query);
+
+	void openWordWidgetEvent(int id);
+
+	void bookmarkWordEvent(int id);
+
+	String[] getEventSearch();
+
+	String[] getEventFullSearch();
+
+	Integer[] getEventOpenWord();
+
+	Integer[] getEventOpenWordWidget();
+
+	Integer[] getEventBookmark();
+
+	void clearEventSearch();
+	
+	void clearEventFullSearch();
+	
+	void clearEventOpenWord();
+
+	void clearEventOpenWordWidget();
+
+	void clearEventBookmark();
+	
 }
