@@ -1,20 +1,22 @@
 package forzaverita.daldic.data;
 
+import java.util.Collection;
+
 public class SearchEvent extends BaseEvent {
 
-	private String searchString;
+	private Collection<String> searchStrings;
 	
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [searchString=" + searchString + ", super: " + super.toString() + "]";
+		return getClass().getSimpleName() + " [searchStrings=" + searchStrings + ", super: " + super.toString() + "]";
 	}
 
-	public String getSearchString() {
-		return searchString;
+	public Collection<String> getSearchStrings() {
+		return searchStrings;
 	}
-
-	public void setSearchString(String searchString) {
-		this.searchString = searchString;
+	
+	public void setSearchStrings(Collection<String> searchStrings) {
+		this.searchStrings = searchStrings;
 	}
 	
 }

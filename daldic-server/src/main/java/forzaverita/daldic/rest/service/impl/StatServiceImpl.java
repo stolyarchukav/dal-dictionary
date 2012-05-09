@@ -32,24 +32,20 @@ public class StatServiceImpl implements StatService {
 	@Override
 	public Response searchEvents(SearchEvents events) {
 		LOG.info("Search events: " + events.toString());
-		for (String str : events.getSearchStrings()) {
-			SearchEvent event = new SearchEvent();
-			fillBaseEvent(events, event);
-			event.setSearchString(str);
-			repository.saveEvent(event);
-		}
+		SearchEvent event = new SearchEvent();
+		fillBaseEvent(events, event);
+		event.setSearchStrings(event.getSearchStrings());
+		repository.saveEvent(event);
 		return Response.ok().build();
 	}
 	
 	@Override
 	public Response fullSearchEvents(SearchEvents events) {
 		LOG.info("Full search events: " +events.toString());
-		for (String str : events.getSearchStrings()) {
-			FullSearchEvent event = new FullSearchEvent();
-			fillBaseEvent(events, event);
-			event.setSearchString(str);
-			repository.saveEvent(event);
-		}
+		FullSearchEvent event = new FullSearchEvent();
+		fillBaseEvent(events, event);
+		event.setSearchStrings(event.getSearchStrings());
+		repository.saveEvent(event);
 		return Response.ok().build();
 	}
 
@@ -62,36 +58,30 @@ public class StatServiceImpl implements StatService {
 	@Override
 	public Response openWordEvents(WordEvents events) {
 		LOG.info("Open word events: " + events.toString());
-		for (Integer id : events.getWordIds()) {
-			OpenWordEvent event = new OpenWordEvent();
-			fillBaseEvent(events, event);
-			event.setWordId(id);
-			repository.saveEvent(event);
-		}
+		OpenWordEvent event = new OpenWordEvent();
+		fillBaseEvent(events, event);
+		event.setWordIds(event.getWordIds());
+		repository.saveEvent(event);
 		return Response.ok().build();
 	}
 	
 	@Override
 	public Response openWordWidgetEvents(WordEvents events) {
 		LOG.info("Open word widget events: " + events.toString());
-		for (Integer id : events.getWordIds()) {
-			OpenWordWidgetEvent event = new OpenWordWidgetEvent();
-			fillBaseEvent(events, event);
-			event.setWordId(id);
-			repository.saveEvent(event);
-		}
+		OpenWordWidgetEvent event = new OpenWordWidgetEvent();
+		fillBaseEvent(events, event);
+		event.setWordIds(event.getWordIds());
+		repository.saveEvent(event);
 		return Response.ok().build();
 	}
 	
 	@Override
 	public Response bookmarkWordEvents(WordEvents events) {
 		LOG.info("Bookmark word events: " + events.toString());
-		for (Integer id : events.getWordIds()) {
-			BookmarkWordEvent event = new BookmarkWordEvent();
-			fillBaseEvent(events, event);
-			event.setWordId(id);
-			repository.saveEvent(event);
-		}
+		BookmarkWordEvent event = new BookmarkWordEvent();
+		fillBaseEvent(events, event);
+		event.setWordIds(event.getWordIds());
+		repository.saveEvent(event);
 		return Response.ok().build();
 	}
 	

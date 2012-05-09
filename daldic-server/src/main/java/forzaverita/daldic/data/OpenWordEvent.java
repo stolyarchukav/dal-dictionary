@@ -1,20 +1,22 @@
 package forzaverita.daldic.data;
 
+import java.util.Collection;
+
 public class OpenWordEvent extends BaseEvent {
 
-	private Integer wordId;
+	private Collection<Integer> wordIds;
 	
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [wordId=" + wordId + ", super: " + super.toString() + "]";
+		return getClass().getSimpleName() + " [wordIds=" + wordIds + ", super: " + super.toString() + "]";
 	}
 
-	public Integer getWordId() {
-		return wordId;
+	public Collection<Integer> getWordIds() {
+		return wordIds;
 	}
-
-	public void setWordId(Integer wordId) {
-		this.wordId = wordId;
+	
+	public void setWordIds(Collection<Integer> wordIds) {
+		this.wordIds = wordIds;
 	}
 	
 }
