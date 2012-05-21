@@ -43,4 +43,17 @@ public interface StatService {
 	@GET
 	@Path("/search_rate")
 	Response getSearchRate();
+
+	@GET
+	@Path("/events_search")
+	Response getEventsSearch();
+	
+	@GET
+	@Path("/events_open_word")
+	Response getEventsOpenWord();
+	
+	@GET
+	@Path("/events_open_word_count")
+	Response getEventsOpenWordCount();
+	
 }

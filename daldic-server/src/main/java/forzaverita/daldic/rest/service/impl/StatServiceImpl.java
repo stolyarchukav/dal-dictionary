@@ -34,7 +34,7 @@ public class StatServiceImpl implements StatService {
 		LOG.info("Search events: " + events.toString());
 		SearchEvent event = new SearchEvent();
 		fillBaseEvent(events, event);
-		event.setSearchStrings(event.getSearchStrings());
+		event.setSearchStrings(events.getSearchStrings());
 		repository.saveEvent(event);
 		return Response.ok().build();
 	}
@@ -44,7 +44,7 @@ public class StatServiceImpl implements StatService {
 		LOG.info("Full search events: " +events.toString());
 		FullSearchEvent event = new FullSearchEvent();
 		fillBaseEvent(events, event);
-		event.setSearchStrings(event.getSearchStrings());
+		event.setSearchStrings(events.getSearchStrings());
 		repository.saveEvent(event);
 		return Response.ok().build();
 	}
@@ -60,7 +60,7 @@ public class StatServiceImpl implements StatService {
 		LOG.info("Open word events: " + events.toString());
 		OpenWordEvent event = new OpenWordEvent();
 		fillBaseEvent(events, event);
-		event.setWordIds(event.getWordIds());
+		event.setWordIds(events.getWordIds());
 		repository.saveEvent(event);
 		return Response.ok().build();
 	}
@@ -70,7 +70,7 @@ public class StatServiceImpl implements StatService {
 		LOG.info("Open word widget events: " + events.toString());
 		OpenWordWidgetEvent event = new OpenWordWidgetEvent();
 		fillBaseEvent(events, event);
-		event.setWordIds(event.getWordIds());
+		event.setWordIds(events.getWordIds());
 		repository.saveEvent(event);
 		return Response.ok().build();
 	}
@@ -80,7 +80,7 @@ public class StatServiceImpl implements StatService {
 		LOG.info("Bookmark word events: " + events.toString());
 		BookmarkWordEvent event = new BookmarkWordEvent();
 		fillBaseEvent(events, event);
-		event.setWordIds(event.getWordIds());
+		event.setWordIds(events.getWordIds());
 		repository.saveEvent(event);
 		return Response.ok().build();
 	}
@@ -95,6 +95,24 @@ public class StatServiceImpl implements StatService {
 	public Response getSearchRate() {
 		LOG.info("request for search rate");
 		return Response.ok(repository.getSearchRate()).build();
+	}
+	
+	@Override
+	public Response getEventsSearch() {
+		LOG.info("request for events");
+		return Response.ok(repository.getEventsSearch(null, null)).build();
+	}
+	
+	@Override
+	public Response getEventsOpenWord() {
+		LOG.info("request for events");
+		return Response.ok(repository.getEventsOpenWord()).build();
+	}
+	
+	@Override
+	public Response getEventsOpenWordCount() {
+		LOG.info("request for events count");
+		return Response.ok(repository.getEventsOpenWordCount()).build();
 	}
 	
 }

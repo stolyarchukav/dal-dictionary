@@ -1,8 +1,14 @@
 package forzaverita.daldic.repo.impl;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -13,8 +19,10 @@ import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.stereotype.Repository;
 
 import forzaverita.daldic.data.BaseEvent;
-import forzaverita.daldic.data.aggregates.StringLongResult;
+import forzaverita.daldic.data.OpenWordEvent;
+import forzaverita.daldic.data.SearchEvent;
 import forzaverita.daldic.data.aggregates.LongLongResult;
+import forzaverita.daldic.data.aggregates.StringLongResult;
 import forzaverita.daldic.repo.StatRepository;
 
 @Repository
@@ -40,36 +48,58 @@ public class StatRepositoryImpl implements StatRepository {
 				LongLongResult.class);
 		Map<Long, Long> map = new HashMap<Long, Long>();
 		for (LongLongResult count : counts) {
-			map.put(count.getId(), count.getValue());
+			if (count.getValue() > 1) {
+				map.put(count.getId(), count.getValue());
+			}
 		}
 		return map;
 	}
 	
 	@Override
-	public Map<String, Float> getSearchRate() {
+	public Map<String, Long> getSearchRate() {
 		MapReduceResults<StringLongResult> searchCounts = mongoOperations.mapReduce("searchEvent", 
 				"classpath:map-reduce/search_rate_map.js", "classpath:map-reduce/search_rate_reduce.js", 
 				StringLongResult.class);
-		Map<String, Long> map = new HashMap<String, Long>();
-		StringLongResult max = new StringLongResult();
+		final Map<String, Long> map = new HashMap<String, Long>();
 		for (StringLongResult searchCount : searchCounts) {
-			long count = searchCount.getValue();
-			if (count > max.getValue()) {
-				max = searchCount;
-			}
 			map.put(searchCount.getId(), searchCount.getValue());			
 		}
-		long maxCount = max.getValue();
-		Map<String, Float> result = new HashMap<String, Float>();
-		for (Entry<String, Long> entry : map.entrySet()) {
-			if (entry.getKey() != null) {
-				result.put(entry.getKey(), (float) (entry.getValue().doubleValue() / maxCount));
+		Map<String, Long> result = new TreeMap<String, Long>(new Comparator<String>() {
+			@Override
+			public int compare(String o1, String o2) {
+				return map.get(o2).compareTo(map.get(o1)) < 0 ? -1 : 1;
 			}
-			else {
-				LOG.warn("null key as result of search rate map-reduce. Entry = " + entry);
-			}
-		}
+		});
+		result.putAll(map);
 		return result;
+	}
+	
+	@Override
+	public List<SearchEvent> getEventsSearch(Date begin, Date end) {
+		/*Criteria criteria = where("true");
+		if (begin != null) {
+			criteria = criteria.and("eventDate").gt(begin);
+		}
+		if (end != null) {
+			criteria = criteria.and("eventDate").lt(end);
+		}
+		return mongoOperations.find(query(criteria), BaseEvent.class);*/
+		return mongoOperations.findAll(SearchEvent.class);
+	}
+	
+	@Override
+	public List<SearchEvent> getSearchEvents(Date begin, Date end) {
+		return mongoOperations.find(query(where("eventDate").gt(begin).and("eventDate").lt(end)), SearchEvent.class);
+	}
+	
+	@Override
+	public List<OpenWordEvent> getEventsOpenWord() {
+		return mongoOperations.findAll(OpenWordEvent.class);
+	}
+	
+	@Override
+	public Long getEventsOpenWordCount() {
+		return mongoOperations.count(null, OpenWordEvent.class);
 	}
 	
 }
