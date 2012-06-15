@@ -7,6 +7,8 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.GET
 import forzaverita.brefdic.model.Word
 import javax.ws.rs.PathParam
+import javax.ws.rs.POST
+import javax.ws.rs.PUT
 
 @Path("/word/")
 @Consumes(Array(MediaType.APPLICATION_JSON))
@@ -17,8 +19,11 @@ trait WordService {
   @Path("{id}")
   def getWord(@PathParam("id") id : Integer) : Word
   
-  @GET
-  @Path("test")
-  def test() : String
+  @POST
+  def postWord(word : Word) : Word
   
+  @PUT
+  @Path("{id}")
+  def putWord(@PathParam("id") id : Integer, word : Word) : Word
+
 }
