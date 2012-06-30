@@ -38,6 +38,8 @@
 
 	<beans profile="cloud">
 		
+		<context:property-placeholder location="classpath:config-cloud.properties"/>
+		
 		<cloud:data-source id="dataSource">
 			<cloud:connection properties="charset=utf-8;" />
     		<cloud:pool pool-size="1-7" max-wait-time="10000" />
