@@ -23,16 +23,19 @@ class WordServiceImpl extends WordService {
     WordConverter toWord entity
   }
   
-  def postWord(word : Word) : Word = {
-    println(word)
+  def postWord(word : Word) = {
     val entity = new WordEntity(word)
     WordConverter toWord (wordRepo saveAndFlush entity)
   }
   
-  def putWord(id : Integer, word : Word) : Word = {
+  def putWord(id : Integer, word : Word) = {
     if (id != word.getId()) throw new Exception()
     val entity = new WordEntity(word)
     WordConverter toWord (wordRepo saveAndFlush entity)
+  }
+  
+  def deleteWord(id : Integer) = {
+    wordRepo delete id
   }
   
 }
