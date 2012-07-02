@@ -22,6 +22,7 @@ public class RestClientExport {
 		List<Integer> ids = Database.getInstance().getIds();
 		int q = 0;
 		for (Integer id : ids) {
+			if (id < 12000) continue;
 			Word word = Database.getInstance().getWord(id);
 			Word response = restTemplate.postForObject(url, word, Word.class);
 			if (++q % 100 == 0) {

@@ -24,4 +24,8 @@ trait WordsService {
   @GET
   def getIndexWords : Collection[Word]
   
+  @GET
+  @Path("/{page}/{size}")
+  def getIndexWords(@PathParam("page") page : Int, @PathParam("size") size : Int) : Collection[Word]
+  
 }
