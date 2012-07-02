@@ -32,6 +32,10 @@ class WordsServiceImpl extends WordsService {
     getWords(wordRepo.findAll(new PageRequest(page, size)), WordConverter toIndexWord _)
   }
   
+  def getWordsCount = {
+    wordRepo count
+  }
+  
   private def getWords(finder : => Iterable[WordEntity], converter : WordEntity => Word) = {
     val result = new ArrayList[Word]()
     val entities = finder
