@@ -20,7 +20,7 @@ class WordsServiceImpl extends WordsService {
   @Autowired
   val wordRepo : WordRepository = null
   
-  def getWords = {
+  def getWords(user : String) = {
     getWords(wordRepo findAll, WordConverter toWord _)
   }
   
@@ -32,7 +32,7 @@ class WordsServiceImpl extends WordsService {
     getWords(wordRepo.findAll(new PageRequest(page, size)), WordConverter toIndexWord _)
   }
   
-  def getWordsCount = {
+  def getWordsCount(user : String) = {
     wordRepo count
   }
   
