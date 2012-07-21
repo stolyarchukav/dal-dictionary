@@ -3,6 +3,7 @@ package forzaverita.brefdic.rest.impl
 import java.util.ArrayList
 import java.util.Collection
 import scala.collection.JavaConversions._
+import forzaverita.brefdic.rest.common.CommonFunctions._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
@@ -21,27 +22,19 @@ class WordsServiceImpl extends WordsService {
   val wordRepo : WordRepository = null
   
   def getWords(user : String) = {
-    getWords(wordRepo findAll, WordConverter toWord _)
+    findWords(wordRepo findAll, WordConverter toWord _)
   }
   
   def getIndexWords = {
-    getWords(wordRepo findAll, WordConverter toIndexWord _)
+    findWords(wordRepo findAll, WordConverter toIndexWord _)
   }
   
   def getIndexWords(page : Int, size : Int) = {
-    getWords(wordRepo.findAll(new PageRequest(page, size)), WordConverter toIndexWord _)
+    findWords(wordRepo.findAll(new PageRequest(page, size)), WordConverter toIndexWord _)
   }
   
   def getWordsCount(user : String) = {
     wordRepo count
-  }
-  
-  private def getWords(finder : => Iterable[WordEntity], converter : WordEntity => Word) = {
-    val result = new ArrayList[Word]()
-    val entities = finder
-    entities foreach(result += converter(_))
-    result
-    
   }
   
 }
