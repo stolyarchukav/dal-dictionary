@@ -15,7 +15,7 @@ class WordEntity (pId : Integer, pWord : String, pDescription : String, pFirstLe
   
   var word : String = pWord
   
-  @Column(length = 10000)
+  @Column(length = 70000)
   var description : String = pDescription
   
   var firstLetter : String = pFirstLetter

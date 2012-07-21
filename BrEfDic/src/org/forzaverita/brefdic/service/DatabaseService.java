@@ -1,6 +1,9 @@
 package org.forzaverita.brefdic.service;
 
+import java.util.Collection;
 import java.util.Map;
+
+import forzaverita.brefdic.model.Word;
 
 import android.database.Cursor;
 
@@ -23,5 +26,7 @@ public interface DatabaseService {
 	void open();
 	
 	Cursor getCursorOfWordsBeginWith(String begin);
+
+	Map<Integer, String> storeWords(Collection<Word> fromCloud);
 
 }

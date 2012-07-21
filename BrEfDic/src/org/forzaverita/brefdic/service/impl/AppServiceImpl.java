@@ -1,5 +1,6 @@
 package org.forzaverita.brefdic.service.impl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
@@ -9,6 +10,7 @@ import org.forzaverita.brefdic.data.WordsCache;
 import org.forzaverita.brefdic.preferences.TextAlignment;
 import org.forzaverita.brefdic.preferences.TextFont;
 import org.forzaverita.brefdic.service.AppService;
+import org.forzaverita.brefdic.service.CloudService;
 import org.forzaverita.brefdic.service.DatabaseService;
 import org.forzaverita.brefdic.service.PreferencesService;
 import org.forzaverita.brefdic.widget.WidgetRefreshTask;
@@ -30,6 +32,7 @@ public class AppServiceImpl extends Application implements AppService {
 	private PreferencesService preferencesService;
 	private Date preferenceChangeDate;
 	private boolean bookmarksChanged;
+	private CloudService cloudService;
 	
 	@Override
 	public void onCreate() {
@@ -39,6 +42,7 @@ public class AppServiceImpl extends Application implements AppService {
 		fontFlow = Typeface.createFromAsset(getAssets(), "FLOW.otf");
 		preferencesService = new PreferencesServiceImpl(this);
 		dataBaseService = new DataBaseServiceImpl(this, preferencesService);
+		cloudService = new CloudServiceImpl();
 	}
 	
 	@Override
@@ -100,12 +104,22 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	@Override
 	public Map<Integer, String> getWordsBeginWith(String begin) {
-		return dataBaseService.getWordsBeginWith(begin, preferencesService.isCapitalLetters());
+		Map<Integer, String> words = dataBaseService.getWordsBeginWith(begin, preferencesService.isCapitalLetters());
+		if (words.isEmpty()) {
+			Collection<Word> fromCloud = cloudService.getWordsBeginWith(begin);
+			words = dataBaseService.storeWords(fromCloud);
+		}
+		return words;
 	}
 	
 	@Override
 	public Map<Integer, String> getWordsFullSearch(String query) {
-		return dataBaseService.getWordsFullSearch(query, preferencesService.isCapitalLetters());
+		Map<Integer, String> words = dataBaseService.getWordsFullSearch(query, preferencesService.isCapitalLetters());
+		if (words.isEmpty()) {
+			Collection<Word> fromCloud = cloudService.getWordsFullSearch(query);
+			words = dataBaseService.storeWords(fromCloud);
+		}
+		return words;
 	}
 	
 	@Override

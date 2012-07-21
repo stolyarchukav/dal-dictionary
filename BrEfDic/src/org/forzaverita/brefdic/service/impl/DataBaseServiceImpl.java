@@ -1,5 +1,6 @@
 package org.forzaverita.brefdic.service.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import org.forzaverita.brefdic.exception.DatabaseException;
 import org.forzaverita.brefdic.service.DatabaseDeployer;
 import org.forzaverita.brefdic.service.DatabaseService;
 import org.forzaverita.brefdic.service.PreferencesService;
+
+import forzaverita.brefdic.model.Word;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -248,6 +251,12 @@ public class DataBaseServiceImpl implements DatabaseService {
 				WORD + " as " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA},
 				WORD + " like '" + begin.trim().toUpperCase() + "%'", 
 				null, null, null, null, "10");
+	}
+
+	@Override
+	public Map<Integer, String> storeWords(Collection<Word> fromCloud) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

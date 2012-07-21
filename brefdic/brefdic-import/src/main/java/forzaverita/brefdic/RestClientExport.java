@@ -11,22 +11,29 @@ import forzaverita.brefdic.model.Word;
 
 public class RestClientExport {
 
-	private static final String URL_CLOUD = "http://brefdic.cloudfoundry.com/api/word";
+	private static final String URL_CLOUD = "http://brefdic.cloudfoundry.com/api/word?user=app_editor";
 	private static final String URL_LOCAL = "http://localhost:9090/brefdic-server/api/word";
 
 	public static void main(String[] args) throws URISyntaxException {
-		
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 		URI url = new URI(URL_CLOUD);
 		List<Integer> ids = Database.getInstance().getIds();
 		int q = 0;
 		for (Integer id : ids) {
-			//if (id < 97693) continue;
-			Word word = Database.getInstance().getWord(id);
-			Word response = restTemplate.postForObject(url, word, Word.class);
-			if (++q % 100 == 0) {
-				System.out.println("Stored " + q + " words");
+			try {
+				if (id < 6906) continue;
+				Word word = Database.getInstance().getWord(id);
+				Word response = restTemplate.postForObject(url, word, Word.class);
+				if (response == null) throw new RuntimeException("Was not saved");
+				if (++q % 1000 == 0) {
+					System.out.println("Stored " + q + " words");
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("error on storing id = " + id);
+				break;
 			}
 		}
 	}
