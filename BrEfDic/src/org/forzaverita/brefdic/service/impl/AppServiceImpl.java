@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
+import org.forzaverita.brefdic.data.Constants;
 import org.forzaverita.brefdic.data.WordsCache;
 import org.forzaverita.brefdic.preferences.TextAlignment;
 import org.forzaverita.brefdic.preferences.TextFont;
@@ -134,10 +135,9 @@ public class AppServiceImpl extends Application implements AppService {
 	}
 
 	private Word generateRandomWord() {
-		int count = dataBaseService.getWordsCount();
 		Word word = null;
 		while (word == null) {
-			int id = random.nextInt(count) + 1;
+			int id = random.nextInt(Constants.MAX_WORD_ID) + 1;
 			String[] wordAndDesc = dataBaseService.getWordAndDescriptionById(id);
 			if (wordAndDesc != null) {
 				word = new Word(id, wordAndDesc[0], wordAndDesc[1]);

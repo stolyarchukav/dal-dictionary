@@ -52,7 +52,7 @@ public final class Database {
 	private Database() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/brefdic.sqlite");
+			conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/brefdic_full.sqlite");
 		}
 		catch (Exception e) {
 			e.printStackTrace();

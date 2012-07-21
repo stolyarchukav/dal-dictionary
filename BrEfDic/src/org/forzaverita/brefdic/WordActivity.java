@@ -129,18 +129,18 @@ public class WordActivity extends Activity {
 	
 	private Word getPreviousWord(int wordId) {
 		if (wordId <= 0) {
-			wordId = Constants.WORDS_COUNT;
+			wordId = Constants.MAX_WORD_ID;
 		}
 		Word word = service.getWord(--wordId);
-		return word != null ? word : getPreviousWord(wordId - 1);
+		return word != null ? word : getPreviousWord(wordId);
 	}
 
 	protected Word getNextWord(Integer wordId) {
-		if (wordId > Constants.WORDS_COUNT) {
+		if (wordId > Constants.MAX_WORD_ID) {
 			wordId = 1;
 		}
 		Word word = service.getWord(++wordId);
-		return word != null ? word : getNextWord(wordId + 1);
+		return word != null ? word : getNextWord(wordId);
 	}
 	
 	private void configureBookmark(final boolean bookmarked, Button button) {

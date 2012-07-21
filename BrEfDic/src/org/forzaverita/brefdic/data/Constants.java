@@ -6,7 +6,7 @@ public class Constants {
 	public static final String SEARCH_QUERY_FULL = "query_full";
 	public static final String WORD_ID = "word_id";
 	
-	public static int WORDS_COUNT = 52837;
+	public static int MAX_WORD_ID = 120789;
 	
 	public static final String AD_MOB_ID = "a14f075025b5b24";
 	

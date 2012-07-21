@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.forzaverita.brefdic.R;
-import org.forzaverita.brefdic.data.Constants;
 import org.forzaverita.brefdic.exception.DatabaseException;
 import org.forzaverita.brefdic.service.DatabaseDeployer;
 import org.forzaverita.brefdic.service.DatabaseService;
@@ -155,11 +154,6 @@ public class DataBaseServiceImpl implements DatabaseService {
 		catch (Exception e) {
 			throw searchError(e);
 		}
-	}
-    
-    @Override
-	public int getWordsCount() {
-		return Constants.WORDS_COUNT;
 	}
 
 	private Map<Integer, String> getIdWordMapFromCursor(Cursor cursor, boolean capitalLetters) {

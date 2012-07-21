@@ -16,8 +16,6 @@ public interface DatabaseService {
 
 	String getWordById(Integer wordId);
 	
-	int getWordsCount();
-
 	void close();
 
 	boolean isDatabaseReady();
