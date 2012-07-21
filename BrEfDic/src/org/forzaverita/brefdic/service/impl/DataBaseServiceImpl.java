@@ -4,23 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.forzaverita.brefdic.R;
+import org.forzaverita.brefdic.data.Constants;
 import org.forzaverita.brefdic.exception.DatabaseException;
 import org.forzaverita.brefdic.service.DatabaseDeployer;
 import org.forzaverita.brefdic.service.DatabaseService;
 import org.forzaverita.brefdic.service.PreferencesService;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import android.util.Log;
 
 public class DataBaseServiceImpl implements DatabaseService {
 	
 	private static int DATA_VERSION = 1;
-	private static int WORDS_COUNT = 118733;
 	private static String WORD_ID = "word_id";
 	private static String WORD = "word";
-	//private static String WORD_REF = "word_ref";
 	private static String DESCRIPTION = "description";
 	private static String FIRST_LETTER = "first_letter";
 	private static String BREFDIC_METADATA = "brefdic_metadata";
@@ -135,20 +136,6 @@ public class DataBaseServiceImpl implements DatabaseService {
 			throw searchError(e);
 		}
     }
-
-    @Override
-	public String[] getDescription(Integer id) {
-		openDataBase();
-		try {
-			Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION}, 
-					WORD_ID + " = " + id,
-	        		null, null, null, null);
-	        return getDescriptionFromCursor(cursor);
-		}
-		catch (Exception e) {
-			throw searchError(e);
-		}
-	}
 	
     @Override
 	public String[] getWordAndDescriptionById(long id) {
@@ -169,19 +156,10 @@ public class DataBaseServiceImpl implements DatabaseService {
 			throw searchError(e);
 		}
 	}
-	
+    
     @Override
 	public int getWordsCount() {
-		return WORDS_COUNT;
-	}
-	
-    private String[] getDescriptionFromCursor(Cursor cursor) {
-		String[] result = new String[2];
-		if (cursor.moveToFirst()) {
-			 result[0] = getDescPrecededByWord(cursor.getString(0), cursor.getString(1), true);
-        }
-        cursor.close();
-        return result;
+		return Constants.WORDS_COUNT;
 	}
 
 	private Map<Integer, String> getIdWordMapFromCursor(Cursor cursor, boolean capitalLetters) {
@@ -265,6 +243,17 @@ public class DataBaseServiceImpl implements DatabaseService {
 			return  "<p>" + word + "</p>" + desc;
 		}
 		return word + " - " + desc;
+	}
+	
+	@Override
+	public Cursor getCursorOfWordsBeginWith(String begin) {
+		return database.query(WORD, new String[] {
+				WORD_ID + " as " + BaseColumns._ID,
+				WORD_ID + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID,
+				WORD + " as " + SearchManager.SUGGEST_COLUMN_TEXT_1,
+				WORD + " as " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA},
+				WORD + " like '" + begin.trim().toUpperCase() + "%'", 
+				null, null, null, null, "10");
 	}
 	
 }

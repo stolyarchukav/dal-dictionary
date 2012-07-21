@@ -16,6 +16,16 @@ public class Word {
 	
 	private Set<Image> images;
 	
+	/* Constructors */
+	
+	public Word() {}
+	
+	public Word(int id, String word, String description) {
+		this.id = id;
+		this.word = word;
+		this.description = description;
+	}
+	
 	/* Methods */
 	
 	@Override

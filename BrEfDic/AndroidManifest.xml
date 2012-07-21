@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.forzaverita.brefdic"
-    android:versionCode="1"
-    android:versionName="1.0" 
- 	android:installLocation="auto">
-
+      package="org.forzaverita.brefdic"
+      android:versionCode="2"
+      android:versionName="1.1" 
+ 	  android:installLocation="auto">
     <uses-sdk android:minSdkVersion="4" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
   	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-    <application android:name="org.forzaverita.brefdic.service.impl.AppServiceImpl"
+    <application android:name=".service.impl.AppServiceImpl"
     	android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".BrEfDicActivity"
                   android:label="@string/app_name"
@@ -46,13 +45,18 @@
 			<meta-data android:name="android.app.default_searchable"
                    android:value=".WordListActivity" />
 		</activity>
+		<activity android:name=".history.BookmarksActivity"
+				android:label="@string/app_name">
+			<meta-data android:name="android.app.default_searchable"
+                   android:value=".WordListActivity" />
+		</activity>
 		<activity android:name=".preferences.AppPreferenceActivity"
 				android:label="@string/app_name">
 		</activity>
 		<activity android:name="com.google.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"/>
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|smallestScreenSize|screenSize"/>
 		
-		<receiver android:name="org.forzaverita.brefdic.widget.WordWidgetProvider" android:label="@string/app_name">
+		<receiver android:name=".widget.WordWidgetProvider" android:label="@string/app_name">
     		<intent-filter>
         		<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
         		<action android:name="org.forzaverita.brefdic.ACTION_WIDGET_PREVIOUS"/>
@@ -61,6 +65,11 @@
     		<meta-data android:name="android.appwidget.provider"
 					android:resource="@xml/word_widget" />
 		</receiver>
+		
+		<provider android:name=".provider.WordSuggestionProvider"
+		     android:authorities="org.forzaverita.brefdic.provider.WordSuggestionProvider" >
+		</provider>
+		    
 	</application>
 
 </manifest>

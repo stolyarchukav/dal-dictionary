@@ -34,8 +34,22 @@
     	<item>Right side</item>
     	<item>Center</item>
     </string-array>
+    <string name="pref_text_font">Font</string>
+    <string name="pref_text_font_summary">Text font in application</string>
+    <string-array name="pref_text_font_names">
+    	<item>Philosopher</item>
+    	<item>Flow</item>
+    	<item>Cuprum</item>
+    	<item>Serif</item>
+    	<item>Sans Serif</item>
+    	<item>Monospace</item>
+    </string-array>
+    <string name="main_more_apps"><u>Get more applications</u></string>
     <string name="history">Search history</string>
     <string name="history_empty">Search history is empty</string>
-    <string name="main_more_apps"><u>Get more applications</u></string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="bookmarks_empty">Bookmarks list is empty</string>
+    <string name="word_previous">Previous</string>
+    <string name="word_next">Next</string>
     <string name="ad_mob_id">a14f075025b5b24</string>
 </resources>

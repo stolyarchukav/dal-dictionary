@@ -4,6 +4,11 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="/media/work/Work/Java/Tools/admob/GoogleAdMobAdsSdk-4.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/andrey/work/tools/GoogleAdMobAdsSdkAndroid-6.0.0/GoogleAdMobAdsSdk-6.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/andrey/work/tools/spring-android-1.0.0.RELEASE/libs/spring-android-core-1.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/home/andrey/work/tools/spring-android-1.0.0.RELEASE/libs/spring-android-rest-template-1.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/home/andrey/work/tools/jackson/jackson-core-asl-1.9.6.jar"/>
+	<classpathentry kind="lib" path="/home/andrey/work/tools/jackson/jackson-mapper-asl-1.9.6.jar" sourcepath="/home/andrey/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.6/jackson-mapper-asl-1.9.6-sources.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/brefdic-core"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

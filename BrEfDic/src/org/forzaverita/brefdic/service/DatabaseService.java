@@ -2,6 +2,8 @@ package org.forzaverita.brefdic.service;
 
 import java.util.Map;
 
+import android.database.Cursor;
+
 public interface DatabaseService {
 
 	Map<Integer, String> getWordsBeginWith(String begin, boolean capitalLetters);
@@ -10,8 +12,6 @@ public interface DatabaseService {
 
 	Map<Integer, String> getWordsFullSearch(String query, boolean capitalLetters);
 	
-	String[] getDescription(Integer id);
-
 	String[] getWordAndDescriptionById(long id);
 
 	String getWordById(Integer wordId);
@@ -23,5 +23,7 @@ public interface DatabaseService {
 	boolean isDatabaseReady();
 
 	void open();
+	
+	Cursor getCursorOfWordsBeginWith(String begin);
 
 }

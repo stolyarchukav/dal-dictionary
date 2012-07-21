@@ -1,8 +1,9 @@
 package org.forzaverita.brefdic;
 
+import java.util.Date;
+
 import org.forzaverita.brefdic.exception.DatabaseException;
-import org.forzaverita.brefdic.history.HistoryActivity;
-import org.forzaverita.brefdic.preferences.AppPreferenceActivity;
+import org.forzaverita.brefdic.menu.MenuUtils;
 import org.forzaverita.brefdic.service.AppService;
 
 import android.app.Activity;
@@ -16,7 +17,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +24,25 @@ import android.widget.TextView;
 
 public class BrEfDicActivity extends Activity {
 	
+	private AppService service;
+	private Date lastPreferencesCheck = new Date();
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        service = (AppService) getApplicationContext();
         
-        Typeface font = ((AppService) getApplicationContext()).getFont();
+        Typeface font = service.getFont();
         
         TextView title = (TextView) findViewById(R.id.title);
         title.setTypeface(font);
@@ -85,31 +98,16 @@ public class BrEfDicActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_menu, menu);
-	    return true;
+		return MenuUtils.createOptionsMenu(menu, this);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(this, AppPreferenceActivity.class));
-			return true;
-		case R.id.menu_seacrh:
-			onSearchRequested();
-			return true;
-		case R.id.menu_history:
-			startActivity(new Intent(this, HistoryActivity.class));
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		return MenuUtils.optionsItemSelected(item, this);
 	}
 
 	private void checkDatabase() {
 		// Check and prepare database
-        final AppService service = (AppService) getApplicationContext();
         if (! service.isDatabaseReady()) {
         	new AsyncTask<Void, Void, String>() {
             	ProgressDialog dialog;

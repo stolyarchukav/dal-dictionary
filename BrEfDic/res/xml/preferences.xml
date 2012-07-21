@@ -30,6 +30,13 @@
 			android:entries="@array/pref_text_align_names"
 			android:entryValues="@array/pref_text_align_values"
 			android:defaultValue="JUSTIFY" />
+			
+		<ListPreference android:key="pref_text_font"
+			android:title="@string/pref_text_font" 
+			android:summary="@string/pref_text_font_summary"
+			android:entries="@array/pref_text_font_names"
+			android:entryValues="@array/pref_text_font_values"
+			android:defaultValue="PHILOSOPHER" />
 		
 	</PreferenceCategory>
 	

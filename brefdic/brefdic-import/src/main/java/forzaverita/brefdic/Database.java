@@ -12,6 +12,7 @@ import forzaverita.brefdic.model.Word;
 
 public final class Database {
 	
+	private static final String SELECT_WORD_COUNT = "select count(*) from word";
 	private static final String SELECT_WORD_IDS = "select word_id from word";
 	private static final String SELECT_WORD_IDS_BY_FILTER = "select word_id from word where description like ?";
 	private static final String SELECT_MAX_WORD_ID = "select max(word_id) from word";
@@ -283,6 +284,24 @@ public final class Database {
 					result.add(word.getId());
 				}
 			}
+		}
+		return result;
+	}
+	
+	public int getCount() {
+		int result = -1;
+		try {
+			if (psSelectWordIds == null) {
+				psSelectWordIds = conn.prepareStatement(SELECT_WORD_COUNT);
+			}
+			ResultSet rs = psSelectWordIds.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+			rs.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 		return result;
 	}

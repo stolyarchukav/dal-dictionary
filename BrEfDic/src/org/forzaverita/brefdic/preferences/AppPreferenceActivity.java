@@ -1,6 +1,7 @@
 package org.forzaverita.brefdic.preferences;
 
 import org.forzaverita.brefdic.R;
+import org.forzaverita.brefdic.service.AppService;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -9,10 +10,13 @@ import android.preference.PreferenceActivity;
 
 public class AppPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
+	private AppService service;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+		service =  (AppService) getApplicationContext();
 	}
 	
 	@Override
@@ -29,7 +33,7 @@ public class AppPreferenceActivity extends PreferenceActivity implements OnShare
 	
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences paramSharedPreferences, String paramString) {
-		//TODO Refresh current views
+		service.preferencesChanged();
 	}
 
 }

@@ -1,11 +1,15 @@
 package org.forzaverita.brefdic.service;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.forzaverita.brefdic.preferences.TextAlignment;
+import org.forzaverita.brefdic.preferences.TextFont;
 import org.forzaverita.brefdic.widget.WidgetRefreshTask;
 
+import android.database.Cursor;
 import android.graphics.Typeface;
+import forzaverita.brefdic.model.Word;
 
 public interface AppService {
 
@@ -17,13 +21,13 @@ public interface AppService {
 	
 	Map<Integer, String> getWordsFullSearch(String query);
 
-	String[] getDescription(Integer id);
+	Word getWord(Integer id);
 
 	String getNextWord();
 
 	String getPreviuosWord();
 	
-	String[] getCurrentWord();
+	Word getCurrentWord();
 	
 	void setWidgetRefreshTask(WidgetRefreshTask task);
 	
@@ -44,5 +48,23 @@ public interface AppService {
 	void addToHistory(Integer id, String word);
 
 	String getWordById(Integer wordId);
+	
+	Cursor getCursorOfWordsBeginWith(String string);
+
+	TextFont resolveTypeface(Typeface typeface);
+
+	boolean isPreferencesChanged(Date lastPreferencesCheck);
+
+	void preferencesChanged();
+
+	Map<Integer, String> getBookmarks();
+	
+	void addBookmark(Integer id, String word);
+
+	void removeBookmark(Integer id);
+
+	boolean isBookmarked(Integer wordId);
+
+	boolean isBookmarksChanged();
 	
 }

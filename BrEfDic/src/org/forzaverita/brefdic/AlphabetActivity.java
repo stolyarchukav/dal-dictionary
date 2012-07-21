@@ -1,8 +1,9 @@
 package org.forzaverita.brefdic;
 
+import java.util.Date;
+
 import org.forzaverita.brefdic.data.Constants;
-import org.forzaverita.brefdic.history.HistoryActivity;
-import org.forzaverita.brefdic.preferences.AppPreferenceActivity;
+import org.forzaverita.brefdic.menu.MenuUtils;
 import org.forzaverita.brefdic.service.AppService;
 
 import android.app.Activity;
@@ -10,7 +11,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +22,17 @@ public class AlphabetActivity extends Activity {
     
 	private static final int MARGIN = 5;
 	private AppService service;
+	private Date lastPreferencesCheck = new Date();
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +61,7 @@ public class AlphabetActivity extends Activity {
                         addView(row);
                 	}
                 	final Button button = new Button(AlphabetActivity.this);
+                	button.setBackgroundResource(R.drawable.selector_dashboard_button);
                 	button.setText("" + q);
                 	button.setTag(q);
                 	button.setWidth(width / colums - MARGIN * 2); 
@@ -59,6 +70,7 @@ public class AlphabetActivity extends Activity {
                 	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
                 	button.setLayoutParams(params);
                 	button.setTypeface(service.getFont(), Typeface.ITALIC);
+                	button.setTextSize(20);
                 	button.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
@@ -75,26 +87,12 @@ public class AlphabetActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_menu, menu);
-	    return true;
+		return MenuUtils.createOptionsMenu(menu, this);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(this, AppPreferenceActivity.class));
-			return true;
-		case R.id.menu_seacrh:
-			onSearchRequested();
-			return true;
-		case R.id.menu_history:
-			startActivity(new Intent(this, HistoryActivity.class));
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		return MenuUtils.optionsItemSelected(item, this);
 	}
 	
 	private void startWordListActivity(char letter) {
