@@ -44,6 +44,17 @@
    		<url-pattern>/api/*</url-pattern>
    	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>open</servlet-name>
+		<servlet-class>forzaverita.brefdic.servlet.OpenServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>open</servlet-name>
+		<url-pattern>/open/*</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

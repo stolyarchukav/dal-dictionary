@@ -10,14 +10,14 @@ import org.forzaverita.brefdic.service.DatabaseDeployer;
 import org.forzaverita.brefdic.service.DatabaseService;
 import org.forzaverita.brefdic.service.PreferencesService;
 
-import forzaverita.brefdic.model.Word;
-
 import android.app.SearchManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.util.Log;
+import forzaverita.brefdic.model.Word;
 
 public class DataBaseServiceImpl implements DatabaseService {
 	
@@ -55,7 +55,7 @@ public class DataBaseServiceImpl implements DatabaseService {
     	try {
     		String path = databaseDeployer.getDatabasePath();
     		database = SQLiteDatabase.openDatabase(path, 
-    				null, SQLiteDatabase.OPEN_READONLY);
+    				null, SQLiteDatabase.OPEN_READWRITE);
     		return database != null;
     	}
     	catch (Exception e) {
@@ -164,15 +164,20 @@ public class DataBaseServiceImpl implements DatabaseService {
 		if (cursor.moveToFirst()) {
             do {
             	String word = cursor.getString(1);
-            	if (! capitalLetters) {
-            		word = word.charAt(0) + word.substring(1).toLowerCase();
-            	}
+            	word = createSearchContent(capitalLetters, word);
             	result.put(cursor.getInt(0), word);
             }
             while (cursor.moveToNext());
         }
         cursor.close();
         return result;
+	}
+
+	private String createSearchContent(boolean capitalLetters, String word) {
+		if (! capitalLetters) {
+			word = word.charAt(0) + word.substring(1).toLowerCase();
+		}
+		return word;
 	}
 	
 	private Map<Integer, String> getIdWordDescMapFromCursor(Cursor cursor,	boolean capitalLetters, String query) {
@@ -181,33 +186,38 @@ public class DataBaseServiceImpl implements DatabaseService {
 			 do {
 				 String word = cursor.getString(1);
 				 String desc = getDescPrecededByWord(word,  cursor.getString(2), true);
-				 StringBuilder wordDesc = new StringBuilder();
-				 if (capitalLetters) {
-					 wordDesc.append(word);
-				 }
-				 else {
-					 wordDesc.append(word.charAt(0));
-					 wordDesc.append(word.substring(1).toLowerCase());
-				 }
-				 int index = desc.toUpperCase().indexOf(query.toUpperCase());
-				 int begin = index >= 10 ? index - 10 : 0;
-				 String prefix = desc.substring(begin, index);
-				 int end = index < desc.length() - 25 ? index + 25 : desc.length() - 1;
-				 String body = desc.substring(index, index + query.length());
-				 String postfix = desc.substring(index + query.length(), end);
-				 wordDesc.append("</br><small><i> ...");
-				 wordDesc.append(prefix);
-				 wordDesc.append("<font color='green'>");
-				 wordDesc.append(body);
-				 wordDesc.append("</font>");
-				 wordDesc.append(postfix);
-				 wordDesc.append("...</i></small>");
-				 result.put(cursor.getInt(0), wordDesc.toString());
+				 String wordDesc = createFullSearchContent(capitalLetters, query, word, desc);
+				 result.put(cursor.getInt(0), wordDesc);
 			 }
 			 while (cursor.moveToNext());
 		 }
 	     cursor.close();
 	     return result;
+	}
+
+	private String createFullSearchContent(boolean capitalLetters, String query, String word, String desc) {
+		StringBuilder wordDesc = new StringBuilder();
+		 if (capitalLetters) {
+			 wordDesc.append(word);
+		 }
+		 else {
+			 wordDesc.append(word.charAt(0));
+			 wordDesc.append(word.substring(1).toLowerCase());
+		 }
+		 int index = desc.toUpperCase().indexOf(query.toUpperCase());
+		 int begin = index >= 10 ? index - 10 : 0;
+		 String prefix = desc.substring(begin, index);
+		 int end = index < desc.length() - 25 ? index + 25 : desc.length() - 1;
+		 String body = desc.substring(index, index + query.length());
+		 String postfix = desc.substring(index + query.length(), end);
+		 wordDesc.append("</br><small><i> ...");
+		 wordDesc.append(prefix);
+		 wordDesc.append("<font color='green'>");
+		 wordDesc.append(body);
+		 wordDesc.append("</font>");
+		 wordDesc.append(postfix);
+		 wordDesc.append("...</i></small>");
+		return wordDesc.toString();
 	}
 	
 	private DatabaseException searchError(Exception e) {
@@ -254,9 +264,33 @@ public class DataBaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
-	public Map<Integer, String> storeWords(Collection<Word> fromCloud) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<Integer, String> storeWords(Collection<Word> words,	boolean capitalLetters) {
+		Map<Integer, String> result = new HashMap<Integer, String>();
+		for (Word word : words) {
+			result.put(word.getId(), word.getWord());
+			storeWord(word);
+		}
+		return result;
+	}
+	
+	@Override
+	public Map<Integer, String> storeWords(Collection<Word> words, String query, boolean capitalLetters) {
+		Map<Integer, String> result = new HashMap<Integer, String>();
+		for (Word word : words) {
+			String desc = getDescPrecededByWord(word.getWord(), word.getDescription(), true);
+			result.put(word.getId(), createFullSearchContent(capitalLetters, query, word.getWord(), desc));
+			storeWord(word);
+		}
+		return result;
+	}
+
+	private void storeWord(Word word) {
+		ContentValues values = new ContentValues();
+		values.put(WORD_ID, word.getId());
+		values.put(WORD, word.getWord());
+		values.put(FIRST_LETTER, word.getFirstLetter());
+		values.put(DESCRIPTION, word.getDescription());
+		database.insert(WORD, null, values);
 	}
 	
 }

@@ -3,6 +3,7 @@ package org.forzaverita.brefdic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.forzaverita.brefdic.data.Constants;
@@ -13,6 +14,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,8 +59,21 @@ public class WordActivity extends Activity {
         	word = service.getWord(wordId);
         }
         else {
-        	word = service.getCurrentWord();
-        	fromWidget = true;
+        	Uri uri = getIntent().getData();
+        	if (uri != null) {
+        		List<String> params = uri.getPathSegments();
+        		if (params != null && params.size() >= 2 && params.get(0).equals("open")) {
+        			int id = Integer.parseInt(params.get(1));
+        			word = service.getWord(id);
+        		}
+        		else {
+        			word = service.getCurrentWord();
+        		}
+        	}
+        	else {
+        		word = service.getCurrentWord();
+            	fromWidget = true;
+        	}
         }
         configureWord(word);
         configureGotoMain(fromWidget);

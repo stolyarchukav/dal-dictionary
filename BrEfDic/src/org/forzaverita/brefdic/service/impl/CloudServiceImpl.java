@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import android.util.Log;
 
 import forzaverita.brefdic.model.Word;
+import forzaverita.brefdic.model.wrapper.WordWrapper;
 
 public class CloudServiceImpl implements CloudService {
 
@@ -27,10 +28,9 @@ public class CloudServiceImpl implements CloudService {
 		return getWords(url);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private Collection<Word> getWords(String url) {
 		try {
-			return restTemplate.getForObject(url, Collection.class);
+			return restTemplate.getForObject(url, WordWrapper.class).getWords();
 		}
 		catch (Exception e) {
 			Log.w("brefdic", "error on cloud search", e);

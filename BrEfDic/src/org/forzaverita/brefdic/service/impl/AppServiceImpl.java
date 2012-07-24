@@ -107,7 +107,7 @@ public class AppServiceImpl extends Application implements AppService {
 		Map<Integer, String> words = dataBaseService.getWordsBeginWith(begin, preferencesService.isCapitalLetters());
 		if (words.isEmpty()) {
 			Collection<Word> fromCloud = cloudService.getWordsBeginWith(begin);
-			words = dataBaseService.storeWords(fromCloud);
+			words = dataBaseService.storeWords(fromCloud, preferencesService.isCapitalLetters());
 		}
 		return words;
 	}
@@ -117,7 +117,7 @@ public class AppServiceImpl extends Application implements AppService {
 		Map<Integer, String> words = dataBaseService.getWordsFullSearch(query, preferencesService.isCapitalLetters());
 		if (words.isEmpty()) {
 			Collection<Word> fromCloud = cloudService.getWordsFullSearch(query);
-			words = dataBaseService.storeWords(fromCloud);
+			words = dataBaseService.storeWords(fromCloud, query, preferencesService.isCapitalLetters());
 		}
 		return words;
 	}

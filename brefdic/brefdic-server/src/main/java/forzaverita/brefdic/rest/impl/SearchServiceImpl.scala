@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import forzaverita.brefdic.repo.WordRepository
 import forzaverita.brefdic.converter.WordConverter
 import org.springframework.data.domain.PageRequest
+import forzaverita.brefdic.model.wrapper.WordWrapper
 
 @Service
 @Scope("request")
@@ -24,11 +25,15 @@ class SearchServiceImpl extends SearchService {
   val wordRepo : WordRepository = null
   
   def getWordsBeginWith(begin : String) = {
-    findWords(wordRepo.findByWordLike(begin.toUpperCase() + '%', page), WordConverter toWord _)
+    new WordWrapper(
+        findWords(wordRepo.findByWordLike(begin.toUpperCase() + '%', page), WordConverter toWord _)
+    )
   }
   
   def getWordsFullSearch(query : String) = {
-    findWords(wordRepo.findByDescriptionLike('%' + query.toLowerCase() + '%', page), WordConverter toWord _)
+    new WordWrapper(
+        findWords(wordRepo.findByDescriptionLike('%' + query.toLowerCase() + '%', page), WordConverter toWord _)
+    )
   }
   
 }

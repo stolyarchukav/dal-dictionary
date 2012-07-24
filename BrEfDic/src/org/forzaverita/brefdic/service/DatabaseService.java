@@ -27,6 +27,8 @@ public interface DatabaseService {
 	
 	Cursor getCursorOfWordsBeginWith(String begin);
 
-	Map<Integer, String> storeWords(Collection<Word> fromCloud);
+	Map<Integer, String> storeWords(Collection<Word> words,	boolean capitalLetters);
+	
+	Map<Integer, String> storeWords(Collection<Word> words, String query, boolean capitalLetters);	
 
 }

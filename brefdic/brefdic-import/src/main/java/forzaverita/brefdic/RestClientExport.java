@@ -22,8 +22,9 @@ public class RestClientExport {
 		int q = 0;
 		for (Integer id : ids) {
 			try {
-				if (id < 6906) continue;
+				if (id < 93640) continue; //missed: 93598, 93599
 				Word word = Database.getInstance().getWord(id);
+				word.setWord(word.getWord().toUpperCase());
 				Word response = restTemplate.postForObject(url, word, Word.class);
 				if (response == null) throw new RuntimeException("Was not saved");
 				if (++q % 1000 == 0) {
