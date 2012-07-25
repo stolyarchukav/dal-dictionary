@@ -54,7 +54,7 @@ public class WordActivity extends Activity {
 		boolean fromWidget = false;
         Word word;
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null && extras.containsKey(Constants.WORD_ID)) {
         	int wordId = (Integer) extras.get(Constants.WORD_ID);
         	word = service.getWord(wordId);
         }

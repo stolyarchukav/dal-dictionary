@@ -40,8 +40,10 @@
 			<meta-data android:name="android.app.default_searchable"
                    android:value=".WordListActivity" />
 			<intent-filter>
-    			<data android:scheme="http" android:host="brefdic.cloudfoundry.com"/>
+    			<data android:scheme="forza" android:host="brefdic.cloudfoundry.com"/>
     			<action android:name="android.intent.action.VIEW" />
+    			<category android:name="android.intent.category.DEFAULT" />
+          		<category android:name="android.intent.category.BROWSABLE" />
 			</intent-filter>
 		</activity>
 		<activity android:name=".history.HistoryActivity"
