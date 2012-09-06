@@ -22,6 +22,7 @@ import android.view.View;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.TextView;
 import forzaverita.brefdic.model.Word;
 
 public class WordActivity extends Activity {
@@ -80,11 +81,20 @@ public class WordActivity extends Activity {
 	}
 
 	private void configureWord(Word word) {
-		int wordId = word.getId();
-        String description = buildDescription(word);
-    	service.addToHistory(wordId, word.getWord());
-    	configureTopPanel(wordId, word.getWord());
-        configureWordView(description);
+		TextView notFoundView = (TextView) findViewById(R.id.word_cannot_open);
+		if (word != null) {
+			notFoundView.setVisibility(View.GONE);
+			int wordId = word.getId();
+	        String description = buildDescription(word);
+	    	service.addToHistory(wordId, word.getWord());
+	    	configureTopPanel(wordId, word.getWord());
+	        configureWordView(description);
+		}
+		else {
+			notFoundView.setText(getString(R.string.word_not_found));
+			notFoundView.setTypeface(service.getFont());
+			notFoundView.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private String buildDescription(Word word) {
@@ -165,6 +175,7 @@ public class WordActivity extends Activity {
 	private void configureWordView(String description) {
 		if (description != null) {
         	WebView text = (WebView) findViewById(R.id.word_text);
+        	text.setVisibility(View.VISIBLE);
         	text.setBackgroundColor(0x00000000);
         	text.getSettings().setDefaultFontSize(25);
         	text.getSettings().setSupportZoom(true);

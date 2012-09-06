@@ -1,6 +1,7 @@
 package org.forzaverita.brefdic.service.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
@@ -125,7 +126,14 @@ public class AppServiceImpl extends Application implements AppService {
 	@Override
 	public Word getWord(Integer id) {
 		String[] word = dataBaseService.getWordAndDescriptionById(id);
-		return word != null ? new Word(id, word[0], word[1]) : null;
+		if (word == null) {
+			Word fromCloud = cloudService.getWord(id);
+			if (fromCloud != null) {
+				dataBaseService.storeWords(Collections.singleton(fromCloud), preferencesService.isCapitalLetters());
+			}
+			return fromCloud;
+		}
+		return new Word(id, word[0], word[1]);
 	}
 	
 	@Override

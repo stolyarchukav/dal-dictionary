@@ -13,6 +13,7 @@ import forzaverita.brefdic.model.Word
 import forzaverita.brefdic.repo.WordRepository
 import forzaverita.brefdic.rest.WordsService
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort.Direction
 
 @Service
 @Scope("request")
@@ -30,7 +31,7 @@ class WordsServiceImpl extends WordsService {
   }
   
   def getIndexWords(page : Int, size : Int) = {
-    findWords(wordRepo.findAll(new PageRequest(page, size)), WordConverter toIndexWord _)
+    findWords(wordRepo.findAll(new PageRequest(page, size, Direction.ASC, "id")), WordConverter toIndexWord _)
   }
   
   def getWordsCount(user : String) = {

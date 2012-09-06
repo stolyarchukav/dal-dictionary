@@ -10,4 +10,6 @@ public interface CloudService {
 
 	Collection<Word> getWordsFullSearch(String query);
 
+	Word getWord(Integer id);
+
 }
