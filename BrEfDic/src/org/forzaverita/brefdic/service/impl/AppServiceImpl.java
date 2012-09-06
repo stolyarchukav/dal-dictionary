@@ -130,10 +130,10 @@ public class AppServiceImpl extends Application implements AppService {
 			Word fromCloud = cloudService.getWord(id);
 			if (fromCloud != null) {
 				dataBaseService.storeWords(Collections.singleton(fromCloud), preferencesService.isCapitalLetters());
+				word = dataBaseService.getWordAndDescriptionById(id);
 			}
-			return fromCloud;
 		}
-		return new Word(id, word[0], word[1]);
+		return word != null ? new Word(id, word[0], word[1]) : null;
 	}
 	
 	@Override
