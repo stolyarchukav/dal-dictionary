@@ -27,14 +27,21 @@
 		
 		<context:property-placeholder location="classpath:config-local.properties"/>
 		
-		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<bean abstract="true" id="abstractDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 			<property name="driverClassName" value="${database.driver}" />
-			<property name="url" value="${database.url}" />
 			<property name="username" value="${database.username}" />
 			<property name="password" value="${database.password}" />
 			<property name="maxActive" value="3" />
 			<property name="maxIdle" value="3" />
 			<property name="maxWait" value="3" />
+		</bean>
+		
+		<bean id="dataSource1" parent="abstractDataSource" >
+			<property name="url" value="${database.url_1}" />
+		</bean>
+		
+		<bean id="dataSource2" parent="abstractDataSource" >
+			<property name="url" value="${database.url_2}" />
 		</bean>
 		
 	</beans>
@@ -43,7 +50,12 @@
 		
 		<context:property-placeholder location="classpath:config-cloud.properties"/>
 		
-		<cloud:data-source id="dataSource">
+		<cloud:data-source id="dataSource1" service-name="brefdic-postgres">
+			<cloud:connection properties="charset=utf-8;" />
+    		<cloud:pool pool-size="1-7" max-wait-time="10000" />
+		</cloud:data-source>
+		
+		<cloud:data-source id="dataSource2" service-name="brefdic-postgres2">
 			<cloud:connection properties="charset=utf-8;" />
     		<cloud:pool pool-size="1-7" max-wait-time="10000" />
 		</cloud:data-source>
@@ -57,6 +69,16 @@
 		<context:component-scan base-package="forzaverita.brefdic" />
 		
 		<tx:annotation-driven/>
+		
+		<bean id="dataSource" class="forzaverita.brefdic.datasource.RoutingDataSource">
+			<property name="targetDataSources">
+				<map key-type="java.lang.Integer">
+					<entry key="1" value-ref="dataSource1"/>
+					<entry key="2" value-ref="dataSource2"/>
+				</map>
+			</property>
+			<property name="defaultTargetDataSource" ref="dataSource1" />
+		</bean>
 		
 		<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 			<property name="dataSource" ref="dataSource" />

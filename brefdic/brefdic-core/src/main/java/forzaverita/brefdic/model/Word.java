@@ -20,7 +20,7 @@ public class Word {
 	
 	public Word() {}
 	
-	public Word(int id, String word, String description) {
+	public Word(Integer id, String word, String description) {
 		this.id = id;
 		this.word = word;
 		this.description = description;
@@ -37,11 +37,11 @@ public class Word {
 
 	/* Getters and Setters */
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

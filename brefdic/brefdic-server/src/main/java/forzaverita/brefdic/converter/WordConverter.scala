@@ -6,21 +6,25 @@ import javax.persistence.Entity
 
 object WordConverter {
 
-  def toWord(entity : WordEntity) = {
+  def toWord(entity: WordEntity) = {
     val word = new Word
-    word setId entity.id
-    word setWord entity.word
-    word setDescription entity.description
-    word setFirstLetter entity.firstLetter
+    if (entity != null) {
+      word setId entity.id
+      word setWord entity.word
+      word setDescription entity.description
+      word setFirstLetter entity.firstLetter
+    }
     word
   }
-  
-  def toIndexWord(entity : WordEntity) = {
+
+  def toIndexWord(entity: WordEntity) = {
     val word = new Word
-    word setId entity.id
-    word setWord entity.word
-    word setDescription entity.description
+    if (entity != null) {
+      word setId entity.id
+      word setWord entity.word
+      word setDescription entity.description
+    }
     word
   }
-  
+
 }

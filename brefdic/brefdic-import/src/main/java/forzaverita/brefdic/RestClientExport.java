@@ -11,8 +11,8 @@ import forzaverita.brefdic.model.Word;
 
 public class RestClientExport {
 
-	private static final String URL_CLOUD = "http://brefdic.cloudfoundry.com/api/word?user=app_editor";
-	private static final String URL_LOCAL = "http://localhost:9090/brefdic-server/api/word";
+	private static final String URL_CLOUD = "http://brefdic-staging.cloudfoundry.com/api/word?user=app_editor";
+	private static final String URL_LOCAL = "http://localhost:9090/brefdic-server-staging/api/word?user=app_editor";
 
 	public static void main(String[] args) throws URISyntaxException {
 		RestTemplate restTemplate = new RestTemplate();
@@ -22,7 +22,7 @@ public class RestClientExport {
 		int q = 0;
 		for (Integer id : ids) {
 			try {
-				if (id < 93640) continue; //missed: 93598, 93599
+				//if (id < 0) continue; //missed: 47822
 				Word word = Database.getInstance().getWord(id);
 				word.setWord(word.getWord().toUpperCase());
 				Word response = restTemplate.postForObject(url, word, Word.class);

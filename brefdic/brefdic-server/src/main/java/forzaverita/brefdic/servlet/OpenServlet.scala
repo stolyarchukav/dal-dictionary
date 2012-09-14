@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import org.springframework.web.context.support.WebApplicationContextUtils
 import forzaverita.brefdic.repo.WordRepository
+import java.io.File
+import java.net.URL
 
 class OpenServlet extends HttpServlet {
 
@@ -19,6 +21,8 @@ class OpenServlet extends HttpServlet {
     		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     		<title>Установите приложение \"Энциклопедия Брокгауза и Ефрона\"</title>
     		</head>""")
+    writer.println("<br> File = " + new File(".").getAbsolutePath())
+    //new URL("http://google.com").getContent();
     if (word != null) {
     	writer.println("<p>Слово: " + word.word)
     	writer.println("<p>Описание: " + word.description)
