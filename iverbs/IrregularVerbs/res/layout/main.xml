@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/TitleBar" >
+
+        <ImageView
+            style="@style/TitleBarLogo"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_launcher" />
+
+        <ImageView
+            style="@style/TitleBarSeparator"
+            android:contentDescription="@string/app_name" />
+
+        <TextView style="@style/TitleBarText" />
+
+        <ImageButton
+            style="@style/TitleBarAction"
+            android:contentDescription="@string/description_info"
+            android:onClick="onClickInfo"
+            android:src="@drawable/title_info" />
+
+        <ImageButton
+            style="@style/TitleBarAction"
+            android:contentDescription="@string/description_search"
+            android:onClick="onClickSearch"
+            android:src="@drawable/title_search" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="6dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/dashboard_button_learn"
+                style="@style/HomeButton"
+                android:drawableTop="@drawable/button_learn"
+                android:onClick="onClickMode"
+                android:text="@string/title_activity_learn" />
+
+            <Button
+                android:id="@+id/dashboard_button_train"
+                style="@style/HomeButton"
+                android:drawableTop="@drawable/button_train"
+                android:onClick="onClickMode"
+                android:text="@string/title_activity_train" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/dashboard_button_scores"
+                style="@style/HomeButton"
+                android:drawableTop="@drawable/button_scores"
+                android:onClick="onClickMode"
+                android:text="@string/title_activity_scores" />
+            
+            <Button
+                android:id="@+id/dashboard_button_table"
+                style="@style/HomeButton"
+                android:drawableTop="@drawable/button_table"
+                android:onClick="onClickMode"
+                android:text="@string/title_activity_table" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
