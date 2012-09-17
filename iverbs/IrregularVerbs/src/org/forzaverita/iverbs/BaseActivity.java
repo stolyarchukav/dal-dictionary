@@ -5,7 +5,6 @@ import java.util.Locale;
 import org.forzaverita.iverbs.data.Constants;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
