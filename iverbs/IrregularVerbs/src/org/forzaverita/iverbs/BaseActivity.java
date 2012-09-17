@@ -5,7 +5,9 @@ import java.util.Locale;
 import org.forzaverita.iverbs.data.Constants;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
@@ -87,6 +89,9 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			if (result == TextToSpeech.LANG_MISSING_DATA
 					|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
 				Log.e(Constants.LOG_TAG, "This Language is not supported");
+			}
+			else {
+				setVolumeControlStream(AudioManager.STREAM_MUSIC);
 			}
 		} else {
 			Log.e(Constants.LOG_TAG, "Initilization Failed!");
