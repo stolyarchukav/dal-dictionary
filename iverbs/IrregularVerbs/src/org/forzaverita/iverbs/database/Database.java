@@ -9,5 +9,7 @@ public interface Database {
 	void open();
 
 	List<Verb> getVerbs();
+
+	Verb getVerb(int id);
 	
 }

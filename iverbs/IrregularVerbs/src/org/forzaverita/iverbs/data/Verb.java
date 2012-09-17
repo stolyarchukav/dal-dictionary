@@ -6,9 +6,15 @@ public class Verb {
 	
 	private String form1;
 	
+	private String form1Transcription;
+	
 	private String form2;
 	
+	private String form2Transcription;
+	
 	private String form3;
+	
+	private String form3Transcription;
 	
 	private String translation;
 
@@ -52,6 +58,30 @@ public class Verb {
 
 	public void setTranslation(String translation) {
 		this.translation = translation;
+	}
+
+	public String getForm1Transcription() {
+		return form1Transcription;
+	}
+
+	public void setForm1Transcription(String form1Transcription) {
+		this.form1Transcription = form1Transcription;
+	}
+
+	public String getForm2Transcription() {
+		return form2Transcription;
+	}
+
+	public void setForm2Transcription(String form2Transcription) {
+		this.form2Transcription = form2Transcription;
+	}
+
+	public String getForm3Transcription() {
+		return form3Transcription;
+	}
+
+	public void setForm3Transcription(String form3Transcription) {
+		this.form3Transcription = form3Transcription;
 	}
 	
 }

@@ -1,21 +1,43 @@
 package org.forzaverita.iverbs;
 
+import java.util.Locale;
+
+import org.forzaverita.iverbs.data.Constants;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity implements OnInitListener {
+
+	private TextToSpeech tts;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		tts = new TextToSpeech(this, this);
+	}
+	
+	protected void onDestroy() {
+		if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+	}
 
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
 	public void onClickHome(View view) {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -25,24 +47,28 @@ public abstract class BaseActivity extends Activity {
 	public void onClickInfo(View view) {
 		startActivity(new Intent(getApplicationContext(), InfoActivity.class));
 	}
-	
+
 	public void onClickSearch(View view) {
 		startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-	}	
+	}
 
 	public void onClickMode(View view) {
 		switch (view.getId()) {
 		case R.id.dashboard_button_table:
-			startActivity(new Intent(getApplicationContext(), TableActivity.class));
+			startActivity(new Intent(getApplicationContext(),
+					TableActivity.class));
 			break;
 		case R.id.dashboard_button_learn:
-			startActivity(new Intent(getApplicationContext(), LearnActivity.class));
+			startActivity(new Intent(getApplicationContext(),
+					LearnActivity.class));
 			break;
 		case R.id.dashboard_button_train:
-			startActivity(new Intent(getApplicationContext(), TrainActivity.class));
+			startActivity(new Intent(getApplicationContext(),
+					TrainActivity.class));
 			break;
 		case R.id.dashboard_button_scores:
-			startActivity(new Intent(getApplicationContext(), ScoresActivity.class));
+			startActivity(new Intent(getApplicationContext(),
+					ScoresActivity.class));
 			break;
 		default:
 			break;
@@ -54,13 +80,21 @@ public abstract class BaseActivity extends Activity {
 		textView.setText(getTitle());
 	}
 
-	public void toast(String msg) {
-		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+	@Override
+	public void onInit(int status) {
+		if (status == TextToSpeech.SUCCESS) {
+			int result = tts.setLanguage(Locale.ENGLISH);
+			if (result == TextToSpeech.LANG_MISSING_DATA
+					|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
+				Log.e(Constants.LOG_TAG, "This Language is not supported");
+			}
+		} else {
+			Log.e(Constants.LOG_TAG, "Initilization Failed!");
+		}
 	}
 
-	public void trace(String msg) {
-		Log.d("Demo", msg);
-		toast(msg);
+	protected final void speak(String text) {
+		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 }
