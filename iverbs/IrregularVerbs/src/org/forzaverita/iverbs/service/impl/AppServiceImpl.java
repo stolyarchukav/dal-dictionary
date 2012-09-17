@@ -1,5 +1,7 @@
 package org.forzaverita.iverbs.service.impl;
 
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import org.forzaverita.iverbs.data.Verb;
@@ -13,6 +15,8 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	private Database database;
 	
+	private Reference<List<Verb>> verbsCache = new WeakReference<List<Verb>>(null);
+	
 	@Override
 	public void onCreate() {
 		database = new SqliteDatabase(this);
@@ -20,13 +24,14 @@ public class AppServiceImpl extends Application implements AppService {
 		super.onCreate();
 	}
 	
-	public List<Verb> getVerbs(int page, int count) {
-		return database.getVerbs();
-	}
-	
 	@Override
 	public List<Verb> getVerbs() {
-		return database.getVerbs();
+		List<Verb> verbs = verbsCache.get();
+		if (verbs == null || verbs.isEmpty()) {
+			verbs = database.getVerbs();
+			verbsCache = new WeakReference<List<Verb>>(verbs);
+		}
+		return verbs;
 	}
 	
 }
