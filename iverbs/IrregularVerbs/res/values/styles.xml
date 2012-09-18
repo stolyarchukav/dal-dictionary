@@ -104,6 +104,7 @@
     
     <style name="CellText">
         <item name="android:layout_margin">1dp</item>
+        <item name="android:padding">2dp</item>
         <item name="android:background">#FFFFFF</item>
         <item name="android:width">0dip</item>
         <item name="android:gravity">center</item>
@@ -112,6 +113,11 @@
     
     <style name="TableHeaderText" parent="CellText">
         <item name="android:textColor">#ff0000ff</item>
+    </style>
+    
+    <style name="HintText">
+        <item name="android:textColor">@color/title_text</item>
+        <item name="android:background">@color/title_background</item>
     </style>
 
 </resources>
