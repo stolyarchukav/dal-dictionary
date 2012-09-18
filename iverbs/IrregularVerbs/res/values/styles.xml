@@ -98,7 +98,7 @@
     
     <style name="TableRow">
         <item name="android:padding">0dip</item>
-        <item name="android:background">#000000</item>
+        <item name="android:background">@color/title_background</item>
         <item name="android:gravity">center_vertical</item> 
     </style>
     
@@ -118,6 +118,7 @@
     <style name="HintText">
         <item name="android:textColor">@color/title_text</item>
         <item name="android:background">@color/title_background</item>
+        <item name="android:paddingLeft">3dp</item>
     </style>
 
 </resources>
