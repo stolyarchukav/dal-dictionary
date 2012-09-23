@@ -163,5 +163,15 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 		}
 		return verb;
 	}
+
+	@Override
+	public int getMaxId() {
+		Cursor cursor = database.query(VERB, new String[] {ID}, 
+				null, null, null, null, ID + " desc", "1");
+		if (cursor.moveToFirst()) {
+			return cursor.getInt(0);
+		}
+		return 0;
+	}
 	
 }

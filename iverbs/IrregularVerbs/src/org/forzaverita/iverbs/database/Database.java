@@ -11,5 +11,7 @@ public interface Database {
 	List<Verb> getVerbs();
 
 	Verb getVerb(int id);
+
+	int getMaxId();
 	
 }

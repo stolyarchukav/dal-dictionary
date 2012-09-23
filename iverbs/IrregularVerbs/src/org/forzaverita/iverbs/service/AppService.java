@@ -8,4 +8,10 @@ public interface AppService {
 
 	List<Verb> getVerbs();
 
+	Verb getVerb(int id);
+
+	Verb getPreviousVerb();
+
+	Verb getNextVerb();
+
 }

@@ -3,6 +3,7 @@ package org.forzaverita.iverbs;
 import java.util.Locale;
 
 import org.forzaverita.iverbs.data.Constants;
+import org.forzaverita.iverbs.service.AppService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,11 +19,13 @@ import android.widget.TextView;
 public abstract class BaseActivity extends Activity implements OnInitListener {
 
 	private TextToSpeech tts;
+	protected AppService service;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tts = new TextToSpeech(this, this);
+		service = (AppService) getApplicationContext();
 	}
 	
 	protected void onDestroy() {

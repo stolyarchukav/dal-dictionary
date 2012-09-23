@@ -17,10 +17,15 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	private Reference<List<Verb>> verbsCache = new WeakReference<List<Verb>>(null);
 	
+	private int currentId = 1;
+	
+	private int maxId;
+	
 	@Override
 	public void onCreate() {
 		database = new SqliteDatabase(this);
 		database.open();
+		maxId = database.getMaxId();
 		super.onCreate();
 	}
 	
@@ -32,6 +37,30 @@ public class AppServiceImpl extends Application implements AppService {
 			verbsCache = new WeakReference<List<Verb>>(verbs);
 		}
 		return verbs;
+	}
+	
+	@Override
+	public Verb getVerb(int id) {
+		if (id != 0) {
+			currentId = id;
+		}
+		return database.getVerb(currentId);
+	}
+
+	@Override
+	public Verb getPreviousVerb() {
+		if (--currentId < 1) {
+			currentId = maxId;
+		}
+		return database.getVerb(currentId);
+	}
+
+	@Override
+	public Verb getNextVerb() {
+		if (++currentId > maxId) {
+			currentId = 1;
+		}
+		return database.getVerb(currentId);
 	}
 	
 }

@@ -3,7 +3,6 @@ package org.forzaverita.iverbs;
 import java.util.List;
 
 import org.forzaverita.iverbs.data.Verb;
-import org.forzaverita.iverbs.service.AppService;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -14,15 +13,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 public class TableActivity extends BaseActivity {
-
-	private AppService service;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.table);
         setActivityTitle();
-        service = (AppService) getApplicationContext();
         
         new AsyncTask<Void, Void, List<Verb>>() {
 

@@ -18,6 +18,9 @@
     <string name="description_info">Info</string>
     <string name="description_home">Home</string>
     <string name="description_search">Search</string>
+    <string name="description_previous">Previous</string>
+    <string name="description_next">Next</string>
+    <string name="description_speak">Speak</string>
 
     <string name="title_home">Home</string>
     
@@ -26,5 +29,7 @@
     <string name="table_form_3">Past Participle</string>
     <string name="table_translation">Translation</string>
     <string name="table_click_hint">Click on cell to speak word</string>
+    
+    <string name="learn_hint">Touch and move to scroll</string>
     
 </resources>
