@@ -1,14 +1,13 @@
 package org.forzaverita.iverbs;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 import org.forzaverita.iverbs.data.Verb;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class LearnActivity extends BaseActivity {
@@ -34,6 +33,39 @@ public class LearnActivity extends BaseActivity {
         }
         Verb verb = service.getVerb(id);
         showVerb(verb);
+        
+        ScrollView view = (ScrollView) findViewById(R.id.learn_scroll_view);
+        view.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+		    	case MotionEvent.ACTION_DOWN :
+		    		takeCoords(event);
+					break;
+				case MotionEvent.ACTION_MOVE :
+					float dx = event.getX() - x;
+					float dyAbs = abs(event.getY() - y);
+					View decorView = getWindow().getDecorView();
+					int moveTarget = decorView.getRight() / 2;
+					System.out.println(dx + "," + dyAbs + "," + moveTarget);
+					if (abs(dx) > dyAbs && abs(dx) >= moveTarget) {
+						if (dx > 0) {
+							showNext();
+						}
+						else {
+							showPrevious();
+						}
+						System.out.println("123");
+						takeCoords(event);
+						return true;
+					}
+					break;
+				default:
+					break;
+				}
+		    	return false;
+			}
+		});
     }
     
     public void onClickPrevious(View view) {
@@ -76,34 +108,6 @@ public class LearnActivity extends BaseActivity {
         	text.setText(verb.getTranslation());
         }
 	}
-    
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-    	switch (event.getAction()) {
-    	case MotionEvent.ACTION_DOWN :
-    		takeCoords(event);
-			break;
-		case MotionEvent.ACTION_MOVE :
-			float dx = event.getX() - x;
-			float dy = event.getY() - y;
-			float max = max(dx, dy);
-			float min = abs(min(dx, dy));
-			View decorView = getWindow().getDecorView();
-			int moveTarget = min(decorView.getRight(), decorView.getBottom()) / 2;
-			if (max >= min && max > moveTarget) {
-				showNext();
-				takeCoords(event);
-			}
-			else if (max < min && min > moveTarget) {
-				showPrevious();
-				takeCoords(event);
-			}
-			break;
-		default:
-			break;
-		}
-    	return true;
-    }
 
 	private void takeCoords(MotionEvent event) {
 		x = event.getX();

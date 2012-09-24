@@ -12,8 +12,9 @@
             android:onClick="onClickHome"
             android:src="@drawable/title_home" />
 
-        <ImageView style="@style/TitleBarSeparator" 
-            android:contentDescription="@string/description_info"/>
+        <ImageView
+            style="@style/TitleBarSeparator"
+            android:contentDescription="@string/description_info" />
 
         <TextView style="@style/TitleBarText" />
 
@@ -29,110 +30,115 @@
             android:onClick="onClickSearch"
             android:src="@drawable/title_search" />
     </LinearLayout>
-    
+
     <LinearLayout
-    	android:layout_width="fill_parent"
-    	android:layout_height="0dp"
-    	android:layout_weight="0.9"
-    	android:orientation="horizontal"
-    	android:background="@color/background" >
-        
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:background="@color/background"
+        android:orientation="horizontal" >
+
         <ImageButton
             style="@style/LearnArrow"
             android:contentDescription="@string/description_previous"
             android:onClick="onClickPrevious"
             android:src="@drawable/button_left_arrow" />
-        
-        <LinearLayout
-    		android:layout_width="0dp"
-    		android:layout_height="fill_parent"
-    		android:layout_weight="0.9"
-    		android:orientation="vertical" >
-        
-            <LinearLayout style="@style/LearnVerbBlock" >
-                
-                <LinearLayout style="@style/LearnVerbTextBlock" >
-    	
-                    <TextView android:id="@+id/learn_form1"
+
+        <ScrollView
+            android:id="@+id/learn_scroll_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout style="@style/LearnVerbBlock" >
+
+                    <LinearLayout style="@style/LearnVerbTextBlock" >
+
+                        <TextView
+                            android:id="@+id/learn_form1"
+                            style="@style/LearnVerbTextForm" />
+
+                        <TextView
+                            android:id="@+id/learn_form1_transcription"
+                            style="@style/LearnVerbTextTranscription" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        style="@style/LearnSpeaker"
+                        android:contentDescription="@string/description_speak"
+                        android:onClick="speakForm1" />
+                </LinearLayout>
+
+                <View style="@style/LearnVerbSplitter" />
+
+                <LinearLayout style="@style/LearnVerbBlock" >
+
+                    <LinearLayout style="@style/LearnVerbTextBlock" >
+
+                        <TextView
+                            android:id="@+id/learn_form2"
+                            style="@style/LearnVerbTextForm" />
+
+                        <TextView
+                            android:id="@+id/learn_form2_transcription"
+                            style="@style/LearnVerbTextTranscription" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        style="@style/LearnSpeaker"
+                        android:contentDescription="@string/description_speak"
+                        android:onClick="speakForm2" />
+                </LinearLayout>
+
+                <View style="@style/LearnVerbSplitter" />
+
+                <LinearLayout style="@style/LearnVerbBlock" >
+
+                    <LinearLayout style="@style/LearnVerbTextBlock" >
+
+                        <TextView
+                            android:id="@+id/learn_form3"
+                            style="@style/LearnVerbTextForm" />
+
+                        <TextView
+                            android:id="@+id/learn_form3_transcription"
+                            style="@style/LearnVerbTextTranscription" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        style="@style/LearnSpeaker"
+                        android:contentDescription="@string/description_speak"
+                        android:onClick="speakForm3" />
+                </LinearLayout>
+
+                <View style="@style/LearnVerbSplitter" />
+
+                <LinearLayout style="@style/LearnVerbBlock" >
+
+                    <TextView
+                        android:id="@+id/learn_translation"
                         style="@style/LearnVerbTextForm" />
-            
-            		<TextView android:id="@+id/learn_form1_transcription"
-        				style="@style/LearnVerbTextTranscription" />
-                    		
-            	</LinearLayout>
-            	
-                <ImageButton
-            		style="@style/LearnSpeaker"
-            		android:contentDescription="@string/description_speak" 
-            		android:onClick="speakForm1" />
-                
+                </LinearLayout>
             </LinearLayout>
-            
-            <View style="@style/LearnVerbSplitter" />
-            
-            <LinearLayout style="@style/LearnVerbBlock" >
-                
-                <LinearLayout style="@style/LearnVerbTextBlock" >
-    	
-                    <TextView android:id="@+id/learn_form2"
-        				style="@style/LearnVerbTextForm" />
-            
-            		<TextView android:id="@+id/learn_form2_transcription"
-        				style="@style/LearnVerbTextTranscription" />
-                    		
-            	</LinearLayout>
-            	
-                <ImageButton
-            		style="@style/LearnSpeaker" 
-            		android:contentDescription="@string/description_speak"
-            		android:onClick="speakForm2" />
-                
-            </LinearLayout>
-            
-            <View style="@style/LearnVerbSplitter" />
-            
-            <LinearLayout style="@style/LearnVerbBlock" >
-                
-                <LinearLayout style="@style/LearnVerbTextBlock" >
-    	
-                    <TextView android:id="@+id/learn_form3"
-        				style="@style/LearnVerbTextForm" />
-            
-            		<TextView android:id="@+id/learn_form3_transcription"
-        				style="@style/LearnVerbTextTranscription" />
-                    		
-            	</LinearLayout>
-            	
-                <ImageButton
-            		style="@style/LearnSpeaker" 
-            		android:contentDescription="@string/description_speak"
-            		android:onClick="speakForm3" />
-                
-            </LinearLayout>
-            
-            <View style="@style/LearnVerbSplitter" />
-            
-            <LinearLayout style="@style/LearnVerbBlock" >
-                
-                <TextView android:id="@+id/learn_translation"
-        				style="@style/LearnVerbTextForm" />
-            	
-            </LinearLayout>
-            
-        </LinearLayout>
-        
+        </ScrollView>
+
         <ImageButton
             style="@style/LearnArrow"
+            android:layout_gravity="right"
             android:contentDescription="@string/description_next"
             android:onClick="onClickNext"
-            android:src="@drawable/button_right_arrow"
-            android:layout_gravity="right" />
-        
+            android:src="@drawable/button_right_arrow" />
     </LinearLayout>
-    
-    <TextView android:text="@string/learn_hint"
-        android:layout_width="fill_parent" 
+
+    <TextView
+        style="@style/HintText"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        style="@style/HintText" />
-    
+        android:text="@string/learn_hint" />
+
 </LinearLayout>

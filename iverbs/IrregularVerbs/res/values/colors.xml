@@ -7,4 +7,5 @@
     <color name="background">#ffffffff</color>
     <color name="table_header_text">#ff0000ff</color>
     <color name="learn_form_text">#ff0000ff</color>
+    <color name="block_splitter">#ff888888</color>
 </resources>

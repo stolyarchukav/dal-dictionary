@@ -136,15 +136,14 @@
     
     <style name="LearnVerbBlock">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">0dp</item>
-    	<item name="android:layout_weight">0.25</item>
+        <item name="android:layout_height">wrap_content</item>
     	<item name="android:orientation">horizontal</item>
     	<item name="android:padding">15dp</item>
     </style>
     
     <style name="LearnVerbTextBlock">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">0.9</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:orientation">vertical</item>
@@ -152,7 +151,7 @@
     
     <style name="LearnVerbTextForm">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">bottom|left</item>
         <item name="android:layout_weight">0.5</item>
         <item name="android:textSize">20sp</item>
@@ -162,7 +161,7 @@
     
     <style name="LearnVerbTextTranscription">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">top|left</item>
         <item name="android:layout_weight">0.5</item>
         <item name="android:textSize">17sp</item>
@@ -172,7 +171,7 @@
     <style name="LearnVerbSplitter">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1dip</item>
-        <item name="android:background">@color/learn_form_text</item>
+        <item name="android:background">@color/block_splitter</item>
     </style>
 
 </resources>
