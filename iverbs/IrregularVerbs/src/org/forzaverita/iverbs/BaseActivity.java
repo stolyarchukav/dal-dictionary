@@ -38,7 +38,8 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		//TODO create menu
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -66,14 +67,15 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			startActivity(new Intent(getApplicationContext(),
 					LearnActivity.class));
 			break;
-		case R.id.dashboard_button_train:
+		/* TODO Future features
+		 * case R.id.dashboard_button_train:
 			startActivity(new Intent(getApplicationContext(),
 					TrainActivity.class));
 			break;
 		case R.id.dashboard_button_scores:
 			startActivity(new Intent(getApplicationContext(),
 					ScoresActivity.class));
-			break;
+			break;*/
 		default:
 			break;
 		}
