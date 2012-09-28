@@ -53,7 +53,7 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 	}
 
 	public void onClickSearch(View view) {
-		startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+		onSearchRequested();
 	}
 
 	public void onClickMode(View view) {

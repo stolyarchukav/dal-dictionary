@@ -32,4 +32,7 @@
     
     <string name="learn_hint">Use arrows or touch to scroll</string>
     
+    <string name="search_hint">Type to search</string>
+    <string name="search_not_found">Verbs not found</string>
+    
 </resources>

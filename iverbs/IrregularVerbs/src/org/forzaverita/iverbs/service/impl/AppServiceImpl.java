@@ -10,6 +10,7 @@ import org.forzaverita.iverbs.database.impl.SqliteDatabase;
 import org.forzaverita.iverbs.service.AppService;
 
 import android.app.Application;
+import android.database.Cursor;
 
 public class AppServiceImpl extends Application implements AppService {
 	
@@ -61,6 +62,16 @@ public class AppServiceImpl extends Application implements AppService {
 			currentId = 1;
 		}
 		return database.getVerb(currentId);
+	}
+	
+	@Override
+	public Cursor getCursorVerbsContains(String search) {
+		return database.getCursorVerbsContains(search);
+	}
+
+	@Override
+	public List<Verb> searchVerbs(String query) {
+		return database.searchVerbs(query);
 	}
 	
 }

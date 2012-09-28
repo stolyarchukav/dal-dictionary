@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.forzaverita.iverbs.data.Verb;
 
+import android.database.Cursor;
+
 public interface Database {
 
 	void open();
@@ -13,5 +15,9 @@ public interface Database {
 	Verb getVerb(int id);
 
 	int getMaxId();
+
+	Cursor getCursorVerbsContains(String search);
+
+	List<Verb> searchVerbs(String query);
 	
 }

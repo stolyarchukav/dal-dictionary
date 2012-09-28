@@ -2,6 +2,7 @@ package org.forzaverita.iverbs;
 
 import static java.lang.Math.abs;
 
+import org.forzaverita.iverbs.data.Constants;
 import org.forzaverita.iverbs.data.Verb;
 
 import android.os.Bundle;
@@ -12,8 +13,6 @@ import android.widget.TextView;
 
 public class LearnActivity extends BaseActivity {
 
-    private static final String VERB_ID = "verb_id";
-    
     private float x;
     private float y;
     
@@ -29,7 +28,7 @@ public class LearnActivity extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         int id = 0;
         if (extras != null) {
-        	id = extras.getInt(VERB_ID);
+        	id = extras.getInt(Constants.VERB_ID);
         }
         Verb verb = service.getVerb(id);
         showVerb(verb);

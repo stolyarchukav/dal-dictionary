@@ -11,11 +11,13 @@ import org.forzaverita.iverbs.data.Constants;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 import android.util.Log;
 
 public class SqliteDatabase extends SQLiteOpenHelper implements Database {
@@ -126,16 +128,21 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 	
 	@Override
 	public List<Verb> getVerbs() {
-		Cursor cursor = database.query(VERB, new String[] {FORM_1, FORM_2, FORM_3, TRANSLATION}, 
+		Cursor cursor = database.query(VERB, new String[] {ID, FORM_1, FORM_2, FORM_3, TRANSLATION}, 
 				null, null, null, null, null);
+		return extractWithoutTranscription(cursor);
+	}
+
+	private List<Verb> extractWithoutTranscription(Cursor cursor) {
 		List<Verb> verbs = new ArrayList<Verb>();
 		if (cursor.moveToFirst()) {
             do {
             	Verb verb = new Verb();
-            	verb.setForm1(cursor.getString(0));
-            	verb.setForm2(cursor.getString(1));
-            	verb.setForm3(cursor.getString(2));
-            	verb.setTranslation(cursor.getString(3));
+            	verb.setId(cursor.getInt(0));
+            	verb.setForm1(cursor.getString(1));
+            	verb.setForm2(cursor.getString(2));
+            	verb.setForm3(cursor.getString(3));
+            	verb.setTranslation(cursor.getString(4));
             	verbs.add(verb);
             }
             while (cursor.moveToNext());
@@ -172,6 +179,39 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 			return cursor.getInt(0);
 		}
 		return 0;
+	}
+	
+	@Override
+	public Cursor getCursorVerbsContains(String search) {
+		final String SELECT_ID_FIELD_VERB = "select " + ID + " as " + BaseColumns._ID +
+				", " + ID + " as " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID +
+				", %1$s as " + SearchManager.SUGGEST_COLUMN_TEXT_1 +
+				", %1$s as " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA +
+				" from " + VERB + 
+				" where upper(%1$s) like '%%%2$s%%' ";
+		StringBuilder query = new StringBuilder(String.format(SELECT_ID_FIELD_VERB, FORM_1, search));
+		query.append(" union all ");
+		query.append(String.format(SELECT_ID_FIELD_VERB, FORM_2, search));
+		query.append(" union all ");
+		query.append(String.format(SELECT_ID_FIELD_VERB, FORM_3, search));
+		query.append(" union all ");
+		query.append(String.format(SELECT_ID_FIELD_VERB, TRANSLATION, search));
+		return database.rawQuery(query.toString(), null);
+	}
+
+	@Override
+	public List<Verb> searchVerbs(String query) {
+		Cursor cursor = database.query(VERB, new String[] {ID, FORM_1, FORM_2, FORM_3, TRANSLATION}, 
+				restrictionLike(FORM_1, query) + " or " +
+				restrictionLike(FORM_2, query) + " or " +
+				restrictionLike(FORM_3, query) + " or " +
+				restrictionLike(TRANSLATION, query), 
+				null, null, null, null);
+		return extractWithoutTranscription(cursor);
+	}
+	
+	private String restrictionLike(String field, String query) {
+		return "upper(" + field + ") like '%" + query + "%'";
 	}
 	
 }
