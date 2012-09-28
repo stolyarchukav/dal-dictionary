@@ -8,7 +8,7 @@
     <string name="progress_text">Loading, please wait…</string>
     
     <string name="title_activity_main">Irregular Verbs</string>
-    <string name="title_activity_info">About app</string>
+    <string name="title_activity_info">Info</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_table">Table</string>
     <string name="title_activity_learn">Learn</string>

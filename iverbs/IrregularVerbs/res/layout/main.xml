@@ -35,12 +35,12 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="6dip"
+        android:padding="4dip"
         android:background="@color/background" >
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal" >
 
@@ -59,7 +59,7 @@
                 android:text="@string/title_activity_table" />
             
         </LinearLayout>
-
+        
         <!-- //TODO future features 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -83,6 +83,28 @@
 
         </LinearLayout>
  		-->
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/dashboard_button_search"
+                style="@style/HomeButton"
+                android:drawableTop="@drawable/ic_btn_search"
+                android:onClick="onClickMode"
+                android:text="@string/title_activity_search" />
+
+            <Button
+                android:id="@+id/dashboard_button_info"
+                style="@style/HomeButton"
+                android:drawableTop="@drawable/ic_btn_info"
+                android:onClick="onClickMode"
+                android:text="@string/title_activity_info" />
+            
+        </LinearLayout>
  		
     </LinearLayout>
 

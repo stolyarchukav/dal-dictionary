@@ -76,6 +76,13 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			startActivity(new Intent(getApplicationContext(),
 					ScoresActivity.class));
 			break;*/
+		case R.id.dashboard_button_search:
+			onSearchRequested();
+			break;
+		case R.id.dashboard_button_info:
+			startActivity(new Intent(getApplicationContext(),
+					InfoActivity.class));
+			break;
 		default:
 			break;
 		}

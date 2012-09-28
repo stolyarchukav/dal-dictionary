@@ -1,6 +1,6 @@
 package org.forzaverita.iverbs;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.forzaverita.iverbs.data.Constants;
@@ -41,7 +41,7 @@ public class SearchActivity extends BaseActivity {
         	@Override
 			protected List<Verb> doInBackground(Void... params) {
         		Intent intent = SearchActivity.this.getIntent();
-        		List<Verb> verbs = Collections.emptyList();
+        		List<Verb> verbs = new ArrayList<Verb>();
                 if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 	String query = intent.getStringExtra(SearchManager.QUERY);
                 	this.query = query;
@@ -51,6 +51,7 @@ public class SearchActivity extends BaseActivity {
                 	String idStr = intent.getData().getLastPathSegment();
                 	if (idStr != null) {
                 		Integer id = Integer.parseInt(idStr);
+                		verbs.add(service.getVerb(id));
                 		startLearnActivity(id);
                 	}
                 }
