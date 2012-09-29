@@ -12,7 +12,8 @@
             android:onClick="onClickHome"
             android:src="@drawable/title_home" />
 
-        <ImageView style="@style/TitleBarSeparator" />
+        <ImageView style="@style/TitleBarSeparator" 
+            android:contentDescription="@string/description_search"/>
 
         <TextView style="@style/TitleBarText" />
 

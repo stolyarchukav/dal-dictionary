@@ -173,5 +173,16 @@
         <item name="android:layout_height">1dip</item>
         <item name="android:background">@color/block_splitter</item>
     </style>
+    
+    <style name="InfoLink">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:textColor">@color/info_link_text</item>
+    </style>
 
 </resources>

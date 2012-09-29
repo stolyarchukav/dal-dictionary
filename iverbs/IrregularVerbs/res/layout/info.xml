@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical" >
 
     <LinearLayout style="@style/TitleBar" >
@@ -12,7 +13,9 @@
             android:onClick="onClickHome"
             android:src="@drawable/title_home" />
 
-        <ImageView style="@style/TitleBarSeparator" android:contentDescription="@string/description_info"/>
+        <ImageView
+            style="@style/TitleBarSeparator"
+            android:contentDescription="@string/description_info" />
 
         <TextView style="@style/TitleBarText" />
 
@@ -29,9 +32,30 @@
             android:src="@drawable/title_search" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Info //TODO under construction" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <WebView
+                android:id="@+id/info_usage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                style="@style/InfoLink"
+                android:onClick="onClickRateApp"
+                android:text="@string/rate_app" />
+
+            <Button
+                style="@style/InfoLink"
+                android:onClick="onClickMoreApps"
+                android:text="@string/info_more_apps" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

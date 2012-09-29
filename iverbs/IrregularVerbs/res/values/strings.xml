@@ -35,4 +35,17 @@
     <string name="search_hint">Type to search</string>
     <string name="search_not_found">Verbs not found</string>
     
+    <string name="info_usage">
+        <![CDATA[
+        		<p><b>The reference book of english irregular verbs</b><p>
+        		<p>version 1.0</p>
+            	Features:<ul>
+        		<li>Table: full list of verbs</li>
+        		<li>Learn: scrollable page of verbs with transcriptions</li>
+        		<li>Search: text and voice search verbs</li></ul>
+        	]]>
+    </string>
+    <string name="info_more_apps"><u>Get more applications</u></string>
+    <string name="rate_app"><u>Very appreciate for your comments and rates</u></string>
+    
 </resources>
