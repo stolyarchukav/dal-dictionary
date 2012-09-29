@@ -19,7 +19,8 @@ public class InfoActivity extends BaseActivity {
         setActivityTitle();
         
         WebView text = (WebView) findViewById(R.id.info_usage);
-        text.loadData(getString(R.string.info_usage), "text/html; charset=UTF-8", null);
+        String header = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+        text.loadData(header + getString(R.string.info_usage), "text/html; charset=UTF-8", null);
     }
     
     public void onClickMoreApps(View view) {
