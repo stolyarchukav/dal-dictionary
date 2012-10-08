@@ -2,7 +2,9 @@ package org.forzaverita.iverbs.service.impl;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
@@ -17,6 +19,8 @@ public class AppServiceImpl extends Application implements AppService {
 	private Database database;
 	
 	private Reference<List<Verb>> verbsCache = new WeakReference<List<Verb>>(null);
+	
+	private Random random = new Random();
 	
 	private int currentId = 1;
 	
@@ -72,6 +76,16 @@ public class AppServiceImpl extends Application implements AppService {
 	@Override
 	public List<Verb> searchVerbs(String query) {
 		return database.searchVerbs(query);
+	}
+	
+	@Override
+	public Verb getRandomVerb(Verb... excludes) {
+		Verb verb = database.getVerb(random.nextInt(maxId + 1));
+		if (verb != null && 
+				! (excludes != null && Arrays.asList(excludes).contains(verb))) {
+			return verb;
+		}	
+		return getRandomVerb(excludes);	
 	}
 	
 }

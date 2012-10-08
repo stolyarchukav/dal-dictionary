@@ -66,13 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/dashboard_button_train"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/button_train"
-                android:onClick="onClickMode"
-                android:text="@string/title_activity_train" />
             
             <Button
                 android:id="@+id/dashboard_button_scores"
@@ -91,11 +84,11 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/dashboard_button_search"
+                android:id="@+id/dashboard_button_train"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/ic_btn_search"
+                android:drawableTop="@drawable/button_train"
                 android:onClick="onClickMode"
-                android:text="@string/title_activity_search" />
+                android:text="@string/title_activity_train" />
 
             <Button
                 android:id="@+id/dashboard_button_info"

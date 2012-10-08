@@ -67,18 +67,15 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			startActivity(new Intent(getApplicationContext(),
 					LearnActivity.class));
 			break;
-		/* TODO Future features
-		 * case R.id.dashboard_button_train:
+		case R.id.dashboard_button_train:
 			startActivity(new Intent(getApplicationContext(),
 					TrainActivity.class));
 			break;
-		case R.id.dashboard_button_scores:
+		/* TODO Future features
+		 * case R.id.dashboard_button_scores:
 			startActivity(new Intent(getApplicationContext(),
 					ScoresActivity.class));
 			break;*/
-		case R.id.dashboard_button_search:
-			onSearchRequested();
-			break;
 		case R.id.dashboard_button_info:
 			startActivity(new Intent(getApplicationContext(),
 					InfoActivity.class));

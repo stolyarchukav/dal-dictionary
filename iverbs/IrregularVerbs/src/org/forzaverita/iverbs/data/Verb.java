@@ -18,6 +18,36 @@ public class Verb {
 	
 	private String translation;
 
+	/* Methods */
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Verb other = (Verb) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Verb [id=" + id + ", form1=" + form1 + ", form2=" + form2
+				+ ", form3=" + form3 + ", translation=" + translation + "]";
+	}
+	
 	/* Getters and Setters */
 	
 	public int getId() {

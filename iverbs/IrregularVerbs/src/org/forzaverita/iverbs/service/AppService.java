@@ -20,4 +20,6 @@ public interface AppService {
 
 	List<Verb> searchVerbs(String query);
 
+	Verb getRandomVerb(Verb... excludes);
+
 }
