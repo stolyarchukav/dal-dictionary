@@ -23,12 +23,21 @@ public class TrainActivity extends BaseActivity {
 	
 	private volatile int formQuest;
 	private volatile Verb verb;
+	private TextView counterCorrect;
+	private TextView counterWrong;
+	private int correctCount = 0;
+	private int wrongCount = 0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train);
         setActivityTitle();
+        
+        counterCorrect = (TextView) findViewById(R.id.train_count_correct);
+        counterCorrect.setText(String.valueOf(correctCount));
+        counterWrong = (TextView) findViewById(R.id.train_count_wrong);
+        counterWrong.setText(String.valueOf(wrongCount));
         
         createQuestion();
     }
@@ -123,6 +132,7 @@ public class TrainActivity extends BaseActivity {
 					}
 				}, 1000);
 				service.addCorrect(formQuest, verb, TrainMode.SELECT);
+				counterCorrect.setText(String.valueOf(++ correctCount));
 			}
 			else {
 				v.setBackgroundColor(v.getResources().getColor(R.color.train_wrong));
@@ -133,6 +143,7 @@ public class TrainActivity extends BaseActivity {
 					}
 				}, 500);
 				service.addWrong(formQuest, verb, TrainMode.SELECT);
+				counterWrong.setText(String.valueOf(++ wrongCount));
 			}
 		}
 	}

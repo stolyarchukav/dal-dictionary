@@ -34,7 +34,7 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="0dp" 
+        android:layout_height="0dp"
         android:layout_weight="0.9" >
 
         <LinearLayout
@@ -100,13 +100,27 @@
                         android:id="@+id/train_answer_4"
                         style="@style/ButtonAnswer" />
                 </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/train_count_correct"
+                        style="@style/CounterAnswer"
+                        android:textColor="@color/train_correct" />
+
+                    <TextView
+                        android:id="@+id/train_count_wrong"
+                        style="@style/CounterAnswer"
+                        android:textColor="@color/train_wrong" />
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </ScrollView>
-    
-    <TextView android:text="@string/tran_hint"
-        android:layout_width="fill_parent" 
+
+    <TextView
+        style="@style/HintText"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        style="@style/HintText" />
+        android:text="@string/tran_hint" />
 
 </LinearLayout>
