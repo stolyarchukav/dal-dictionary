@@ -6,10 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
 import org.forzaverita.iverbs.database.impl.SqliteDatabase;
 import org.forzaverita.iverbs.service.AppService;
+import org.forzaverita.iverbs.service.PreferencesService;
 
 import android.app.Application;
 import android.database.Cursor;
@@ -17,6 +19,8 @@ import android.database.Cursor;
 public class AppServiceImpl extends Application implements AppService {
 	
 	private Database database;
+	
+	private PreferencesService preferences;
 	
 	private Reference<List<Verb>> verbsCache = new WeakReference<List<Verb>>(null);
 	
@@ -31,6 +35,7 @@ public class AppServiceImpl extends Application implements AppService {
 		database = new SqliteDatabase(this);
 		database.open();
 		maxId = database.getMaxId();
+		preferences = new PreferencesServiceImpl(this);
 		super.onCreate();
 	}
 	
@@ -86,6 +91,16 @@ public class AppServiceImpl extends Application implements AppService {
 			return verb;
 		}	
 		return getRandomVerb(excludes);	
+	}
+	
+	@Override
+	public void addCorrect(int formQuest, Verb verb, TrainMode select) {
+		preferences.addCorrect(formQuest, verb, select);
+	}
+	
+	@Override
+	public void addWrong(int formQuest, Verb verb, TrainMode select) {
+		preferences.addWrong(formQuest, verb, select);
 	}
 	
 }

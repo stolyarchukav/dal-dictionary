@@ -44,46 +44,60 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:padding="5dp"
                 android:text="@string/train_question_part_first" />
-            
+
             <TextView
                 android:id="@+id/train_question_form"
-                android:padding="10dp"
-                android:textSize="17sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/train_key_text"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:padding="5dp"
                 android:text="@string/train_question_part_second" />
-            
+
             <TextView
                 android:id="@+id/train_question_verb"
-                android:padding="10dp"
-                android:textSize="17sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/train_key_text"
+                android:textSize="20sp" />
+
             <TableLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="*" >
+                android:stretchColumns="1" >
 
                 <TableRow>
 
-                    <Button android:id="@+id/train_answer_1" />
+                    <Button
+                        android:id="@+id/train_answer_1"
+                        style="@style/ButtonAnswer" />
 
-                    <Button android:id="@+id/train_answer_2" />
+                    <Button
+                        android:id="@+id/train_answer_2"
+                        style="@style/ButtonAnswer" />
                 </TableRow>
 
                 <TableRow>
 
-                    <Button android:id="@+id/train_answer_3" />
+                    <Button
+                        android:id="@+id/train_answer_3"
+                        style="@style/ButtonAnswer" />
 
-                    <Button android:id="@+id/train_answer_4" />
+                    <Button
+                        android:id="@+id/train_answer_4"
+                        style="@style/ButtonAnswer" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>

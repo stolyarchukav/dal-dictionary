@@ -184,5 +184,11 @@
         <item name="android:gravity">center_horizontal|center_vertical</item>
         <item name="android:textColor">@color/info_link_text</item>
     </style>
+    
+    <style name="ButtonAnswer">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:padding">2dp</item>
+    </style>
 
 </resources>
