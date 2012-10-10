@@ -34,7 +34,8 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="0dp" 
+        android:layout_weight="0.9" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -102,5 +103,10 @@
             </TableLayout>
         </LinearLayout>
     </ScrollView>
+    
+    <TextView android:text="@string/tran_hint"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        style="@style/HintText" />
 
 </LinearLayout>

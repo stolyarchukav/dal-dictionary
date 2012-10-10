@@ -48,5 +48,6 @@
     <string name="rate_app"><u>Very appreciate for your comments and rates</u></string>
     <string name="train_question_part_first">Select the</string>
     <string name="train_question_part_second">of verb</string>
+    <string name="tran_hint">Select right answer</string>
     
 </resources>
