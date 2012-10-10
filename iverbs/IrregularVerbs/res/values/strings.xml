@@ -41,7 +41,8 @@
             	Features:<ul>
         		<li>Table: full list of verbs</li>
         		<li>Learn: scrollable page of verbs with transcriptions</li>
-        		<li>Search: text and voice search verbs</li></ul>
+        		<li>Search: text and voice search verbs</li>
+        		<li>Train: quiz of verbs</li></ul>
         	]]>
     </string>
     <string name="info_more_apps"><u>Get more applications</u></string>
