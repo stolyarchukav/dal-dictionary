@@ -46,5 +46,7 @@
     </string>
     <string name="info_more_apps"><u>Другие приложения</u></string>
     <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
+    <string name="train_question_part_first">Укажите</string>
+    <string name="train_question_part_second">глагола</string>
     
 </resources>
