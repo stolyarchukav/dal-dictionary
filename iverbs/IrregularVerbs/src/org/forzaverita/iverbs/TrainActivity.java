@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
@@ -116,6 +117,7 @@ public class TrainActivity extends BaseActivity {
     private class AnswerListener implements View.OnClickListener {
     	
     	private boolean correct;
+    	private AtomicBoolean selected = new AtomicBoolean();
     	
     	public AnswerListener(boolean correct) {
 			this.correct = correct;
@@ -123,27 +125,32 @@ public class TrainActivity extends BaseActivity {
     	
 		@Override
 		public void onClick(final View v) {
-			if (correct) {
-				v.setBackgroundColor(v.getResources().getColor(R.color.train_correct));
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						TrainActivity.this.createQuestion();
-					}
-				}, 1000);
-				service.addCorrect(formQuest, verb, TrainMode.SELECT);
-				counterCorrect.setText(String.valueOf(++ correctCount));
-			}
-			else {
-				v.setBackgroundColor(v.getResources().getColor(R.color.train_wrong));
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						v.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_answer));
-					}
-				}, 500);
-				service.addWrong(formQuest, verb, TrainMode.SELECT);
-				counterWrong.setText(String.valueOf(++ wrongCount));
+			if (! selected.get()) {
+				selected.set(true);
+				if (correct) {
+					v.setBackgroundColor(v.getResources().getColor(R.color.train_correct));
+					new Handler().postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							TrainActivity.this.createQuestion();
+							selected.set(false);
+						}
+					}, 1000);
+					service.addCorrect(formQuest, verb, TrainMode.SELECT);
+					counterCorrect.setText(String.valueOf(++ correctCount));
+				}
+				else {
+					v.setBackgroundColor(v.getResources().getColor(R.color.train_wrong));
+					new Handler().postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							v.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_answer));
+							selected.set(false);
+						}
+					}, 500);
+					service.addWrong(formQuest, verb, TrainMode.SELECT);
+					counterWrong.setText(String.valueOf(++ wrongCount));
+				}				
 			}
 		}
 	}
