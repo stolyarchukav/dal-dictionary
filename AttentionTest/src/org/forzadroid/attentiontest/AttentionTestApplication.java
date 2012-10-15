@@ -149,22 +149,24 @@ public class AttentionTestApplication extends Application {
 	}
 
 	public int getFontColor() {
-		int color = 0;
+		int color = Color.BLACK;
 		if (varFontColor) {
-			color = random.nextInt(5);
+			color = Color.rgb(random.nextInt(255), random.nextInt(200), random.nextInt(200));
 		}
-		switch (color) {
-		case 0:
-			return Color.BLACK;
-		case 1:
-			return Color.MAGENTA;
-		case 2:
-			return Color.RED;
-		case 3:
-			return Color.YELLOW;
-		default:
-			return Color.rgb(0, 0, 128);
-		} 		
+		return color; 		
+	}
+	
+	public String getDigitalSquareTitle() {
+		StringBuilder text = new StringBuilder(getString(R.string.dig_square_title));
+		text.append(" [ ");
+		text.append(next.get());
+		text.append(" ]");
+		if (startTime != null) {
+			long time = System.currentTimeMillis() - startTime;
+			text.append(". Time ");
+			text.append(time / 100 / 10.0);
+		}
+		return text.toString();
 	}
 	
 }

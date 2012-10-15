@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.forzadroid.attentiontest"
-      android:versionCode="5"
-      android:versionName="1.21">
+      android:versionCode="7"
+      android:versionName="1.22">
     <uses-sdk android:minSdkVersion="4" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -21,7 +21,8 @@
         	android:label="@string/main_digital_sequence">
         </activity>
         <activity android:name="DigitalSquareActivity"
-        	android:label="@string/dig_square_title">
+        	android:label="@string/dig_square_title"
+        	android:configChanges="orientation">
         </activity>
         <activity android:name="RecordsActivity"
         	android:label="@string/main_records">

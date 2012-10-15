@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20px"
+        android:textSize="24sp"
+        android:textColor="@color/title"
+        android:text="@string/title" />
+    
+    <Button android:id="@+id/appsButton"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:text="@string/apps_link" 
+		android:textSize="15sp"
+		android:textColor="@color/apps_link"
+		android:layout_margin="15px"
+		android:background="@null" />
+
+</LinearLayout>
