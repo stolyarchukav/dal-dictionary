@@ -40,9 +40,10 @@ public class TableActivity extends BaseActivity {
         	protected void onPostExecute(List<Verb> verbs) {
         		dialog.dismiss();
         		TableLayout layout = (TableLayout) findViewById(R.id.table_table);
-		        for (Verb verb : verbs) {
+        		boolean odd = false;
+        		for (Verb verb : verbs) {
 		        	TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
-		            TextView form1 = (TextView) row.findViewById(R.id.table_form_1);
+		        	TextView form1 = (TextView) row.findViewById(R.id.table_form_1);
 		            form1.setText(verb.getForm1());
 		            configureClickListener(form1);
 		            TextView form2 = (TextView) row.findViewById(R.id.table_form_2);
@@ -53,6 +54,13 @@ public class TableActivity extends BaseActivity {
 		            configureClickListener(form3);
 		            TextView translation = (TextView) row.findViewById(R.id.table_translation);
 		            translation.setText(verb.getTranslation());
+		            if (odd ^= true) {
+		        		int color = getResources().getColor(R.color.cell_background_odd);
+						form1.setBackgroundColor(color);
+		        		form2.setBackgroundColor(color);
+		        		form3.setBackgroundColor(color);
+		        		translation.setBackgroundColor(color);
+		        	}
 		            layout.addView(row);
 		        }
         	}

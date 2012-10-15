@@ -4,6 +4,7 @@
     <color name="title_text">#ffffffff</color>
     <color name="title_separator">#40ffffff</color>
     <color name="cell_background">#ffffffff</color>
+    <color name="cell_background_odd">#d1d2e4</color>
     <color name="background">#ffffffff</color>
     <color name="table_header_text">#ff0000ff</color>
     <color name="learn_form_text">#ff0000ff</color>
