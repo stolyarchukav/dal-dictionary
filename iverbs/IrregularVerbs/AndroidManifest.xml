@@ -63,6 +63,10 @@
                    android:value=".SearchActivity" />
         </activity>
         
+        <activity android:name=".preference.AppPreferenceActivity"
+				android:label="@string/app_name">
+		</activity>
+        
         <provider android:name=".provider.WordSuggestionProvider"
 		     android:authorities="org.forzaverita.iverbs.provider.WordSuggestionProvider" />
         

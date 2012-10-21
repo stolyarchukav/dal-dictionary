@@ -1,7 +1,9 @@
 package org.forzaverita.iverbs.service.impl;
 
-import org.forzaverita.iverbs.data.Constants;
-import org.forzaverita.iverbs.data.Lang;
+import static org.forzaverita.iverbs.data.Constants.LOG_TAG;
+import static org.forzaverita.iverbs.data.Constants.SPEECH_RATE_DEFAULT;
+import static org.forzaverita.iverbs.data.Constants.SPEECH_RATE_SCALE;
+
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.service.PreferencesService;
@@ -18,6 +20,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	private static final String CORRECT = "c";
 	private static final String WRONG = "w";
 	private static final String KEY_SPLITTER = "-";
+	private static final String SPEECH_RATE = "pref_speak_speech_rate";
 	
 	private SharedPreferences preferences;
 	
@@ -36,13 +39,19 @@ public class PreferencesServiceImpl implements PreferencesService {
 	}
 	
 	@Override
-	public Lang getLanguage() {
-		return Lang.valueOf(preferences.getString(LANG, Lang.RU.name()));
+	public String getLanguage() {
+		return preferences.getString(LANG, null);
 	}
 	
 	@Override
-	public void setLanguage(Lang lang) {
-		preferences.edit().putString(LANG, lang.name()).commit();
+	public void setLanguage(String lang) {
+		preferences.edit().putString(LANG, lang).commit();
+	}
+	
+	@Override
+	public float getSpeechRate() {
+		return preferences.getInt(SPEECH_RATE, (int) (SPEECH_RATE_DEFAULT * SPEECH_RATE_SCALE)) 
+				* 1f / SPEECH_RATE_SCALE;
 	}
 	
 	private void addStat(int formQuest, Verb verb, TrainMode select, String postfix) {
@@ -50,7 +59,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 				select.ordinal() + KEY_SPLITTER + postfix;
 		int value = preferences.getInt(key, 0);
 		preferences.edit().putInt(key, ++value).commit();
-		Log.d(Constants.LOG_TAG, formQuest + "_" + verb + "_" + select + "_" + postfix + "_" + value);
+		Log.d(LOG_TAG, formQuest + "_" + verb + "_" + select + "_" + postfix + "_" + value);
 	}
 	
 }

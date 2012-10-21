@@ -1,5 +1,6 @@
 package org.forzaverita.iverbs.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.forzaverita.iverbs.data.Lang;
@@ -31,5 +32,11 @@ public interface AppService {
 	Lang getLanguage();
 
 	void setLanguage(Lang lang);
+
+	boolean isPreferencesChanged(Date lastPreferencesCheck);
+
+	void preferencesChanged();
+
+	float getSpeechRate();
 
 }

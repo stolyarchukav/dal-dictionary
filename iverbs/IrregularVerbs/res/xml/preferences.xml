@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="@string/pref_speak"
+		android:summary="@string/pref_speak">
+
+		<org.forzaverita.iverbs.preference.SpeechRatePreference 
+			android:key="pref_speak_speech_rate"
+            android:title="@string/pref_speak_speech_rate" />
+
+	</PreferenceCategory>
+	
+</PreferenceScreen>

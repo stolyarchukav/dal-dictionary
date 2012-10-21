@@ -1,8 +1,10 @@
 package org.forzaverita.iverbs;
 
+import java.util.Date;
 import java.util.Locale;
 
 import org.forzaverita.iverbs.data.Constants;
+import org.forzaverita.iverbs.preference.AppPreferenceActivity;
 import org.forzaverita.iverbs.service.AppService;
 
 import android.app.Activity;
@@ -13,6 +15,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,11 +24,23 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 	private TextToSpeech tts;
 	protected AppService service;
 	
+	private Date lastPreferencesCheck = new Date();
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		tts = new TextToSpeech(this, this);
 		service = (AppService) getApplicationContext();
+		tts = new TextToSpeech(this, this);
+		tts.setSpeechRate(service.getSpeechRate());
 	}
 	
 	protected void onDestroy() {
@@ -38,8 +53,18 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//TODO create menu
-		//getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_settings :
+				startActivity(new Intent(this, AppPreferenceActivity.class));
+			break;
+			default:
+		}
 		return true;
 	}
 

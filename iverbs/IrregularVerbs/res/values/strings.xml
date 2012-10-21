@@ -51,4 +51,7 @@
     <string name="train_question_part_second">of verb</string>
     <string name="tran_hint">Select right answer</string>
     
+    <string name="pref_speak">Speaker</string>
+    <string name="pref_speak_speech_rate">Speech rate</string>
+    
 </resources>

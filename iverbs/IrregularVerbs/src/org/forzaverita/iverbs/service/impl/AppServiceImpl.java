@@ -3,6 +3,7 @@ package org.forzaverita.iverbs.service.impl;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -30,6 +31,8 @@ public class AppServiceImpl extends Application implements AppService {
 	private int currentId = 1;
 	
 	private int maxId;
+	
+	private Date preferenceChangeDate;
 	
 	@Override
 	public void onCreate() {
@@ -106,13 +109,35 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	@Override
 	public Lang getLanguage() {
-		return preferences.getLanguage();
+		String lang = preferences.getLanguage();
+		Lang result = null;
+		if (lang != null) {
+			result = Lang.valueOf(lang);			
+		}
+		if (result == null) {
+			result = Lang.RU;
+		}
+		return result;
 	}
 	
 	@Override
 	public void setLanguage(Lang lang) {
-		preferences.setLanguage(lang);
-		
+		preferences.setLanguage(lang.name());
+	}
+	
+	@Override
+	public boolean isPreferencesChanged(Date lastPreferencesCheck) {
+		return preferenceChangeDate != null && preferenceChangeDate.after(lastPreferencesCheck);
+	}
+	
+	@Override
+	public void preferencesChanged() {
+		preferenceChangeDate = new Date();
+	}
+	
+	@Override
+	public float getSpeechRate() {
+		return preferences.getSpeechRate();
 	}
 	
 }
