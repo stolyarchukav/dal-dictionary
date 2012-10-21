@@ -1,6 +1,7 @@
 package org.forzaverita.iverbs.service.impl;
 
 import org.forzaverita.iverbs.data.Constants;
+import org.forzaverita.iverbs.data.Lang;
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.service.PreferencesService;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 public class PreferencesServiceImpl implements PreferencesService {
 
+	private static final String LANG = "lang";
 	private static final String VERB_STAT_PREFIX = "vs";
 	private static final String CORRECT = "c";
 	private static final String WRONG = "w";
@@ -31,6 +33,16 @@ public class PreferencesServiceImpl implements PreferencesService {
 	@Override
 	public void addWrong(int formQuest, Verb verb, TrainMode select) {
 		addStat(formQuest, verb, select, WRONG);
+	}
+	
+	@Override
+	public Lang getLanguage() {
+		return Lang.valueOf(preferences.getString(LANG, Lang.RU.name()));
+	}
+	
+	@Override
+	public void setLanguage(Lang lang) {
+		preferences.edit().putString(LANG, lang.name()).commit();
 	}
 	
 	private void addStat(int formQuest, Verb verb, TrainMode select, String postfix) {

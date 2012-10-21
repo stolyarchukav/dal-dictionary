@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import org.forzaverita.iverbs.data.Lang;
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
@@ -101,6 +102,17 @@ public class AppServiceImpl extends Application implements AppService {
 	@Override
 	public void addWrong(int formQuest, Verb verb, TrainMode select) {
 		preferences.addWrong(formQuest, verb, select);
+	}
+	
+	@Override
+	public Lang getLanguage() {
+		return preferences.getLanguage();
+	}
+	
+	@Override
+	public void setLanguage(Lang lang) {
+		preferences.setLanguage(lang);
+		
 	}
 	
 }

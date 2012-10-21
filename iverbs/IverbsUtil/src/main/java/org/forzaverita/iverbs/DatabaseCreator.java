@@ -3,16 +3,13 @@ package org.forzaverita.iverbs;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class DatabaseCreator {
 
 	public static void main(String[] args) {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/iverbs.sqlite");
-			
+			Connection conn = ConnectionFactory.createConnection();
 			conn.createStatement().execute("create table android_metadata (" +
 					"locale text" +
 					")");
@@ -21,7 +18,7 @@ public class DatabaseCreator {
 			conn.createStatement().execute("create table iverbs_metadata (" +
 					"data_version integer not null" +
 					")");
-			conn.createStatement().execute("insert into iverbs_metadata values (1)");
+			conn.createStatement().execute("insert into iverbs_metadata values (2)");
 			
 			conn.createStatement().execute("create table verb (" +
 					"id integer primary key," +
@@ -31,12 +28,10 @@ public class DatabaseCreator {
 					"form_2_transcription text not null," +
 					"form_3 text not null," +
 					"form_3_transcription text not null," +
-					"rus text," +
-					"ita text," +
-					"ukr text" +
+					"ru text" +
 					")");
 			PreparedStatement stmt = conn.prepareStatement("insert into verb values (" +
-					"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"?, ?, ?, ?, ?, ?, ?, ?)");
 			BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/verbs.csv"));
 			int q = 0;
 			while (reader.ready()) {
@@ -54,11 +49,11 @@ public class DatabaseCreator {
 				stmt.setString(7, form3[1]);
 				String[] rus = parseWordTranscription(values[3]);
 				stmt.setString(8, rus[0]);
-				stmt.setString(9, null);
-				stmt.setString(10, null);
 				stmt.executeUpdate();
 				System.out.println(q);
 			}
+			stmt.close();
+			conn.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

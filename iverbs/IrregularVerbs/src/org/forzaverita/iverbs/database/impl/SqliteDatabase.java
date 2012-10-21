@@ -10,6 +10,7 @@ import java.util.List;
 import org.forzaverita.iverbs.data.Constants;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
+import org.forzaverita.iverbs.service.AppService;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -22,7 +23,7 @@ import android.util.Log;
 
 public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 
-	private static int DATA_VERSION = 1;
+	private static int DATA_VERSION = 2;
 	
 	private static String DB_NAME = "iverbs.sqlite";
 	private static String DB_PATH = "/data/data/org.forzaverita.iverbs/databases/" + DB_NAME;
@@ -38,7 +39,6 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 	private static final String FORM_2_TRANSCRIPTION = "form_2_transcription";
 	private static final String FORM_3 = "form_3";
 	private static final String FORM_3_TRANSCRIPTION = "form_3_transcription";
-	private static final String TRANSLATION = "rus";
 	
 	private SQLiteDatabase database;
 	private final Context context;
@@ -128,9 +128,13 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 	
 	@Override
 	public List<Verb> getVerbs() {
-		Cursor cursor = database.query(VERB, new String[] {ID, FORM_1, FORM_2, FORM_3, TRANSLATION}, 
+		Cursor cursor = database.query(VERB, new String[] {ID, FORM_1, FORM_2, FORM_3, getLang()}, 
 				null, null, null, null, null);
 		return extractWithoutTranscription(cursor);
+	}
+
+	private String getLang() {
+		return ((AppService) context).getLanguage().name();
 	}
 
 	private List<Verb> extractWithoutTranscription(Cursor cursor) {
@@ -155,7 +159,7 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 	public Verb getVerb(int id) {
 		Verb verb = null;
 		Cursor cursor = database.query(VERB, new String[] {FORM_1, FORM_1_TRANSCRIPTION, 
-				FORM_2, FORM_2_TRANSCRIPTION, FORM_3, FORM_3_TRANSCRIPTION, TRANSLATION}, 
+				FORM_2, FORM_2_TRANSCRIPTION, FORM_3, FORM_3_TRANSCRIPTION, getLang()}, 
 				ID + "=" + id, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			verb = new Verb();
@@ -195,17 +199,18 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 		query.append(" union all ");
 		query.append(String.format(SELECT_ID_FIELD_VERB, FORM_3, search));
 		query.append(" union all ");
-		query.append(String.format(SELECT_ID_FIELD_VERB, TRANSLATION, search));
+		query.append(String.format(SELECT_ID_FIELD_VERB, getLang(), search));
 		return database.rawQuery(query.toString(), null);
 	}
 
 	@Override
 	public List<Verb> searchVerbs(String query) {
-		Cursor cursor = database.query(VERB, new String[] {ID, FORM_1, FORM_2, FORM_3, TRANSLATION}, 
+		String lang = getLang();
+		Cursor cursor = database.query(VERB, new String[] {ID, FORM_1, FORM_2, FORM_3, lang}, 
 				restrictionLike(FORM_1, query) + " or " +
 				restrictionLike(FORM_2, query) + " or " +
 				restrictionLike(FORM_3, query) + " or " +
-				restrictionLike(TRANSLATION, query), 
+				restrictionLike(lang, query), 
 				null, null, null, null);
 		return extractWithoutTranscription(cursor);
 	}
