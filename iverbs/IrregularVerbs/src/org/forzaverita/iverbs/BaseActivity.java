@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.forzaverita.iverbs.data.Constants;
 import org.forzaverita.iverbs.preference.AppPreferenceActivity;
+import org.forzaverita.iverbs.preference.SelectLangDialog;
 import org.forzaverita.iverbs.service.AppService;
 
 import android.app.Activity;
@@ -42,6 +43,9 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 		tts = new TextToSpeech(this, this);
 		tts.setSpeechRate(service.getSpeechRate());
 		tts.setPitch(service.getPitch());
+		if (! service.isLanguagePrefered()) {
+			startActivity(new Intent(this, SelectLangDialog.class));
+		}
 	}
 	
 	protected void onDestroy() {

@@ -14,4 +14,9 @@
 
 	</PreferenceCategory>
 	
+	<PreferenceCategory android:title="@string/pref_lang"
+	    android:summary="@string/pref_lang">
+	    
+	</PreferenceCategory>
+	
 </PreferenceScreen>

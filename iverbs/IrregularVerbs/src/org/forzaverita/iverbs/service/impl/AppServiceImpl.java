@@ -120,9 +120,15 @@ public class AppServiceImpl extends Application implements AppService {
 		return result;
 	}
 	
+
 	@Override
 	public void setLanguage(Lang lang) {
 		preferences.setLanguage(lang.name());
+	}
+	
+	@Override
+	public boolean isLanguagePrefered() {
+		return preferences.getLanguage() != null;
 	}
 	
 	@Override

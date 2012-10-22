@@ -54,5 +54,11 @@
     <string name="pref_speak">Speaker</string>
     <string name="pref_speak_speech_rate">Speech rate</string>
     <string name="pref_speak_pitch">Pitch</string>
-    
+    <string name="pref_lang">Language of translation</string>
+    <string name="pref_lang_dialog">Select language of translation</string>
+    <string name="lang_ru">Russian</string>
+    <string name="lang_it">Italian</string>
+    <string name="lang_de">German</string>
+    <string name="lang_fr">French</string>
+    <string name="pref_lang_dialog_save">Save</string>
 </resources>

@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/pref_lang_dialog"
+        android:textColor="@color/select_lang_title"
+        android:textSize="19sp" />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RadioButton
+            style="@style/LangButton"
+            android:contentDescription="@string/lang_ru"
+            android:drawableLeft="@drawable/ru"
+            android:text="@string/lang_ru" />
+
+        <RadioButton
+            style="@style/LangButton"
+            android:contentDescription="@string/lang_it"
+            android:drawableLeft="@drawable/it"
+            android:text="@string/lang_it" />
+
+        <RadioButton
+            style="@style/LangButton"
+            android:contentDescription="@string/lang_de"
+            android:drawableLeft="@drawable/de"
+            android:text="@string/lang_de" />
+
+        <RadioButton
+            style="@style/LangButton"
+            android:contentDescription="@string/lang_fr"
+            android:drawableLeft="@drawable/fr"
+            android:text="@string/lang_fr" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_lang_dialog_save" />
+
+</LinearLayout>

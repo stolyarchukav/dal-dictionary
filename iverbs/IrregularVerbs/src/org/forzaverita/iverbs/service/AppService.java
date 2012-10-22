@@ -33,6 +33,8 @@ public interface AppService {
 
 	void setLanguage(Lang lang);
 
+	boolean isLanguagePrefered();
+	
 	boolean isPreferencesChanged(Date lastPreferencesCheck);
 
 	void preferencesChanged();
