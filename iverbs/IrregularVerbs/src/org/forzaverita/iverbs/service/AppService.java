@@ -39,4 +39,6 @@ public interface AppService {
 
 	float getSpeechRate();
 
+	float getPitch();
+
 }

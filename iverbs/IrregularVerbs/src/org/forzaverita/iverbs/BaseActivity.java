@@ -41,6 +41,7 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 		service = (AppService) getApplicationContext();
 		tts = new TextToSpeech(this, this);
 		tts.setSpeechRate(service.getSpeechRate());
+		tts.setPitch(service.getPitch());
 	}
 	
 	protected void onDestroy() {

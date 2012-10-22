@@ -15,4 +15,6 @@ public interface PreferencesService {
 
 	float getSpeechRate();
 
+	float getPitch();
+
 }

@@ -7,6 +7,10 @@
 		<org.forzaverita.iverbs.preference.SpeechRatePreference 
 			android:key="pref_speak_speech_rate"
             android:title="@string/pref_speak_speech_rate" />
+		
+		<org.forzaverita.iverbs.preference.SpeechRatePreference 
+			android:key="pref_speak_pitch"
+            android:title="@string/pref_speak_pitch" />
 
 	</PreferenceCategory>
 	

@@ -140,4 +140,9 @@ public class AppServiceImpl extends Application implements AppService {
 		return preferences.getSpeechRate();
 	}
 	
+	@Override
+	public float getPitch() {
+		return preferences.getPitch();
+	}
+	
 }

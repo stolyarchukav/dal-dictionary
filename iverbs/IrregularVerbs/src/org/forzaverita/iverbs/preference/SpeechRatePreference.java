@@ -1,7 +1,7 @@
 package org.forzaverita.iverbs.preference;
 
-import static org.forzaverita.iverbs.data.Constants.SPEECH_RATE_DEFAULT;
-import static org.forzaverita.iverbs.data.Constants.SPEECH_RATE_SCALE;
+import static org.forzaverita.iverbs.data.Constants.RATE_DEFAULT;
+import static org.forzaverita.iverbs.data.Constants.RATE_SCALE;
 
 import org.forzaverita.iverbs.R;
 
@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 public class SpeechRatePreference extends Preference {
 
+	private static final int POSITION_DEFAULT = (int) (RATE_DEFAULT * RATE_SCALE);
 	private static final int MAXIMUM = 30;
 	private static final int MINIMUM = 1;
 
-	private int position = (int) (SPEECH_RATE_DEFAULT * SPEECH_RATE_SCALE);
+	private int position = POSITION_DEFAULT;
 	
 	private TextView positionText;
+	private SeekBar seekBar;
 	
 	public SpeechRatePreference(Context context) {
 		super(context);
@@ -48,7 +50,7 @@ public class SpeechRatePreference extends Preference {
 		TextView titleSummary = (TextView) view.findViewById(R.id.pref_slider_title_summary);
 		titleSummary.setText(getSummary());
 		
-		SeekBar seekBar = (SeekBar) view.findViewById(R.id.pref_slider_seek);
+		seekBar = (SeekBar) view.findViewById(R.id.pref_slider_seek);
 		seekBar.setMax(getProgress(MAXIMUM));
 		seekBar.setProgress(getProgress(position));
 		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
