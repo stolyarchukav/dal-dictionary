@@ -1,10 +1,9 @@
 package org.forzaverita.iverbs.service.impl;
 
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import org.forzaverita.iverbs.data.Lang;
@@ -23,8 +22,6 @@ public class AppServiceImpl extends Application implements AppService {
 	private Database database;
 	
 	private PreferencesService preferences;
-	
-	private Reference<List<Verb>> verbsCache = new WeakReference<List<Verb>>(null);
 	
 	private Random random = new Random();
 	
@@ -45,12 +42,7 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	@Override
 	public List<Verb> getVerbs() {
-		List<Verb> verbs = verbsCache.get();
-		if (verbs == null || verbs.isEmpty()) {
-			verbs = database.getVerbs();
-			verbsCache = new WeakReference<List<Verb>>(verbs);
-		}
-		return verbs;
+		return database.getVerbs();
 	}
 	
 	@Override
@@ -113,6 +105,10 @@ public class AppServiceImpl extends Application implements AppService {
 		Lang result = null;
 		if (lang != null) {
 			result = Lang.valueOf(lang);			
+		}
+		if (result == null) {
+			String locale = Locale.getDefault().getLanguage();
+			result = Lang.tryValueOf(locale);
 		}
 		if (result == null) {
 			result = Lang.RU;
