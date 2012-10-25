@@ -1,4 +1,4 @@
-package org.forzaverita.iverbs;
+package org.forzaverita.iverbs.translate.impl;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

@@ -1,22 +1,16 @@
-package org.forzaverita.iverbs;
+package org.forzaverita.iverbs.translate;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import org.forzaverita.iverbs.ConnectionFactory;
+import org.forzaverita.iverbs.translate.impl.TranslateRestSyslang;
 
 public class TranslatePopulator {
-
-	private static final String URL = "http://www.syslang.com/frengly/controller?" +
-			"action=translateREST&src={src}&dest={dest}&" +
-			"text={text}&username=andrey&password=maldini";
 	
-	private static RestTemplate restTemplate = new RestTemplate();
-	private static Map<String, String> params = new HashMap<String, String>();
+	private static Translator translator = new TranslateRestSyslang();
+	//private static Translator translator = new TranslateWs();
 	
 	public static void main(String[] args) throws Exception {
 		Connection conn = ConnectionFactory.createConnection();
@@ -29,7 +23,7 @@ public class TranslatePopulator {
 		fillLang(conn, "pt");
 		fillLang(conn, "zh");
 		fillLang(conn, "ko");
-		fillLang(conn, "uk");*/
+		fillLang(conn, "ua");*/
 		conn.close();
 	}
 	
@@ -40,7 +34,7 @@ public class TranslatePopulator {
 		while (rs.next()) {
 			Long id = rs.getLong(1);
 			String text = rs.getString(2);
-			String translation = translate(text, lang);
+			String translation = translator.translate(text, lang);
 			stmt.setString(1, translation);
 			stmt.setLong(2, id);
 			stmt.executeUpdate();
@@ -48,15 +42,6 @@ public class TranslatePopulator {
 		}
 		stmt.close();
 		rs.close();
-	}
-	
-	private static String translate(String text, String lang) throws Exception {
-		Thread.sleep(3000);
-		params.put("src", "en");
-		params.put("dest", lang);
-		params.put("text", text);
-		ResponseEntity<Pair> response = restTemplate.getForEntity(URL, Pair.class, params);
-		return response.getBody().getTranslation();
 	}
 	
 }
