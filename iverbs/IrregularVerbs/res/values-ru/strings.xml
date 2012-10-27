@@ -61,5 +61,6 @@
     <string name="lang_it">Итальянский</string>
     <string name="lang_de">Немецкий</string>
     <string name="lang_fr">Французский</string>
+    <string name="lang_es">Испанский</string>
     <string name="pref_lang_dialog_save">Сохранить</string>
 </resources>

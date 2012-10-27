@@ -46,6 +46,13 @@
             android:contentDescription="@string/lang_fr"
             android:drawableLeft="@drawable/fr"
             android:text="@string/lang_fr" />
+        
+        <RadioButton
+            android:id="@+id/selectLangEs"
+            style="@style/LangButton"
+            android:contentDescription="@string/lang_es"
+            android:drawableLeft="@drawable/es"
+            android:text="@string/lang_es" />
     </RadioGroup>
 
     <Button

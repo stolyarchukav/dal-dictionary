@@ -8,7 +8,8 @@ public enum Lang {
 	IT (R.id.selectLangIt), 
 	FR (R.id.selectLangFr), 
 	DE (R.id.selectLangDe), 
-	ES (-1), CZ (-1), JA (-1), PT (-1), ZH (-1), KO (-1), UK (-1);
+	ES (R.id.selectLangEs), 
+	CZ (-1), JA (-1), PT (-1), ZH (-1), KO (-1), UK (-1);
 	
 	private int id;
 	
