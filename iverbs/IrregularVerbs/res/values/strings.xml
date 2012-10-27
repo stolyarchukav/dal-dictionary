@@ -37,12 +37,14 @@
     <string name="info_usage">
         <![CDATA[
         		<p><b>The reference book of english irregular verbs</b></p>
-        		<p>version 1.1</p>
+        		<p>version 1.2</p>
             	Features:<ul>
         		<li>Table: full list of verbs</li>
         		<li>Learn: scrollable page of verbs with transcriptions</li>
         		<li>Search: text and voice search verbs</li>
-        		<li>Train: quiz of verbs</li></ul>
+        		<li>Train: quiz of verbs</li>
+        		<li>Scores: statistic of training</li>
+        		<li>Settings: speech rate, languages of translate</li></ul>
         	]]>
     </string>
     <string name="info_more_apps"><u>Get more applications</u></string>
