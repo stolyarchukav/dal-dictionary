@@ -32,16 +32,5 @@ public class InfoActivity extends BaseActivity {
 			Log.w(Constants.LOG_TAG, "Can't open market forzaverita apps");
 		}
 	}
-    
-    public void onClickRateApp(View view) {
-    	try {
-    		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
-					getApplicationInfo().packageName)));
-		}
-		catch (ActivityNotFoundException e) {
-			Log.w(Constants.LOG_TAG, "Can't open market app page");
-		}
-	}
-
-    
+        
 }

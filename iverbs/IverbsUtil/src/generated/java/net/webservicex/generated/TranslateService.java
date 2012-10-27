@@ -15,7 +15,7 @@ import javax.xml.ws.WebServiceClient;
  * Generated source version: 2.0
  * 
  */
-@WebServiceClient(name = "Translator", targetNamespace = "http://www.webservicex.net", wsdlLocation = "http://www.webservicex.net/Translator.asmx?WSDL")
+@WebServiceClient(name = "TranslateService", targetNamespace = "http://www.webservicex.net", wsdlLocation = "http://www.webservicex.net/TranslateService.asmx?WSDL")
 public class TranslateService
     extends Service
 {
@@ -25,7 +25,7 @@ public class TranslateService
     static {
         URL url = null;
         try {
-            url = new URL("http://www.webservicex.net/Translator.asmx?WSDL");
+            url = new URL("http://www.webservicex.net/TranslateService.asmx?WSDL");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -37,7 +37,7 @@ public class TranslateService
     }
 
     public TranslateService() {
-        super(TRANSLATESERVICE_WSDL_LOCATION, new QName("http://www.webservicex.net", "Translator"));
+        super(TRANSLATESERVICE_WSDL_LOCATION, new QName("http://www.webservicex.net", "TranslateService"));
     }
 
     /**

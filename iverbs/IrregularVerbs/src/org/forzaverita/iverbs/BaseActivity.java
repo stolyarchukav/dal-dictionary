@@ -9,8 +9,10 @@ import org.forzaverita.iverbs.preference.SelectLangDialog;
 import org.forzaverita.iverbs.service.AppService;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
@@ -101,14 +103,9 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			startActivity(new Intent(getApplicationContext(),
 					TrainActivity.class));
 			break;
-		/* TODO Future features
-		 * case R.id.dashboard_button_scores:
+		case R.id.dashboard_button_scores:
 			startActivity(new Intent(getApplicationContext(),
 					ScoresActivity.class));
-			break;*/
-		case R.id.dashboard_button_info:
-			startActivity(new Intent(getApplicationContext(),
-					InfoActivity.class));
 			break;
 		default:
 			break;
@@ -138,6 +135,16 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 
 	protected final void speak(String text) {
 		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+	}
+	
+	public void onClickRateApp(View view) {
+    	try {
+    		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
+					getApplicationInfo().packageName)));
+		}
+		catch (ActivityNotFoundException e) {
+			Log.w(Constants.LOG_TAG, "Can't open market app page");
+		}
 	}
 
 }

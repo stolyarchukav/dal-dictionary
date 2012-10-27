@@ -16,14 +16,14 @@ public class TranslatePopulator {
 		Connection conn = ConnectionFactory.createConnection();
 		/*fillLang(conn, "it");
 		fillLang(conn, "fr");
-		fillLang(conn, "de");*/
-		fillLang(conn, "es");
-		/*fillLang(conn, "cz");
+		fillLang(conn, "de");
+		fillLang(conn, "es");*/
+		fillLang(conn, "cz");
 		fillLang(conn, "ja");
 		fillLang(conn, "pt");
 		fillLang(conn, "zh");
 		fillLang(conn, "ko");
-		fillLang(conn, "ua");*/
+		fillLang(conn, "ua");
 		conn.close();
 	}
 	

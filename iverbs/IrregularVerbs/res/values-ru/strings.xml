@@ -47,6 +47,7 @@
     </string>
     <string name="info_more_apps"><u>Другие приложения</u></string>
     <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
+    <string name="rate_app_short"><u>Оценить приложение</u></string>
     <string name="train_question_part_first">Укажите</string>
     <string name="train_question_part_second">глагола</string>
     <string name="tran_hint">Выберите правильный ответ</string>
@@ -55,5 +56,10 @@
     <string name="pref_speak_speech_rate">Скорость речи</string>
     <string name="pref_speak_pitch">Тон речи</string>
     <string name="pref_lang">Язык перевода</string>
-    
+    <string name="pref_lang_dialog">Выберите язык перевода</string>
+    <string name="lang_ru">Русский</string>
+    <string name="lang_it">Итальянский</string>
+    <string name="lang_de">Немецкий</string>
+    <string name="lang_fr">Французский</string>
+    <string name="pref_lang_dialog_save">Сохранить</string>
 </resources>

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout style="@style/TitleBar" >
 
@@ -33,10 +33,10 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"
+        android:layout_weight="0.9"
+        android:background="@color/background"
         android:orientation="vertical"
-        android:padding="4dip"
-        android:background="@color/background" >
+        android:padding="4dip" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -57,26 +57,8 @@
                 android:drawableTop="@drawable/button_table"
                 android:onClick="onClickMode"
                 android:text="@string/title_activity_table" />
-            
         </LinearLayout>
-        
-        <!-- //TODO future features 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-            
-            <Button
-                android:id="@+id/dashboard_button_scores"
-                style="@style/HomeButton"
-                android:drawableTop="@drawable/button_scores"
-                android:onClick="onClickMode"
-                android:text="@string/title_activity_scores" />            
 
-        </LinearLayout>
- 		-->
-        
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
@@ -91,14 +73,20 @@
                 android:text="@string/title_activity_train" />
 
             <Button
-                android:id="@+id/dashboard_button_info"
+                android:id="@+id/dashboard_button_scores"
                 style="@style/HomeButton"
-                android:drawableTop="@drawable/ic_btn_info"
+                android:drawableTop="@drawable/button_scores"
                 android:onClick="onClickMode"
-                android:text="@string/title_activity_info" />
-            
+                android:text="@string/title_activity_scores" />
         </LinearLayout>
- 		
     </LinearLayout>
+
+    <Button
+        style="@style/HintText"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:onClick="onClickRateApp"
+        android:text="@string/rate_app_short"
+        android:textSize="12sp" />
 
 </LinearLayout>
