@@ -29,9 +29,49 @@
             android:src="@drawable/title_search" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Scores //TODO under construction" />
+        android:background="@color/background" 
+        android:stretchColumns="*" >
+
+        <TableRow style="@style/TableRow" >
+
+            <TextView
+                style="@style/TableHeaderText"
+                android:text="@string/scores_verb" />
+
+            <TextView
+                style="@style/TableHeaderText"
+                android:text="@string/scores_correct_count" />
+
+            <TextView
+                style="@style/TableHeaderText"
+                android:text="@string/scores_correct_percent" />
+
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp" 
+        android:layout_weight="0.9" >
+
+        <TableLayout
+            android:id="@+id/scores_table"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:stretchColumns="*" >
+        </TableLayout>
+    </ScrollView>
+    
+    <Button
+        style="@style/HintText"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:onClick="onClickReset"
+        android:text="@string/scores_reset"
+        android:textSize="12sp" />
 
 </LinearLayout>

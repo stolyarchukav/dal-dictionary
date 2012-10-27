@@ -63,4 +63,13 @@
     <string name="lang_fr">Французский</string>
     <string name="lang_es">Испанский</string>
     <string name="pref_lang_dialog_save">Сохранить</string>
+    
+    <string name="scores_verb">Глагол</string>
+    <string name="scores_correct_count">Верных ответов</string>
+    <string name="scores_correct_percent">% верных</string>
+    <string name="scores_reset"><u>Сбросить статистику</u></string>
+    
+    <string name="question_submit">Вы уверены?</string>
+    <string name="answer_yes">Да</string>
+    <string name="answer_no">Нет</string>
 </resources>

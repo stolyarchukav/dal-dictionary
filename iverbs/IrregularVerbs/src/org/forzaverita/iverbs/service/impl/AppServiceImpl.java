@@ -1,5 +1,6 @@
 package org.forzaverita.iverbs.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import org.forzaverita.iverbs.data.Lang;
+import org.forzaverita.iverbs.data.StatItem;
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
@@ -145,6 +147,22 @@ public class AppServiceImpl extends Application implements AppService {
 	@Override
 	public float getPitch() {
 		return preferences.getPitch();
+	}
+	
+	@Override
+	public List<StatItem> getStats() {
+		List<StatItem> stats = new ArrayList<StatItem>();
+		for (Verb verb : getVerbs()) {
+			stats.add(preferences.getStat(verb));			
+		}
+		return stats;
+	}
+	
+	@Override
+	public void resetStats() {
+		for (Verb verb : getVerbs()) {
+			preferences.resetStat(verb);			
+		}
 	}
 	
 }

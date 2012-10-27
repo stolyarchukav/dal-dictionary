@@ -1,9 +1,11 @@
+
 package org.forzaverita.iverbs.service;
 
 import java.util.Date;
 import java.util.List;
 
 import org.forzaverita.iverbs.data.Lang;
+import org.forzaverita.iverbs.data.StatItem;
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 
@@ -42,5 +44,9 @@ public interface AppService {
 	float getSpeechRate();
 
 	float getPitch();
+
+	List<StatItem> getStats();
+
+	void resetStats();
 
 }

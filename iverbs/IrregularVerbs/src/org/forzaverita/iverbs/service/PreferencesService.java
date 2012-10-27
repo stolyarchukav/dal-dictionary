@@ -1,5 +1,6 @@
 package org.forzaverita.iverbs.service;
 
+import org.forzaverita.iverbs.data.StatItem;
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 
@@ -16,5 +17,9 @@ public interface PreferencesService {
 	float getSpeechRate();
 
 	float getPitch();
+
+	StatItem getStat(Verb verb);
+	
+	void resetStat(Verb verb);
 
 }

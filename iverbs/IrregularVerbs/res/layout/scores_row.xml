@@ -1,0 +1,16 @@
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/TableRow" >
+
+    <TextView
+        android:id="@id/scores_verb"
+        style="@style/CellText" />
+
+    <TextView
+        android:id="@id/scores_correct_count"
+        style="@style/CellText" />
+
+    <TextView
+        android:id="@id/scores_correct_percent"
+        style="@style/CellText" />
+
+</TableRow>
