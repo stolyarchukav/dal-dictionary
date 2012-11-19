@@ -37,18 +37,42 @@
     <string name="info_usage">
         <![CDATA[
         		<p><b>The reference book of english irregular verbs</b></p>
-        		<p>version 1.1</p>
+        		<p>version 1.2</p>
             	Features:<ul>
         		<li>Table: full list of verbs</li>
         		<li>Learn: scrollable page of verbs with transcriptions</li>
         		<li>Search: text and voice search verbs</li>
-        		<li>Train: quiz of verbs</li></ul>
+        		<li>Train: quiz of verbs</li>
+        		<li>Scores: statistic of training</li>
+        		<li>Settings: speech rate, languages of translate</li></ul>
         	]]>
     </string>
     <string name="info_more_apps"><u>Get more applications</u></string>
     <string name="rate_app"><u>Very appreciate for your comments and rates</u></string>
+    <string name="rate_app_short"><u>Rate application</u></string>
     <string name="train_question_part_first">Select the</string>
     <string name="train_question_part_second">of verb</string>
     <string name="tran_hint">Select right answer</string>
+    
+    <string name="pref_speak">Speaker</string>
+    <string name="pref_speak_speech_rate">Speech rate</string>
+    <string name="pref_speak_pitch">Pitch</string>
+    <string name="pref_lang">Language of translation</string>
+    <string name="pref_lang_dialog">Select language of translation</string>
+    <string name="lang_ru">Russian</string>
+    <string name="lang_it">Italian</string>
+    <string name="lang_de">German</string>
+    <string name="lang_fr">French</string>
+    <string name="lang_es">Spanish</string>
+    <string name="pref_lang_dialog_save">Save</string>
+    
+    <string name="scores_verb">Verb</string>
+    <string name="scores_correct_count">Correct</string>
+    <string name="scores_correct_percent">% of correct</string>
+    <string name="scores_reset"><u>Reset statistic</u></string>
+    
+    <string name="question_submit">Are you sure?</string>
+    <string name="answer_yes">Yes</string>
+    <string name="answer_no">No</string>
     
 </resources>

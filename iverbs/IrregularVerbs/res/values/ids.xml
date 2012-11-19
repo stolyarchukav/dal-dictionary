@@ -19,4 +19,8 @@
     
     <item type="id" name="search_list" />
     <item type="id" name="search_item_text" />
+    
+    <item type="id" name="scores_verb" />
+    <item type="id" name="scores_correct_count" />
+    <item type="id" name="scores_correct_percent" />
 </resources>

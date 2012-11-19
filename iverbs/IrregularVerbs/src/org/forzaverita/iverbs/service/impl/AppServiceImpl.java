@@ -1,11 +1,14 @@
 package org.forzaverita.iverbs.service.impl;
 
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
+import org.forzaverita.iverbs.data.Lang;
+import org.forzaverita.iverbs.data.StatItem;
 import org.forzaverita.iverbs.data.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
@@ -22,13 +25,13 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	private PreferencesService preferences;
 	
-	private Reference<List<Verb>> verbsCache = new WeakReference<List<Verb>>(null);
-	
 	private Random random = new Random();
 	
 	private int currentId = 1;
 	
 	private int maxId;
+	
+	private Date preferenceChangeDate;
 	
 	@Override
 	public void onCreate() {
@@ -41,12 +44,7 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	@Override
 	public List<Verb> getVerbs() {
-		List<Verb> verbs = verbsCache.get();
-		if (verbs == null || verbs.isEmpty()) {
-			verbs = database.getVerbs();
-			verbsCache = new WeakReference<List<Verb>>(verbs);
-		}
-		return verbs;
+		return database.getVerbs();
 	}
 	
 	@Override
@@ -101,6 +99,70 @@ public class AppServiceImpl extends Application implements AppService {
 	@Override
 	public void addWrong(int formQuest, Verb verb, TrainMode select) {
 		preferences.addWrong(formQuest, verb, select);
+	}
+	
+	@Override
+	public Lang getLanguage() {
+		String lang = preferences.getLanguage();
+		Lang result = null;
+		if (lang != null) {
+			result = Lang.valueOf(lang);			
+		}
+		if (result == null) {
+			String locale = Locale.getDefault().getLanguage();
+			result = Lang.tryValueOf(locale);
+		}
+		if (result == null) {
+			result = Lang.RU;
+		}
+		return result;
+	}
+	
+
+	@Override
+	public void setLanguage(Lang lang) {
+		preferences.setLanguage(lang.name());
+	}
+	
+	@Override
+	public boolean isLanguagePrefered() {
+		return preferences.getLanguage() != null;
+	}
+	
+	@Override
+	public boolean isPreferencesChanged(Date lastPreferencesCheck) {
+		return preferenceChangeDate != null && preferenceChangeDate.after(lastPreferencesCheck);
+	}
+	
+	@Override
+	public void preferencesChanged() {
+		preferenceChangeDate = new Date();
+	}
+	
+	@Override
+	public float getSpeechRate() {
+		return preferences.getSpeechRate();
+	}
+	
+	@Override
+	public float getPitch() {
+		return preferences.getPitch();
+	}
+	
+	@Override
+	public List<StatItem> getStats() {
+		List<StatItem> stats = new ArrayList<StatItem>();
+		for (Verb verb : getVerbs()) {
+			stats.add(preferences.getStat(verb));			
+		}
+		return stats;
+	}
+	
+	@Override
+	public void resetStats() {
+		for (Verb verb : getVerbs()) {
+			preferences.resetStat(verb);			
+		}
 	}
 	
 }

@@ -1,18 +1,24 @@
 package org.forzaverita.iverbs;
 
+import java.util.Date;
 import java.util.Locale;
 
 import org.forzaverita.iverbs.data.Constants;
+import org.forzaverita.iverbs.preference.AppPreferenceActivity;
+import org.forzaverita.iverbs.preference.SelectLangDialog;
 import org.forzaverita.iverbs.service.AppService;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,11 +27,27 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 	private TextToSpeech tts;
 	protected AppService service;
 	
+	private Date lastPreferencesCheck = new Date();
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (service.isPreferencesChanged(lastPreferencesCheck)) {
+			lastPreferencesCheck = new Date();
+			onCreate(null);
+		}
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		tts = new TextToSpeech(this, this);
 		service = (AppService) getApplicationContext();
+		tts = new TextToSpeech(this, this);
+		tts.setSpeechRate(service.getSpeechRate());
+		tts.setPitch(service.getPitch());
+		if (! service.isLanguagePrefered()) {
+			startActivity(new Intent(this, SelectLangDialog.class));
+		}
 	}
 	
 	protected void onDestroy() {
@@ -38,8 +60,18 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//TODO create menu
-		//getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_settings :
+				startActivity(new Intent(this, AppPreferenceActivity.class));
+			break;
+			default:
+		}
 		return true;
 	}
 
@@ -71,14 +103,9 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			startActivity(new Intent(getApplicationContext(),
 					TrainActivity.class));
 			break;
-		/* TODO Future features
-		 * case R.id.dashboard_button_scores:
+		case R.id.dashboard_button_scores:
 			startActivity(new Intent(getApplicationContext(),
 					ScoresActivity.class));
-			break;*/
-		case R.id.dashboard_button_info:
-			startActivity(new Intent(getApplicationContext(),
-					InfoActivity.class));
 			break;
 		default:
 			break;
@@ -108,6 +135,16 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 
 	protected final void speak(String text) {
 		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+	}
+	
+	public void onClickRateApp(View view) {
+    	try {
+    		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
+					getApplicationInfo().packageName)));
+		}
+		catch (ActivityNotFoundException e) {
+			Log.w(Constants.LOG_TAG, "Can't open market app page");
+		}
 	}
 
 }

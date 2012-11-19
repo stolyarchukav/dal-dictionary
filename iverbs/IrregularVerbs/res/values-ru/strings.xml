@@ -37,18 +37,41 @@
     <string name="info_usage">
         <![CDATA[
         		<p><b>Справочник неправильных глаголов английского языка</b></p>
-        		<p>версия 1.1</p>
+        		<p>версия 1.2</p>
             	Возможности:<ul>
         		<li>Таблица: полный список глаголов</li>
         		<li>Изучение: Постраничный вывод глаголов с транскрипциями</li>
         		<li>Поиск: текстовый и голосовой поиск</li>
-        		<li>Тренировка: Викторина по глаголам</li></ul>
+        		<li>Тренировка: Викторина по глаголам</li>
+        		<li>Статистика: статистика тренировок</li>
+        		<li>Настройки: скорость речи, языки перевода</li></ul>
         	]]>
     </string>
     <string name="info_more_apps"><u>Другие приложения</u></string>
     <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
+    <string name="rate_app_short"><u>Оценить приложение</u></string>
     <string name="train_question_part_first">Укажите</string>
     <string name="train_question_part_second">глагола</string>
     <string name="tran_hint">Выберите правильный ответ</string>
     
+    <string name="pref_speak">Речь</string>
+    <string name="pref_speak_speech_rate">Скорость речи</string>
+    <string name="pref_speak_pitch">Тон речи</string>
+    <string name="pref_lang">Язык перевода</string>
+    <string name="pref_lang_dialog">Выберите язык перевода</string>
+    <string name="lang_ru">Русский</string>
+    <string name="lang_it">Итальянский</string>
+    <string name="lang_de">Немецкий</string>
+    <string name="lang_fr">Французский</string>
+    <string name="lang_es">Испанский</string>
+    <string name="pref_lang_dialog_save">Сохранить</string>
+    
+    <string name="scores_verb">Глагол</string>
+    <string name="scores_correct_count">Верных ответов</string>
+    <string name="scores_correct_percent">% верных</string>
+    <string name="scores_reset"><u>Сбросить статистику</u></string>
+    
+    <string name="question_submit">Вы уверены?</string>
+    <string name="answer_yes">Да</string>
+    <string name="answer_no">Нет</string>
 </resources>
