@@ -12,6 +12,11 @@ public class LangImporter {
 
 	public static void importLang(String lang, int engIdx, int langIdx, String fileName) 
 			throws Exception {
+		importLang(lang, engIdx, langIdx, fileName, "[|]");
+	}
+	
+	public static void importLang(String lang, int engIdx, int langIdx, String fileName, 
+			String separator) throws Exception {
 		Connection conn = ConnectionFactory.createConnection();
 		PreparedStatement search = conn.prepareStatement("select id, " + 
 				lang + " from verb where form_1 = ?");
@@ -21,7 +26,7 @@ public class LangImporter {
 				fileName + ".csv"));
 		while (reader.ready()) {
 			String line = reader.readLine();
-			String[] values = line.split("[|]");
+			String[] values = line.split(separator);
 			if (values.length > 1) {
 				String form1 = values[engIdx];
 				String translation = values[langIdx];
