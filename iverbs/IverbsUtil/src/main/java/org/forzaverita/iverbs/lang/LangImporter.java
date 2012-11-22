@@ -28,8 +28,8 @@ public class LangImporter {
 			String line = reader.readLine();
 			String[] values = line.split(separator);
 			if (values.length > 1) {
-				String form1 = values[engIdx];
-				String translation = values[langIdx];
+				String form1 = values[engIdx].trim().toLowerCase();
+				String translation = values[langIdx].trim().replaceAll("[*]", "");
 				search.setString(1, form1);
 				ResultSet rs = search.executeQuery();
 				while (rs.next()) {
