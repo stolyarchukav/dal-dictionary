@@ -4,17 +4,22 @@ import org.forzaverita.iverbs.R;
 
 public enum Lang {
 	
-	RU (R.id.selectLangRu), 
-	IT (R.id.selectLangIt), 
-	FR (R.id.selectLangFr), 
-	DE (R.id.selectLangDe), 
-	ES (R.id.selectLangEs), 
-	CZ (-1), JA (-1), PT (-1), ZH (-1), KO (-1), UK (-1);
+	RU (R.id.selectLangRu, R.string.lang_ru), 
+	IT (R.id.selectLangIt, R.string.lang_it), 
+	FR (R.id.selectLangFr, R.string.lang_fr), 
+	DE (R.id.selectLangDe, R.string.lang_de), 
+	ES (R.id.selectLangEs, R.string.lang_es),
+	PT (R.id.selectLangPt, R.string.lang_pt),
+	UA (R.id.selectLangUa, R.string.lang_ua),
+	RO (R.id.selectLangRo, R.string.lang_ro),
+	CZ (-1, -1), JA (-1, -1), ZH (-1, -1), KO (-1, -1);
 	
 	private int id;
+	private int idString;
 	
-	private Lang(int id) {
+	private Lang(int id, int idString) {
 		this.id = id;
+		this.idString = idString;
 	}
 	
 	public static Lang valueOf(int id) {
@@ -37,6 +42,10 @@ public enum Lang {
 
 	public int getId() {
 		return id;
+	}
+
+	public int getIdString() {
+		return idString;
 	}
 
 }

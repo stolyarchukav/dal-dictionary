@@ -51,7 +51,7 @@
                 style="@style/TableHeaderText"
                 android:text="@string/table_form_3" />
 
-            <TextView
+            <TextView android:id="@+id/table_header_translation"
                 style="@style/TableHeaderText"
                 android:text="@string/table_translation" />
         </TableRow>
