@@ -50,9 +50,12 @@
     <string name="info_more_apps"><u>Другие приложения</u></string>
     <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
     <string name="rate_app_short"><u>Оценить приложение</u></string>
+    
     <string name="train_question_part_first">Укажите</string>
     <string name="train_question_part_second">глагола</string>
     <string name="tran_hint">Выберите правильный ответ</string>
+    <string name="train_min_dialog_title">Не менее %s глаголов должно быть в тренировке</string>
+    <string name="train_min_dialog_button">Перейти в статистику и добавить глаголы</string>
     
     <string name="pref_speak">Речь</string>
     <string name="pref_speak_speech_rate">Скорость речи</string>
@@ -64,12 +67,16 @@
     <string name="lang_de">Немецкий</string>
     <string name="lang_fr">Французский</string>
     <string name="lang_es">Испанский</string>
+    <string name="lang_pt">Португальский</string>
+    <string name="lang_ro">Румынский</string>
+    <string name="lang_ua">Украинский</string>
     <string name="pref_lang_dialog_save">Сохранить</string>
     
     <string name="scores_verb">Глагол</string>
     <string name="scores_correct_count">Верных ответов</string>
     <string name="scores_correct_percent">% верных</string>
     <string name="scores_reset"><u>Сбросить статистику</u></string>
+    <string name="scores_in_training">В тренировке</string>
     
     <string name="question_submit">Вы уверены?</string>
     <string name="answer_yes">Да</string>

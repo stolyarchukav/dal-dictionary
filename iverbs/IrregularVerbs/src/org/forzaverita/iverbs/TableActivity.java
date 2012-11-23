@@ -40,6 +40,9 @@ public class TableActivity extends BaseActivity {
         	protected void onPostExecute(List<Verb> verbs) {
         		dialog.dismiss();
         		TableLayout layout = (TableLayout) findViewById(R.id.table_table);
+        		TextView headerTranslation = (TextView) findViewById(R.id.table_header_translation);
+        		headerTranslation.setText(getString(R.string.table_translation) + "\n" + 
+        				getString(service.getLanguage().getIdString()));
         		boolean odd = false;
         		for (Verb verb : verbs) {
 		        	TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);

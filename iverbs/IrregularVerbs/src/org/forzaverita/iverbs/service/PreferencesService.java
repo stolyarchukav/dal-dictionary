@@ -22,4 +22,8 @@ public interface PreferencesService {
 	
 	void resetStat(Verb verb);
 
+	void setInTraining(Verb verb, boolean inTraining);
+
+	boolean isInTraining(Verb verb);
+
 }

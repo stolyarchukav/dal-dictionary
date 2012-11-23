@@ -48,6 +48,10 @@
             <TextView
                 style="@style/TableHeaderText"
                 android:text="@string/scores_correct_percent" />
+            
+            <TextView
+                style="@style/TableHeaderText"
+                android:text="@string/scores_in_training" />
 
         </TableRow>
     </TableLayout>

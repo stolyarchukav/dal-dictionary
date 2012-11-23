@@ -23,4 +23,5 @@
     <item type="id" name="scores_verb" />
     <item type="id" name="scores_correct_count" />
     <item type="id" name="scores_correct_percent" />
+    <item type="id" name="scores_in_training" />
 </resources>

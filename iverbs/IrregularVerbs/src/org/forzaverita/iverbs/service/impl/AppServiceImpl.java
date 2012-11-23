@@ -33,12 +33,20 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	private Date preferenceChangeDate;
 	
+	private List<Integer> verbsInTraining = new ArrayList<Integer>();
+	
 	@Override
 	public void onCreate() {
 		database = new SqliteDatabase(this);
 		database.open();
 		maxId = database.getMaxId();
 		preferences = new PreferencesServiceImpl(this);
+		List<Verb> verbs = database.getVerbs();
+		for (Verb verb : verbs) {
+			if (preferences.isInTraining(verb)) {
+				verbsInTraining.add(verb.getId());				
+			}			
+		}
 		super.onCreate();
 	}
 	
@@ -83,7 +91,8 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	@Override
 	public Verb getRandomVerb(Verb... excludes) {
-		Verb verb = database.getVerb(random.nextInt(maxId + 1));
+		int index = random.nextInt(verbsInTraining.size());
+		Verb verb = database.getVerb(verbsInTraining.get(index));
 		if (verb != null && 
 				! (excludes != null && Arrays.asList(excludes).contains(verb))) {
 			return verb;
@@ -163,6 +172,25 @@ public class AppServiceImpl extends Application implements AppService {
 		for (Verb verb : getVerbs()) {
 			preferences.resetStat(verb);			
 		}
+	}
+	
+	@Override
+	public void setInTraining(Verb verb, boolean inTraining) {
+		preferences.setInTraining(verb, inTraining);
+		Integer id = verb.getId();
+		if (inTraining) {
+			if (! verbsInTraining.contains(id)) {
+				verbsInTraining.add(id);
+			}	
+		}
+		else {
+			verbsInTraining.remove(id);
+		}
+	}
+	
+	@Override
+	public int getInTrainingCount() {
+		return verbsInTraining.size();
 	}
 	
 }

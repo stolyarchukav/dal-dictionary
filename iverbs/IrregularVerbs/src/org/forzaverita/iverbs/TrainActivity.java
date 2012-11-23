@@ -19,7 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class TrainActivity extends BaseActivity {
-
+	
 	private Random random = new Random();
 	
 	private volatile int formQuest;
@@ -34,12 +34,10 @@ public class TrainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train);
         setActivityTitle();
-        
-        counterCorrect = (TextView) findViewById(R.id.train_count_correct);
+    	counterCorrect = (TextView) findViewById(R.id.train_count_correct);
         counterCorrect.setText(String.valueOf(correctCount));
         counterWrong = (TextView) findViewById(R.id.train_count_wrong);
         counterWrong.setText(String.valueOf(wrongCount));
-        
         createQuestion();
     }
     

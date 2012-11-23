@@ -13,6 +13,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -48,10 +51,14 @@ public class ScoresActivity extends BaseActivity {
         		Collections.sort(stats, new Comparator<StatItem>() {
         			@Override
         			public int compare(StatItem lhs, StatItem rhs) {
-        				return rhs.getCorrect() - lhs.getCorrect();
+        				int result = rhs.getCorrect() - lhs.getCorrect();
+        				if (result == 0) {
+        					result = lhs.getWrong() - rhs.getWrong();
+        				}
+        				return result;
         			}
 				});
-        		for (StatItem stat : stats) {
+        		for (final StatItem stat : stats) {
 		        	TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.scores_row, null);
 		        	TextView verb = (TextView) row.findViewById(R.id.scores_verb);
 		            verb.setText(stat.getVerb().getForm1() + " / " + stat.getVerb().getTranslation());
@@ -68,6 +75,14 @@ public class ScoresActivity extends BaseActivity {
 		            	correctPercent.setTextColor(ScoresActivity.this.getResources().
 		            			getColor(R.color.train_wrong));
 		            }
+		            CheckBox inTraining = (CheckBox) row.findViewById(R.id.scores_in_training);
+		            inTraining.setChecked(stat.isInTraining());
+		            inTraining.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+						@Override
+						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+							service.setInTraining(stat.getVerb(), isChecked);
+						}
+					});
 		            layout.addView(row);
 		        }
         	}

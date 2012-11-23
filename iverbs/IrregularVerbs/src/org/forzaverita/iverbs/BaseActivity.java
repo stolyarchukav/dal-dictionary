@@ -9,7 +9,10 @@ import org.forzaverita.iverbs.preference.SelectLangDialog;
 import org.forzaverita.iverbs.service.AppService;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -24,6 +27,8 @@ import android.widget.TextView;
 
 public abstract class BaseActivity extends Activity implements OnInitListener {
 
+	private static final int MIN_COUNT_IN_TRAINING = 5;
+	
 	private TextToSpeech tts;
 	protected AppService service;
 	
@@ -100,8 +105,7 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 					LearnActivity.class));
 			break;
 		case R.id.dashboard_button_train:
-			startActivity(new Intent(getApplicationContext(),
-					TrainActivity.class));
+			tryStartTraining();
 			break;
 		case R.id.dashboard_button_scores:
 			startActivity(new Intent(getApplicationContext(),
@@ -109,6 +113,24 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			break;
 		default:
 			break;
+		}
+	}
+
+	private void tryStartTraining() {
+		if (service.getInTrainingCount() < MIN_COUNT_IN_TRAINING) {
+			String title = String.format(getString(R.string.train_min_dialog_title), MIN_COUNT_IN_TRAINING);
+			new AlertDialog.Builder(this).setTitle(title).setPositiveButton(R.string.train_min_dialog_button,
+					new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							startActivity(new Intent(BaseActivity.this, ScoresActivity.class).
+									addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
+						}
+					}).create().show();
+		}
+		else {
+			startActivity(new Intent(getApplicationContext(),
+					TrainActivity.class));
 		}
 	}
 
