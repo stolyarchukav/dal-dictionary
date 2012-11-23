@@ -12,5 +12,8 @@
     <TextView
         android:id="@id/scores_correct_percent"
         style="@style/CellText" />
+    
+    <CheckBox android:id="@id/scores_in_training"
+        style="@style/CellText" />
 
 </TableRow>

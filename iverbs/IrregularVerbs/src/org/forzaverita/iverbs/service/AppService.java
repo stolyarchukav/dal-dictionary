@@ -49,4 +49,8 @@ public interface AppService {
 
 	void resetStats();
 
+	void setInTraining(Verb verb, boolean inTraining);
+
+	int getInTrainingCount();
+
 }

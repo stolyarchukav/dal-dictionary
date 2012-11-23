@@ -50,9 +50,12 @@
     <string name="info_more_apps"><u>Get more applications</u></string>
     <string name="rate_app"><u>Very appreciate for your comments and rates</u></string>
     <string name="rate_app_short"><u>Rate application</u></string>
+    
     <string name="train_question_part_first">Select the</string>
     <string name="train_question_part_second">of verb</string>
     <string name="tran_hint">Select right answer</string>
+    <string name="train_min_dialog_title">At least %s verbs must be in training</string>
+    <string name="train_min_dialog_button">Go to statistic and add verbs in training</string>
     
     <string name="pref_speak">Speaker</string>
     <string name="pref_speak_speech_rate">Speech rate</string>
@@ -73,6 +76,7 @@
     <string name="scores_correct_count">Correct</string>
     <string name="scores_correct_percent">% of correct</string>
     <string name="scores_reset"><u>Reset statistic</u></string>
+    <string name="scores_in_training">In training</string>
     
     <string name="question_submit">Are you sure?</string>
     <string name="answer_yes">Yes</string>

@@ -7,6 +7,8 @@ public class StatItem {
 	private int correct;
 	
 	private int wrong;
+	
+	private boolean inTraining;
 
 	/* Methods */
 	
@@ -42,6 +44,14 @@ public class StatItem {
 
 	public void setWrong(int wrong) {
 		this.wrong = wrong;
+	}
+
+	public boolean isInTraining() {
+		return inTraining;
+	}
+
+	public void setInTraining(boolean inTraining) {
+		this.inTraining = inTraining;
 	}
 	
 }
