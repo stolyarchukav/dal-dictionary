@@ -45,18 +45,23 @@ public class TableActivity extends BaseActivity {
         				getString(service.getLanguage().getIdString()));
         		boolean odd = false;
         		for (Verb verb : verbs) {
+        			float fontSize = service.getFontSize();
 		        	TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
 		        	TextView form1 = (TextView) row.findViewById(R.id.table_form_1);
 		            form1.setText(verb.getForm1());
+		            form1.setTextSize(fontSize);
 		            configureClickListener(form1);
 		            TextView form2 = (TextView) row.findViewById(R.id.table_form_2);
 		            form2.setText(verb.getForm2());
+		            form2.setTextSize(fontSize);
 		            configureClickListener(form2);
 		            TextView form3 = (TextView) row.findViewById(R.id.table_form_3);
 		            form3.setText(verb.getForm3());
+		            form3.setTextSize(fontSize);
 		            configureClickListener(form3);
 		            TextView translation = (TextView) row.findViewById(R.id.table_translation);
 		            translation.setText(verb.getTranslation());
+		            translation.setTextSize(fontSize);
 		            if (odd ^= true) {
 		        		int color = getResources().getColor(R.color.cell_background_odd);
 						form1.setBackgroundColor(color);

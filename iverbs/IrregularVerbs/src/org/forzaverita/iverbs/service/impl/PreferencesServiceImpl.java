@@ -1,5 +1,6 @@
 package org.forzaverita.iverbs.service.impl;
 
+import static org.forzaverita.iverbs.data.Constants.FONT_SIZE_DEFAULT;
 import static org.forzaverita.iverbs.data.Constants.LOG_TAG;
 import static org.forzaverita.iverbs.data.Constants.RATE_DEFAULT;
 import static org.forzaverita.iverbs.data.Constants.RATE_SCALE;
@@ -23,6 +24,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	private static final String KEY_SPLITTER = "-";
 	private static final String SPEECH_RATE = "pref_speak_speech_rate";
 	private static final String PITCH = "pref_speak_pitch";
+	private static final String FONT_SIZE = "pref_font_size";
 	private static final String IN_TRAINING = "in_training";
 	
 	private SharedPreferences preferences;
@@ -113,12 +115,16 @@ public class PreferencesServiceImpl implements PreferencesService {
 	}
 
 	private float getRate(String key) {
-		return preferences.getInt(key, (int) (RATE_DEFAULT * RATE_SCALE)) 
-				* 1f / RATE_SCALE;
+		return preferences.getInt(key, RATE_DEFAULT) * 1f / RATE_SCALE;
 	}
 	
 	private String getInTrainingKey(Verb verb) {
 		return IN_TRAINING + verb.getId();
+	}
+	
+	@Override
+	public float getFontSize() {
+		return preferences.getInt(FONT_SIZE, FONT_SIZE_DEFAULT);
 	}
 	
 }

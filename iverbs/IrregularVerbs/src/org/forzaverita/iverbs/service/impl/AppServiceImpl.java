@@ -193,4 +193,9 @@ public class AppServiceImpl extends Application implements AppService {
 		return verbsInTraining.size();
 	}
 	
+	@Override
+	public float getFontSize() {
+		return preferences.getFontSize();
+	}
+	
 }

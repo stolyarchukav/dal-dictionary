@@ -4,17 +4,17 @@ import static org.forzaverita.iverbs.data.Constants.RATE_DEFAULT;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class SpeechRatePreference extends AbstractSliderPreference {
+public class PitchPreference extends AbstractSliderPreference {
 	
-	public SpeechRatePreference(Context context) {
+	public PitchPreference(Context context) {
 		super(context);
 	}
 
-	public SpeechRatePreference(Context context, AttributeSet attrs) {
+	public PitchPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public SpeechRatePreference(Context context, AttributeSet attrs, int defStyle) {
+	public PitchPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 

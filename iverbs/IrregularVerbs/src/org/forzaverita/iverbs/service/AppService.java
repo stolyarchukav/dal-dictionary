@@ -53,4 +53,6 @@ public interface AppService {
 
 	int getInTrainingCount();
 
+	float getFontSize();
+
 }

@@ -26,4 +26,6 @@ public interface PreferencesService {
 
 	boolean isInTraining(Verb verb);
 
+	float getFontSize();
+
 }
