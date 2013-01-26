@@ -85,26 +85,35 @@ public class LearnActivity extends BaseActivity {
 
     private void showVerb(Verb verb) {
     	if (verb != null) {
+    		float fontSize = service.getFontSize();
+    		
         	TextView text = (TextView) findViewById(R.id.learn_form1);
         	form1 = verb.getForm1();
         	text.setText(form1);
+        	text.setTextSize(fontSize);
         	text = (TextView) findViewById(R.id.learn_form1_transcription);
         	text.setText(verb.getForm1Transcription());
+        	text.setTextSize(fontSize);
         	
         	text = (TextView) findViewById(R.id.learn_form2);
         	form2 = verb.getForm2();
         	text.setText(form2);
+        	text.setTextSize(fontSize);
         	text = (TextView) findViewById(R.id.learn_form2_transcription);
         	text.setText(verb.getForm2Transcription());
+        	text.setTextSize(fontSize);
         	
         	text = (TextView) findViewById(R.id.learn_form3);
         	form3 = verb.getForm3();
         	text.setText(form3);
+        	text.setTextSize(fontSize);
         	text = (TextView) findViewById(R.id.learn_form3_transcription);
         	text.setText(verb.getForm3Transcription());
+        	text.setTextSize(fontSize);
         	
         	text = (TextView) findViewById(R.id.learn_translation);
         	text.setText(verb.getTranslation());
+        	text.setTextSize(fontSize);
         }
 	}
 

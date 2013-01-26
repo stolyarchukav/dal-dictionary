@@ -25,7 +25,7 @@ public class FontSizePreference extends AbstractSliderPreference {
 
 	@Override
 	protected int getMaximum() {
-		return 24;
+		return 30;
 	}
 
 	@Override

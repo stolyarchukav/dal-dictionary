@@ -28,12 +28,15 @@ public class TrainActivity extends BaseActivity {
 	private TextView counterWrong;
 	private int correctCount = 0;
 	private int wrongCount = 0;
+
+	private float fontSize;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train);
         setActivityTitle();
+        fontSize = service.getFontSize();
     	counterCorrect = (TextView) findViewById(R.id.train_count_correct);
         counterCorrect.setText(String.valueOf(correctCount));
         counterWrong = (TextView) findViewById(R.id.train_count_wrong);
@@ -43,8 +46,14 @@ public class TrainActivity extends BaseActivity {
     
     private void createQuestion() {
     	verb = service.getRandomVerb();
+    	TextView questFormTitleText = (TextView) findViewById(R.id.train_question_form_title);
+    	questFormTitleText.setTextSize(fontSize - 2);
     	TextView questFormText = (TextView) findViewById(R.id.train_question_form);
+    	questFormText.setTextSize(fontSize);
+    	TextView questVerbTitleText = (TextView) findViewById(R.id.train_question_verb_title);
+    	questVerbTitleText.setTextSize(fontSize - 2);
     	TextView questVerbText = (TextView) findViewById(R.id.train_question_verb);
+    	questVerbText.setTextSize(fontSize);
     	formQuest = random.nextInt(4);
     	String answer = null;
     	switch (formQuest) {
@@ -86,6 +95,7 @@ public class TrainActivity extends BaseActivity {
     private void configureButton(int id, String text, Map<String, Boolean> options) {
     	Button answer = (Button) findViewById(id);
     	answer.setText(text);
+    	answer.setTextSize(fontSize);
     	answer.setOnClickListener(new AnswerListener(options.get(text)));
     	answer.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_answer));
     }

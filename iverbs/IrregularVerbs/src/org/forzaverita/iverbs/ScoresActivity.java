@@ -47,6 +47,7 @@ public class ScoresActivity extends BaseActivity {
         	@Override
         	protected void onPostExecute(List<StatItem> stats) {
         		dialog.dismiss();
+        		float fontSize = service.getFontSize();
         		TableLayout layout = (TableLayout) findViewById(R.id.scores_table);
         		Collections.sort(stats, new Comparator<StatItem>() {
         			@Override
@@ -62,9 +63,12 @@ public class ScoresActivity extends BaseActivity {
 		        	TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.scores_row, null);
 		        	TextView verb = (TextView) row.findViewById(R.id.scores_verb);
 		            verb.setText(stat.getVerb().getForm1() + " / " + stat.getVerb().getTranslation());
+		            verb.setTextSize(fontSize);
 		            TextView correct = (TextView) row.findViewById(R.id.scores_correct_count);
 		            correct.setText(String.valueOf(stat.getCorrect()));
+		            correct.setTextSize(fontSize);
 		            TextView correctPercent = (TextView) row.findViewById(R.id.scores_correct_percent);
+		            correctPercent.setTextSize(fontSize);
 		            float percent = stat.getCorrectPercent();
 		            correctPercent.setText(String.format("%.2f", percent));
 		            if (percent > 50) {

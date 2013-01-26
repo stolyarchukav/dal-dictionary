@@ -39,14 +39,14 @@ public class TableActivity extends BaseActivity {
         	@Override
         	protected void onPostExecute(List<Verb> verbs) {
         		dialog.dismiss();
+        		float fontSize = service.getFontSize();
         		TableLayout layout = (TableLayout) findViewById(R.id.table_table);
         		TextView headerTranslation = (TextView) findViewById(R.id.table_header_translation);
         		headerTranslation.setText(getString(R.string.table_translation) + "\n" + 
         				getString(service.getLanguage().getIdString()));
         		boolean odd = false;
         		for (Verb verb : verbs) {
-        			float fontSize = service.getFontSize();
-		        	TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
+        			TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
 		        	TextView form1 = (TextView) row.findViewById(R.id.table_form_1);
 		            form1.setText(verb.getForm1());
 		            form1.setTextSize(fontSize);
