@@ -14,6 +14,7 @@ import org.forzaverita.iverbs.data.Verb;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -120,6 +121,13 @@ public class TrainActivity extends BaseActivity {
 			options.put(key, false);
 		}
 	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.menu_train).setVisible(false);
+        return true;
+    }
     
     private class AnswerListener implements View.OnClickListener {
     	

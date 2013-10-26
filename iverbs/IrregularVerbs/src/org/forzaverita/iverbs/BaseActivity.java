@@ -1,5 +1,6 @@
 package org.forzaverita.iverbs;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -54,7 +55,8 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 		if (! service.isLanguagePrefered()) {
 			startActivity(new Intent(this, SelectLangDialog.class));
 		}
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 	
 	protected void onDestroy() {
@@ -68,12 +70,18 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+        return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+            case R.id.menu_table :
+                startActivity(new Intent(this, TableActivity.class));
+                break;
+            case R.id.menu_train :
+                startActivity(new Intent(this, TrainActivity.class));
+                break;
 			case R.id.menu_search :
                 onSearchRequested();
                 break;

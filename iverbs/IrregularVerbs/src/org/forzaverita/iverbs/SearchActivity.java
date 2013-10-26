@@ -11,6 +11,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -91,6 +92,13 @@ public class SearchActivity extends BaseActivity {
         	}
         	
         }.execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.menu_search).setVisible(false);
+        return true;
     }
 
 	private void startLearnActivity(int id) {

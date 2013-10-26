@@ -7,6 +7,7 @@ import org.forzaverita.iverbs.data.Verb;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -73,6 +74,13 @@ public class TableActivity extends BaseActivity {
         	}
         	
         }.execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.menu_table).setVisible(false);
+        return true;
     }
     
     private void configureClickListener(final TextView text) {

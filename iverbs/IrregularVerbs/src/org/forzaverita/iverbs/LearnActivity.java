@@ -6,6 +6,7 @@ import org.forzaverita.iverbs.data.Constants;
 import org.forzaverita.iverbs.data.Verb;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
@@ -65,7 +66,7 @@ public class LearnActivity extends BaseActivity {
 			}
 		});
     }
-    
+
     public void onClickPrevious(View view) {
     	showPrevious();
 	}
