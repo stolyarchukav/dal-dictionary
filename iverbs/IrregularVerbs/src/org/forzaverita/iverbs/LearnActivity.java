@@ -24,7 +24,6 @@ public class LearnActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.learn);
-        setActivityTitle();
         Bundle extras = getIntent().getExtras();
         int id = 0;
         if (extras != null) {

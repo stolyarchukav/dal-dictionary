@@ -26,7 +26,6 @@ public class ScoresActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scores);
-        setActivityTitle();
         
         new AsyncTask<Void, Void, List<StatItem>>() {
 

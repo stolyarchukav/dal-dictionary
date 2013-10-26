@@ -16,7 +16,6 @@ public class InfoActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
-        setActivityTitle();
         
         WebView text = (WebView) findViewById(R.id.info_usage);
         String header = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";

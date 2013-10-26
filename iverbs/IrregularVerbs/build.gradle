@@ -13,7 +13,7 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 16
+    compileSdkVersion 15
     buildToolsVersion "17.0.0"
 
     sourceSets {
@@ -45,8 +45,8 @@ android {
         release {
             storeFile file("/work/java/WorkspaceAndroid/exports/keystore")
             keyAlias "android"
-            storePassword System.console().readLine("\n\$ Enter keystore password: ")
-            keyPassword System.console().readLine("\n\$ Enter key password: ")
+            storePassword System.console() ? String.valueOf(System.console().readPassword("\n\$ Enter keystore password: ")) : 'password'
+            keyPassword System.console() ? String.valueOf(System.console().readPassword("\n\$ Enter key password: ")) : "password"
         }
     }
 

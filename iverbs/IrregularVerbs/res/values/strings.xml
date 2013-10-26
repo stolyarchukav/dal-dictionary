@@ -83,5 +83,7 @@
     <string name="question_submit">Are you sure?</string>
     <string name="answer_yes">Yes</string>
     <string name="answer_no">No</string>
+
+    <string name="ad_mob_id">a1526599e1c1c36</string>
     
 </resources>

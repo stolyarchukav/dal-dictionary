@@ -35,7 +35,6 @@ public class TrainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train);
-        setActivityTitle();
         fontSize = service.getFontSize();
     	counterCorrect = (TextView) findViewById(R.id.train_count_correct);
         counterCorrect.setText(String.valueOf(correctCount));

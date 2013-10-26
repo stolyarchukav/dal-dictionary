@@ -18,7 +18,6 @@ public class TableActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.table);
-        setActivityTitle();
         
         new AsyncTask<Void, Void, List<Verb>>() {
 

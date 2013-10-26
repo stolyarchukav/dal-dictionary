@@ -1,13 +1,5 @@
 package org.forzaverita.iverbs;
 
-import java.util.Date;
-import java.util.Locale;
-
-import org.forzaverita.iverbs.data.Constants;
-import org.forzaverita.iverbs.preference.AppPreferenceActivity;
-import org.forzaverita.iverbs.preference.SelectLangDialog;
-import org.forzaverita.iverbs.service.AppService;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -19,11 +11,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+
+import org.forzaverita.iverbs.data.Constants;
+import org.forzaverita.iverbs.preference.AppPreferenceActivity;
+import org.forzaverita.iverbs.preference.SelectLangDialog;
+import org.forzaverita.iverbs.service.AppService;
+
+import java.util.Date;
+import java.util.Locale;
 
 public abstract class BaseActivity extends Activity implements OnInitListener {
 
@@ -53,6 +54,7 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 		if (! service.isLanguagePrefered()) {
 			startActivity(new Intent(this, SelectLangDialog.class));
 		}
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	protected void onDestroy() {
@@ -72,29 +74,32 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.menu_settings :
-				startActivity(new Intent(this, AppPreferenceActivity.class));
-			break;
-			default:
+			case R.id.menu_search :
+                onSearchRequested();
+                break;
+            case R.id.menu_info :
+                startActivity(new Intent(this, InfoActivity.class));
+			    break;
+            case R.id.menu_settings :
+                startActivity(new Intent(this, AppPreferenceActivity.class));
+                break;
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                if (upIntent != null) {
+                    if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                        TaskStackBuilder.create(this)
+                                .addNextIntentWithParentStack(upIntent)
+                                .startActivities();
+                    } else {
+                        NavUtils.navigateUpTo(this, upIntent);
+                    }
+                }
+                break;
 		}
 		return true;
 	}
 
-	public void onClickHome(View view) {
-		Intent intent = new Intent(this, MainActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
-
-	public void onClickInfo(View view) {
-		startActivity(new Intent(getApplicationContext(), InfoActivity.class));
-	}
-
-	public void onClickSearch(View view) {
-		onSearchRequested();
-	}
-
-	public void onClickMode(View view) {
+    public void onClickMode(View view) {
 		switch (view.getId()) {
 		case R.id.dashboard_button_table:
 			startActivity(new Intent(getApplicationContext(),
@@ -111,8 +116,6 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			startActivity(new Intent(getApplicationContext(),
 					ScoresActivity.class));
 			break;
-		default:
-			break;
 		}
 	}
 
@@ -127,16 +130,10 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 									addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP));
 						}
 					}).create().show();
-		}
-		else {
+		} else {
 			startActivity(new Intent(getApplicationContext(),
 					TrainActivity.class));
 		}
-	}
-
-	public void setActivityTitle() {
-		TextView textView = (TextView) findViewById(R.id.title_text);
-		textView.setText(getTitle());
 	}
 
 	@Override
@@ -146,8 +143,7 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			if (result == TextToSpeech.LANG_MISSING_DATA
 					|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
 				Log.e(Constants.LOG_TAG, "This Language is not supported");
-			}
-			else {
+			} else {
 				setVolumeControlStream(AudioManager.STREAM_MUSIC);
 			}
 		} else {
@@ -163,8 +159,7 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
     	try {
     		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
 					getApplicationInfo().packageName)));
-		}
-		catch (ActivityNotFoundException e) {
+		} catch (ActivityNotFoundException e) {
 			Log.w(Constants.LOG_TAG, "Can't open market app page");
 		}
 	}
