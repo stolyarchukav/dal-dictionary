@@ -25,7 +25,11 @@ import org.forzaverita.iverbs.preference.SelectLangDialog;
 import org.forzaverita.iverbs.service.AppService;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Set;
+
+import static android.speech.tts.TextToSpeech.Engine.KEY_FEATURE_NETWORK_SYNTHESIS;
 
 public abstract class BaseActivity extends Activity implements OnInitListener {
 
@@ -52,6 +56,7 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 		tts = new TextToSpeech(this, this);
 		tts.setSpeechRate(service.getSpeechRate());
 		tts.setPitch(service.getPitch());
+        tts.setLanguage(Locale.US);
 		if (! service.isLanguagePrefered()) {
 			startActivity(new Intent(this, SelectLangDialog.class));
 		}
@@ -90,6 +95,12 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 			    break;
             case R.id.menu_settings :
                 startActivity(new Intent(this, AppPreferenceActivity.class));
+                break;
+            case R.id.menu_rate :
+                rateApp();
+                break;
+            case R.id.menu_more_apps :
+                moreApps();
                 break;
             case android.R.id.home:
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
@@ -160,16 +171,34 @@ public abstract class BaseActivity extends Activity implements OnInitListener {
 	}
 
 	protected final void speak(String text) {
-		tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        HashMap<String, String> params = new HashMap<String, String>();
+        Set<String> features = tts.getFeatures(Locale.US);
+        if (features.contains(KEY_FEATURE_NETWORK_SYNTHESIS)) {
+            params.put(KEY_FEATURE_NETWORK_SYNTHESIS, "true");
+        }
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, params);
 	}
-	
+
 	public void onClickRateApp(View view) {
-    	try {
-    		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
-					getApplicationInfo().packageName)));
-		} catch (ActivityNotFoundException e) {
-			Log.w(Constants.LOG_TAG, "Can't open market app page");
-		}
+    	rateApp();
 	}
+
+    private void rateApp() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +
+                    getApplicationInfo().packageName)));
+        } catch (ActivityNotFoundException e) {
+            Log.w(Constants.LOG_TAG, "Can't open market app page");
+        }
+    }
+
+    private void moreApps() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("market://search?q=pub:ForzaVerita")));
+        } catch (ActivityNotFoundException e) {
+            Log.w(Constants.LOG_TAG, "Can't open market app page");
+        }
+    }
 
 }

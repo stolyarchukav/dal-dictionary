@@ -6,7 +6,7 @@
     <string name="progress_title">Загрузка</string>
     <string name="progress_text">Подождите, идет загрузка…</string>
     
-    <string name="title_activity_main">Irregular verbs</string>
+    <string name="title_activity_main">Неправильные глаголы</string>
     <string name="title_activity_info">О программе</string>
     <string name="title_activity_search">Поиск</string>
     <string name="title_activity_table">Таблица</string>
@@ -23,7 +23,7 @@
 
     <string name="title_home">Домой</string>
     
-    <string name="table_form_1">Present Simple</string>
+    <string name="table_form_1">Infinitive</string>
     <string name="table_form_2">Past Simple</string>
     <string name="table_form_3">Past Participle</string>
     <string name="table_translation">Перевод</string>
@@ -37,7 +37,7 @@
     <string name="info_usage">
         <![CDATA[
         		<p><b>Справочник неправильных глаголов английского языка</b></p>
-        		<p>версия 1.3</p>
+        		<p>версия 1.5</p>
             	Возможности:<ul>
         		<li>Таблица: полный список глаголов</li>
         		<li>Изучение: Постраничный вывод глаголов с транскрипциями</li>

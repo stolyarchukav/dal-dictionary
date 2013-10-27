@@ -23,7 +23,7 @@
 
     <string name="title_home">Home</string>
     
-    <string name="table_form_1">Present Simple</string>
+    <string name="table_form_1">Infinitive</string>
     <string name="table_form_2">Past Simple</string>
     <string name="table_form_3">Past Participle</string>
     <string name="table_translation">Translation</string>
@@ -37,7 +37,7 @@
     <string name="info_usage">
         <![CDATA[
         		<p><b>The reference book of english irregular verbs</b></p>
-        		<p>version 1.3</p>
+        		<p>version 1.5</p>
             	Features:<ul>
         		<li>Table: full list of verbs</li>
         		<li>Learn: scrollable page of verbs with transcriptions</li>
