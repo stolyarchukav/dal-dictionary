@@ -131,7 +131,8 @@
     <style name="ButtonAnswer">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:padding">2dp</item>
+        <item name="android:padding">30dp</item>
+        <item name="android:layout_margin">12dp</item>
     </style>
     
     <style name="CounterAnswer">

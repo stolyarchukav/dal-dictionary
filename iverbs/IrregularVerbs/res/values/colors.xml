@@ -13,8 +13,8 @@
     <color name="train_correct">#ff00ff00</color>
     <color name="train_wrong">#ffff0000</color>
     <color name="train_key_text">#ff0000ff</color>
-    <color name="train_button_grad_from">#ffffffff</color>
-    <color name="train_button_grad_to">#ffcccccc</color>
+    <color name="train_button_grad_from">#ff7e64ff</color>
+    <color name="train_button_grad_to">#ffa39aff</color>
     <color name="train_button_border">#00000000</color>
     <color name="select_lang_title">#ff0000ff</color>
     <color name="select_lang_item">#ff000000</color>
