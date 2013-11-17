@@ -6,7 +6,7 @@ import static org.forzaverita.iverbs.data.Constants.RATE_DEFAULT;
 import static org.forzaverita.iverbs.data.Constants.RATE_SCALE;
 
 import org.forzaverita.iverbs.data.StatItem;
-import org.forzaverita.iverbs.data.TrainMode;
+import org.forzaverita.iverbs.train.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.service.PreferencesService;
 

@@ -70,7 +70,7 @@
        	</activity>
         <activity
             android:name=".TrainActivity"
-            android:label="@string/title_activity_train" >
+            android:label="@string/title_activity_train">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

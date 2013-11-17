@@ -50,7 +50,9 @@
     <string name="info_more_apps"><u>Другие приложения</u></string>
     <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
     <string name="rate_app_short"><u>Оценить приложение</u></string>
-    
+
+    <string name="train_title_quiz">Тест с вариантами</string>
+    <string name="train_title_text">Текстовый режим</string>
     <string name="train_question_part_first">Укажите</string>
     <string name="train_question_part_second">глагола</string>
     <string name="tran_hint">Выберите правильный ответ</string>

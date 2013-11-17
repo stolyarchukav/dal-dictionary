@@ -1,4 +1,4 @@
-package org.forzaverita.iverbs.data;
+package org.forzaverita.iverbs.train;
 
 public enum TrainMode {
 

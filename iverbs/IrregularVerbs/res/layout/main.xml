@@ -62,7 +62,7 @@
         android:onClick="onClickRateApp"
         android:text="@string/rate_app_short"
         android:textSize="12sp" />
-
+<!--
     <com.google.ads.AdView android:id="@+id/adView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -70,5 +70,5 @@
         ads:adSize="SMART_BANNER"
         ads:loadAdOnCreate="true"
         ads:testDevices="HT12WTD02717,015d3b65d45ff218" />
-
+-->
 </LinearLayout>

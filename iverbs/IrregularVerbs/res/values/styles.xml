@@ -30,12 +30,6 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="TextBody">
-        <item name="android:textSize">15sp</item>
-        <item name="android:lineSpacingMultiplier">1.1</item>
-        <item name="android:textColor">@android:color/secondary_text_light</item>
-    </style>
-    
     <style name="TableRow">
         <item name="android:padding">0dip</item>
         <item name="android:background">@color/title_background</item>
@@ -131,7 +125,7 @@
     <style name="ButtonAnswer">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:padding">30dp</item>
+        <item name="android:padding">20dp</item>
         <item name="android:layout_margin">12dp</item>
     </style>
     

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.forzaverita.iverbs.data.Lang;
 import org.forzaverita.iverbs.data.StatItem;
-import org.forzaverita.iverbs.data.TrainMode;
+import org.forzaverita.iverbs.train.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 
 import android.database.Cursor;

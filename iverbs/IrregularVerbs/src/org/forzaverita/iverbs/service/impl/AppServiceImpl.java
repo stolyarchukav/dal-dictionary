@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.forzaverita.iverbs.data.Lang;
 import org.forzaverita.iverbs.data.StatItem;
-import org.forzaverita.iverbs.data.TrainMode;
+import org.forzaverita.iverbs.train.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.database.Database;
 import org.forzaverita.iverbs.database.impl.SqliteDatabase;
