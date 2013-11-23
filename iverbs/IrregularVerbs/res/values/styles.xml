@@ -150,4 +150,35 @@
         <item name="android:background">@null</item>
     </style>
 
+    <style name="ButtonTrainTextAnswer">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_margin">15dp</item>
+    </style>
+
+    <style name="TrainTextFormTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TrainTextFormOriginal" parent="TrainTextFormTitle">
+        <item name="android:textColor">@color/train_correct</item>
+    </style>
+
+    <style name="TrainTextFormAnswer">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/train_key_text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:minWidth">50dp</item>
+    </style>
+
 </resources>

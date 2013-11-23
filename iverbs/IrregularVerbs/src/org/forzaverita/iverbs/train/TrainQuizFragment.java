@@ -155,7 +155,7 @@ public class TrainQuizFragment extends TitledFragment {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            TrainQuizFragment.this.createQuestion();
+                            createQuestion();
                             selected.set(false);
                         }
                     }, 1000);

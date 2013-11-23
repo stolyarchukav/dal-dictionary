@@ -58,7 +58,13 @@
     <string name="tran_hint">Select right answer</string>
     <string name="train_min_dialog_title">At least %s verbs must be in training</string>
     <string name="train_min_dialog_button">Go to statistic and add verbs in training</string>
-    
+    <string name="train_text_task">Type three forms of verb</string>
+    <string name="train_text_form_1">1st form (infinitive)</string>
+    <string name="train_text_form_2">2nd form (past simple)</string>
+    <string name="train_text_form_3">3rd form (past participle)</string>
+    <string name="train_text_answer">Check answer</string>
+    <string name="train_text_next">Next</string>
+
     <string name="pref_speak">Speaker</string>
     <string name="pref_speak_speech_rate">Speech rate</string>
     <string name="pref_speak_pitch">Pitch</string>

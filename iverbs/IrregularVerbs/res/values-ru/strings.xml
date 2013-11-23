@@ -58,7 +58,13 @@
     <string name="tran_hint">Выберите правильный ответ</string>
     <string name="train_min_dialog_title">Не менее %s глаголов должно быть в тренировке</string>
     <string name="train_min_dialog_button">Перейти в статистику и добавить глаголы</string>
-    
+    <string name="train_text_task">Укажите три формы глагола</string>
+    <string name="train_text_form_1">1-я форма (infinitive)</string>
+    <string name="train_text_form_2">2-я форма (past simple)</string>
+    <string name="train_text_form_3">3-я форма (past participle)</string>
+    <string name="train_text_answer">Проверить ответ</string>
+    <string name="train_text_next">Следующий</string>
+
     <string name="pref_speak">Речь</string>
     <string name="pref_speak_speech_rate">Скорость речи</string>
     <string name="pref_speak_pitch">Тон речи</string>
