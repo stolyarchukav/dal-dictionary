@@ -1,33 +1,32 @@
-package org.forzaverita.iverbs;
+package org.forzaverita.iverbs.train;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 
-import org.forzaverita.iverbs.fragment.CommonPagerAdapter;
+import org.forzaverita.iverbs.BaseActivity;
+import org.forzaverita.iverbs.R;
+import org.forzaverita.iverbs.fragment.MapFragmentsPagerAdapter;
 import org.forzaverita.iverbs.fragment.TitledFragment;
-import org.forzaverita.iverbs.train.TrainQuizFragment;
-import org.forzaverita.iverbs.train.TrainTextFragment;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TrainActivity extends BaseActivity {
 
-    private CommonPagerAdapter pagerAdapter;
+    private MapFragmentsPagerAdapter pagerAdapter;
 
     private ViewPager viewPager;
-
-    private final Map<Integer, TitledFragment> fragments = new HashMap<Integer, TitledFragment>();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train);
 
+        Map<Integer, TitledFragment> fragments = new HashMap<Integer, TitledFragment>();
         fragments.put(0, new TrainQuizFragment(getString(R.string.train_title_quiz)));
         fragments.put(1, new TrainTextFragment(getString(R.string.train_title_text)));
 
-        pagerAdapter = new CommonPagerAdapter(getSupportFragmentManager(), fragments);
+        pagerAdapter = new MapFragmentsPagerAdapter(getSupportFragmentManager(), fragments);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);

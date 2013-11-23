@@ -38,6 +38,10 @@ public class TrainQuizFragment extends TitledFragment {
     private float fontSize;
     private View rootView;
 
+    public TrainQuizFragment() {
+        super();
+    }
+
     public TrainQuizFragment(String title) {
         super(title);
     }

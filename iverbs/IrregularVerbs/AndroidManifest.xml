@@ -59,7 +59,7 @@
                 android:value=".SearchActivity" />
         </activity>	
         <activity
-            android:name=".LearnActivity"
+            android:name=".learn.LearnActivity"
             android:label="@string/title_activity_learn" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -69,7 +69,7 @@
                 android:value=".SearchActivity" />
        	</activity>
         <activity
-            android:name=".TrainActivity"
+            android:name=".train.TrainActivity"
             android:label="@string/title_activity_train">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -1,7 +1,6 @@
 package org.forzaverita.iverbs;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -21,9 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.forzaverita.iverbs.data.Constants;
+import org.forzaverita.iverbs.learn.LearnActivity;
 import org.forzaverita.iverbs.preference.AppPreferenceActivity;
 import org.forzaverita.iverbs.preference.SelectLangDialog;
 import org.forzaverita.iverbs.service.AppService;
+import org.forzaverita.iverbs.train.TrainActivity;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -171,7 +172,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
 		}
 	}
 
-	protected final void speak(String text) {
+	public final void speak(String text) {
         HashMap<String, String> params = new HashMap<String, String>();
         Set<String> features = tts.getFeatures(Locale.US);
         if (features.contains(KEY_FEATURE_NETWORK_SYNTHESIS)) {

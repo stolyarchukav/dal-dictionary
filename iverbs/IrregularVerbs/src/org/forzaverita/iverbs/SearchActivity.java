@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.forzaverita.iverbs.data.Constants;
 import org.forzaverita.iverbs.data.Verb;
+import org.forzaverita.iverbs.learn.LearnActivity;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;

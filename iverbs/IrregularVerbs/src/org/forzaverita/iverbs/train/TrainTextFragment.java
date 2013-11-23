@@ -9,6 +9,10 @@ import org.forzaverita.iverbs.fragment.TitledFragment;
 
 public class TrainTextFragment extends TitledFragment {
 
+    public TrainTextFragment() {
+        super();
+    }
+
     public TrainTextFragment(String title) {
         super(title);
     }

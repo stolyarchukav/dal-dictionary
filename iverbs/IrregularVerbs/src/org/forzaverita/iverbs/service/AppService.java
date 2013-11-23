@@ -55,4 +55,5 @@ public interface AppService {
 
 	float getFontSize();
 
+    int getVerbsCount();
 }

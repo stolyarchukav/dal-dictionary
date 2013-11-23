@@ -1,23 +1,23 @@
 package org.forzaverita.iverbs.service.impl;
 
+import android.app.Application;
+import android.database.Cursor;
+
+import org.forzaverita.iverbs.data.Lang;
+import org.forzaverita.iverbs.data.StatItem;
+import org.forzaverita.iverbs.data.Verb;
+import org.forzaverita.iverbs.database.Database;
+import org.forzaverita.iverbs.database.impl.SqliteDatabase;
+import org.forzaverita.iverbs.service.AppService;
+import org.forzaverita.iverbs.service.PreferencesService;
+import org.forzaverita.iverbs.train.TrainMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-
-import org.forzaverita.iverbs.data.Lang;
-import org.forzaverita.iverbs.data.StatItem;
-import org.forzaverita.iverbs.train.TrainMode;
-import org.forzaverita.iverbs.data.Verb;
-import org.forzaverita.iverbs.database.Database;
-import org.forzaverita.iverbs.database.impl.SqliteDatabase;
-import org.forzaverita.iverbs.service.AppService;
-import org.forzaverita.iverbs.service.PreferencesService;
-
-import android.app.Application;
-import android.database.Cursor;
 
 public class AppServiceImpl extends Application implements AppService {
 	
@@ -197,5 +197,10 @@ public class AppServiceImpl extends Application implements AppService {
 	public float getFontSize() {
 		return preferences.getFontSize();
 	}
-	
+
+    @Override
+    public int getVerbsCount() {
+        return maxId;
+    }
+
 }

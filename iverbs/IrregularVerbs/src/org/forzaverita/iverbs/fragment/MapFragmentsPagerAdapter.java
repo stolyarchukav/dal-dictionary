@@ -6,11 +6,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.Map;
 
-public class CommonPagerAdapter extends FragmentPagerAdapter {
+public class MapFragmentsPagerAdapter extends FragmentPagerAdapter {
 
     private final Map<Integer, TitledFragment> fragments;
 
-    public CommonPagerAdapter(FragmentManager fm, Map<Integer, TitledFragment> fragments) {
+    public MapFragmentsPagerAdapter(FragmentManager fm, Map<Integer, TitledFragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }
