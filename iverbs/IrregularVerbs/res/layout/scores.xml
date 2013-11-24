@@ -44,7 +44,27 @@
             android:stretchColumns="*" >
         </TableLayout>
     </ScrollView>
-    
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/scores_select_all"
+            android:onClick="onSelectAll" />
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/scores_deselect_all"
+            android:onClick="onDeselectAll" />
+    </LinearLayout>
+
     <Button
         style="@style/HintText"
         android:layout_width="fill_parent"

@@ -8,6 +8,10 @@
         android:title="@string/title_activity_train"
         android:showAsAction="ifRoom|withText" />
 
+    <item android:id="@+id/menu_scores"
+        android:title="@string/title_activity_scores"
+        android:showAsAction="ifRoom" />
+
     <item android:id="@+id/menu_search"
         android:title="@string/description_search"
         android:icon="@android:drawable/ic_menu_search"

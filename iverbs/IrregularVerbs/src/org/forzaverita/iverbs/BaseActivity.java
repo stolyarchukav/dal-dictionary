@@ -89,7 +89,10 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
             case R.id.menu_train :
                 startActivity(new Intent(this, TrainActivity.class));
                 break;
-			case R.id.menu_search :
+			case R.id.menu_scores :
+                startActivity(new Intent(this, ScoresActivity.class));
+                break;
+            case R.id.menu_search :
                 onSearchRequested();
                 break;
             case R.id.menu_info :

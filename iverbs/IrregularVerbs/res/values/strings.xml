@@ -87,6 +87,8 @@
     <string name="scores_correct_percent">% of correct</string>
     <string name="scores_reset"><u>Reset statistic</u></string>
     <string name="scores_in_training">In training</string>
+    <string name="scores_select_all">Select all</string>
+    <string name="scores_deselect_all">Deselect all</string>
     
     <string name="question_submit">Are you sure?</string>
     <string name="answer_yes">Yes</string>

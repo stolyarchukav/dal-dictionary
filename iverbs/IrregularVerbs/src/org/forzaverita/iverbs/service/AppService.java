@@ -51,9 +51,12 @@ public interface AppService {
 
 	void setInTraining(Verb verb, boolean inTraining);
 
+    void setInTrainingAll(boolean inTraining);
+
 	int getInTrainingCount();
 
 	float getFontSize();
 
     int getVerbsCount();
+
 }

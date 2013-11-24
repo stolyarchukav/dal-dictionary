@@ -187,8 +187,16 @@ public class AppServiceImpl extends Application implements AppService {
 			verbsInTraining.remove(id);
 		}
 	}
-	
-	@Override
+
+    @Override
+    public void setInTrainingAll(boolean inTraining) {
+        List<Verb> verbs = getVerbs();
+        for (Verb verb : verbs) {
+            setInTraining(verb, inTraining);
+        }
+    }
+
+    @Override
 	public int getInTrainingCount() {
 		return verbsInTraining.size();
 	}
