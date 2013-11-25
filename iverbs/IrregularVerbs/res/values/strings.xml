@@ -42,8 +42,8 @@
         		<li>Table: full list of verbs</li>
         		<li>Learn: scrollable page of verbs with transcriptions</li>
         		<li>Search: text and voice search verbs</li>
-        		<li>Train: quiz of verbs</li>
-        		<li>Scores: statistic of training</li>
+        		<li>Train: 2 train modes: quiz plus type</li>
+        		<li>Scores: statistic of training with filtering and sorting</li>
         		<li>Settings: speech rate, languages of translate</li></ul>
         	]]>
     </string>
