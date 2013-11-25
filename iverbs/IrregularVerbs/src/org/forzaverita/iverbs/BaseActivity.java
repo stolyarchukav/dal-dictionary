@@ -47,7 +47,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
 		super.onResume();
 		if (service.isPreferencesChanged(lastPreferencesCheck)) {
 			lastPreferencesCheck = new Date();
-			onCreate(null);
+			startActivity(new Intent(this, getClass()));
 		}
 	}
 	
