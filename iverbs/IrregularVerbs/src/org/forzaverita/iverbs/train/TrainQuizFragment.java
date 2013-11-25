@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.forzaverita.iverbs.BaseActivity;
 import org.forzaverita.iverbs.R;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.fragment.TitledFragment;
@@ -159,7 +160,7 @@ public class TrainQuizFragment extends TitledFragment {
                             selected.set(false);
                         }
                     }, 1000);
-                    //TODO Voice correct answer ?
+                    speakCorrect();
                     service.addCorrect(formQuest, verb, TrainMode.SELECT);
                     counterCorrect.setText(String.valueOf(++ correctCount));
                 }
@@ -177,6 +178,13 @@ public class TrainQuizFragment extends TitledFragment {
                 }
             }
         }
+    }
+
+    private void speakCorrect() {
+        BaseActivity baseActivity = (BaseActivity) getActivity();
+        baseActivity.speak(verb.getForm1());
+        baseActivity.speak(verb.getForm2());
+        baseActivity.speak(verb.getForm3());
     }
 
 }

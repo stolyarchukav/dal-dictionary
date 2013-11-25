@@ -181,7 +181,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
         if (features.contains(KEY_FEATURE_NETWORK_SYNTHESIS)) {
             params.put(KEY_FEATURE_NETWORK_SYNTHESIS, "true");
         }
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, params);
+        tts.speak(text, TextToSpeech.QUEUE_ADD, params);
 	}
 
 	public void onClickRateApp(View view) {

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.forzaverita.iverbs.BaseActivity;
 import org.forzaverita.iverbs.R;
 import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.fragment.TitledFragment;
@@ -122,6 +123,7 @@ public class TrainTextFragment extends TitledFragment {
         public void onClick(View view) {
             answered = true;
             buttonAnswer.setEnabled(false);
+            speakCorrect();
             checkAnswer(verb.getForm1(), answer1, R.id.train_text_form1_original, 0);
             checkAnswer(verb.getForm2(), answer2, R.id.train_text_form2_original, 1);
             checkAnswer(verb.getForm3(), answer3, R.id.train_text_form3_original, 3);
@@ -156,4 +158,12 @@ public class TrainTextFragment extends TitledFragment {
             }
         }
     }
+
+    private void speakCorrect() {
+        BaseActivity baseActivity = (BaseActivity) getActivity();
+        baseActivity.speak(verb.getForm1());
+        baseActivity.speak(verb.getForm2());
+        baseActivity.speak(verb.getForm3());
+    }
+
 }
