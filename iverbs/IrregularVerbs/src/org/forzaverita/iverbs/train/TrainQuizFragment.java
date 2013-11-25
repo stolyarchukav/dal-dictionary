@@ -159,6 +159,7 @@ public class TrainQuizFragment extends TitledFragment {
                             selected.set(false);
                         }
                     }, 1000);
+                    //TODO Voice correct answer ?
                     service.addCorrect(formQuest, verb, TrainMode.SELECT);
                     counterCorrect.setText(String.valueOf(++ correctCount));
                 }

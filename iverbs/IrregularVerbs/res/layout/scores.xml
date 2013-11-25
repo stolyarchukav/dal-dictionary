@@ -13,20 +13,32 @@
         <TableRow style="@style/TableRow" >
 
             <TextView
+                android:id="@+id/scores_header_verb"
                 style="@style/TableHeaderText"
-                android:text="@string/scores_verb" />
+                android:text="@string/scores_verb"
+                android:clickable="true"
+                android:onClick="onClickHeaderVerb" />
 
             <TextView
+                android:id="@+id/scores_header_correct_count"
                 style="@style/TableHeaderText"
-                android:text="@string/scores_correct_count" />
+                android:text="@string/scores_correct_count"
+                android:clickable="true"
+                android:onClick="onClickHeaderCorrectCount" />
 
             <TextView
+                android:id="@+id/scores_header_correct_percent"
                 style="@style/TableHeaderText"
-                android:text="@string/scores_correct_percent" />
+                android:text="@string/scores_correct_percent"
+                android:clickable="true"
+                android:onClick="onClickHeaderCorrectPercent" />
             
             <TextView
+                android:id="@+id/scores_header_in_training"
                 style="@style/TableHeaderText"
-                android:text="@string/scores_in_training" />
+                android:text="@string/scores_in_training"
+                android:clickable="true"
+                android:onClick="onClickHeaderInTraining" />
 
         </TableRow>
     </TableLayout>

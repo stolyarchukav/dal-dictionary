@@ -23,15 +23,43 @@ import java.util.List;
 
 public class ScoresActivity extends BaseActivity {
 
+    private static final String ARROW_DOWN = "\u25B2";
+    private static final String ARROW_UP = "\u25BC";
+
+    private volatile Comparator<StatItem> comparator;
+    private TextView headerVerb;
+    private TextView headerCorrectCount;
+    private TextView headerCorrectPercent;
+    private TextView headerInTraining;
+
+    private boolean orderVerbAsc;
+    private boolean orderCorrectCountAsc;
+    private boolean orderCorrectPercentAsc;
+    private boolean orderInTrainingAsc;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scores);
+        comparator = new Comparator<StatItem>() {
+            @Override
+            public int compare(StatItem lhs, StatItem rhs) {
+                int result = rhs.getCorrect() - lhs.getCorrect();
+                if (result == 0) {
+                    result = lhs.getWrong() - rhs.getWrong();
+                }
+                return result;
+            }
+        };
+        headerVerb = (TextView) findViewById(R.id.scores_header_verb);
+        headerCorrectCount = (TextView) findViewById(R.id.scores_header_correct_count);
+        headerCorrectPercent = (TextView) findViewById(R.id.scores_header_correct_percent);
+        headerInTraining = (TextView) findViewById(R.id.scores_header_in_training);
         loadTable();
     }
 
     private void loadTable(Runnable... preLoadTasks) {
-        new LoadTableTask(preLoadTasks).execute();
+        new LoadTableTask(comparator, preLoadTasks).execute();
     }
 
     private class LoadTableTask extends AsyncTask<Void, Void, List<StatItem>> {
@@ -39,7 +67,7 @@ public class ScoresActivity extends BaseActivity {
         private ProgressDialog dialog;
         private Runnable[] preLoadTasks;
 
-        public LoadTableTask(Runnable... preLoadTasks) {
+        public LoadTableTask(Comparator<StatItem> comparator, Runnable... preLoadTasks) {
             this.preLoadTasks = preLoadTasks;
         }
 
@@ -64,16 +92,7 @@ public class ScoresActivity extends BaseActivity {
             float fontSize = service.getFontSize();
             TableLayout table = (TableLayout) findViewById(R.id.scores_table);
             table.removeAllViews();
-            Collections.sort(stats, new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    int result = rhs.getCorrect() - lhs.getCorrect();
-                    if (result == 0) {
-                        result = lhs.getWrong() - rhs.getWrong();
-                    }
-                    return result;
-                }
-            });
+            Collections.sort(stats, comparator);
             for (final StatItem stat : stats) {
                 TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.scores_row, null);
                 TextView verb = (TextView) row.findViewById(R.id.scores_verb);
@@ -157,4 +176,104 @@ public class ScoresActivity extends BaseActivity {
             }
         });
     }
+
+    private void clearHeaders() {
+        headerVerb.setText(R.string.scores_verb);
+        headerCorrectCount.setText(R.string.scores_correct_count);
+        headerCorrectPercent.setText(R.string.scores_correct_percent);
+        headerInTraining.setText(R.string.scores_in_training);
+    }
+
+    public void onClickHeaderVerb(View view) {
+        clearHeaders();
+        if (orderVerbAsc) {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return rhs.getVerb().getForm1().compareTo(lhs.getVerb().getForm1());
+                }
+            };
+            headerVerb.setText(headerVerb.getText() + ARROW_UP);
+        } else {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return lhs.getVerb().getForm1().compareTo(rhs.getVerb().getForm1());
+                }
+            };
+            headerVerb.setText(headerVerb.getText() + ARROW_DOWN);
+        }
+        loadTable();
+        orderVerbAsc ^= true;
+    }
+
+    public void onClickHeaderCorrectCount(View view) {
+        clearHeaders();
+        if (orderCorrectCountAsc) {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return rhs.getCorrect() - lhs.getCorrect();
+                }
+            };
+            headerCorrectCount.setText(headerCorrectCount.getText() + ARROW_UP);
+        } else {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return lhs.getCorrect() - rhs.getCorrect();
+                }
+            };
+            headerCorrectCount.setText(headerCorrectCount.getText() + ARROW_DOWN);
+        }
+        loadTable();
+        orderCorrectCountAsc ^= true;
+    }
+
+    public void onClickHeaderCorrectPercent(View view) {
+        clearHeaders();
+        if (orderCorrectPercentAsc) {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return (int) (rhs.getCorrectPercent() - lhs.getCorrectPercent());
+                }
+            };
+            headerCorrectPercent.setText(headerCorrectPercent.getText() + ARROW_UP);
+        } else {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return (int) (lhs.getCorrectPercent() - rhs.getCorrectPercent());
+                }
+            };
+            headerCorrectPercent.setText(headerCorrectPercent.getText() + ARROW_DOWN);
+        }
+        loadTable();
+        orderCorrectPercentAsc ^= true;
+    }
+
+    public void onClickHeaderInTraining(View view) {
+        clearHeaders();
+        if (orderInTrainingAsc) {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return rhs.isInTraining() ? 1 : -1;
+                }
+            };
+            headerInTraining.setText(headerInTraining.getText() + ARROW_UP);
+        } else {
+            comparator = new Comparator<StatItem>() {
+                @Override
+                public int compare(StatItem lhs, StatItem rhs) {
+                    return lhs.isInTraining() ? 1 : -1;
+                }
+            };
+            headerInTraining.setText(headerInTraining.getText() + ARROW_DOWN);
+        }
+        loadTable();
+        orderInTrainingAsc ^= true;
+    }
+
 }
