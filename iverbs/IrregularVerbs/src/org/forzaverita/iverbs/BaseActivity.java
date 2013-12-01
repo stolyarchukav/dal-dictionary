@@ -178,7 +178,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
 	public final void speak(String text) {
         HashMap<String, String> params = new HashMap<String, String>();
         Set<String> features = tts.getFeatures(Locale.US);
-        if (features.contains(KEY_FEATURE_NETWORK_SYNTHESIS)) {
+        if (features != null && features.contains(KEY_FEATURE_NETWORK_SYNTHESIS)) {
             params.put(KEY_FEATURE_NETWORK_SYNTHESIS, "true");
         }
         tts.speak(text, TextToSpeech.QUEUE_ADD, params);
