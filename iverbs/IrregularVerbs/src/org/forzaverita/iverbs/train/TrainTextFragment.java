@@ -29,7 +29,7 @@ public class TrainTextFragment extends TitledFragment {
     private EditText answer1;
     private EditText answer2;
     private EditText answer3;
-    private boolean answered;
+    private volatile boolean answered;
     private TextView original1;
     private TextView original2;
     private TextView original3;
@@ -70,8 +70,17 @@ public class TrainTextFragment extends TitledFragment {
         original2 = (TextView) rootView.findViewById(R.id.train_text_form2_original);
         original3 = (TextView) rootView.findViewById(R.id.train_text_form3_original);
 
+        configureTitleSize(R.id.train_text_form1_title);
+        configureTitleSize(R.id.train_text_form2_title);
+        configureTitleSize(R.id.train_text_form3_title);
+
         createQuestion();
         return rootView;
+    }
+
+    private void configureTitleSize(int id) {
+        TextView text = (TextView) rootView.findViewById(id);
+        text.setTextSize(fontSize);
     }
 
     private void configureAnswerFlow(EditText answer, final View nextView) {
@@ -104,10 +113,12 @@ public class TrainTextFragment extends TitledFragment {
 
     private void clearOriginal(TextView original) {
         original.setText("");
+        original.setTextSize(fontSize);
     }
 
     private void clearAnswer(EditText answer) {
         answer.getText().clear();
+        answer.setTextSize(fontSize - 2);
         answer.setTextColor(getResources().getColor(R.color.train_key_text));
     }
 
@@ -124,12 +135,12 @@ public class TrainTextFragment extends TitledFragment {
             answered = true;
             buttonAnswer.setEnabled(false);
             speakCorrect();
-            checkAnswer(verb.getForm1(), answer1, R.id.train_text_form1_original, 0);
-            checkAnswer(verb.getForm2(), answer2, R.id.train_text_form2_original, 1);
-            checkAnswer(verb.getForm3(), answer3, R.id.train_text_form3_original, 3);
+            checkAnswer(verb.getForm1(), answer1, original1, 0);
+            checkAnswer(verb.getForm2(), answer2, original2, 1);
+            checkAnswer(verb.getForm3(), answer3, original3, 3);
         }
 
-        private void checkAnswer(String original, EditText answer, int originalTextId, int formQuest) {
+        private void checkAnswer(String original, EditText answer, TextView originalText, int formQuest) {
             if (original.equalsIgnoreCase(answer.getText().toString())) {
                 answer.setTextColor(getResources().getColor(R.color.train_correct));
                 counterCorrect.setText(String.valueOf(++ correctCount));
@@ -138,7 +149,6 @@ public class TrainTextFragment extends TitledFragment {
             else {
                 answer.setTextColor(getResources().getColor(R.color.train_wrong));
                 counterWrong.setText(String.valueOf(++ wrongCount));
-                TextView originalText = (TextView) rootView.findViewById(originalTextId);
                 originalText.setText(original);
                 service.addWrong(formQuest, verb, TrainMode.TEXT);
             }
@@ -149,13 +159,13 @@ public class TrainTextFragment extends TitledFragment {
 
         @Override
         public void onClick(View v) {
-            createQuestion();
             if (! answered) {
                 service.addWrong(0, verb, TrainMode.TEXT);
                 service.addWrong(1, verb, TrainMode.TEXT);
                 service.addWrong(2, verb, TrainMode.TEXT);
                 counterWrong.setText(String.valueOf(++ wrongCount));
             }
+            createQuestion();
         }
     }
 
