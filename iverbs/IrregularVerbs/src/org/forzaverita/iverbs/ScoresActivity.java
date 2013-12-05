@@ -27,10 +27,10 @@ public class ScoresActivity extends BaseActivity implements SortableTable<StatIt
 
     private volatile Comparator<StatItem> comparator;
 
-    private OrderingHandler orderingVerb;
-    private OrderingHandler orderingCorrectCount;
-    private OrderingHandler orderingCorrectPercent;
-    private OrderingHandler orderingInTraining;
+    private OrderingHandler<StatItem> orderingVerb;
+    private OrderingHandler<StatItem> orderingCorrectCount;
+    private OrderingHandler<StatItem> orderingCorrectPercent;
+    private OrderingHandler<StatItem> orderingInTraining;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class ScoresActivity extends BaseActivity implements SortableTable<StatIt
     }
 
     private void configureOrdering() {
-        orderingVerb = new OrderingHandler((TextView) findViewById(R.id.scores_header_verb),
+        orderingVerb = new OrderingHandler<StatItem>((TextView) findViewById(R.id.scores_header_verb),
                 new Comparator<StatItem>() {
                     @Override
                     public int compare(StatItem lhs, StatItem rhs) {
@@ -55,7 +55,7 @@ public class ScoresActivity extends BaseActivity implements SortableTable<StatIt
                     }
                 }, this
         );
-        orderingCorrectCount = new OrderingHandler((TextView) findViewById(R.id.scores_header_correct_count),
+        orderingCorrectCount = new OrderingHandler<StatItem>((TextView) findViewById(R.id.scores_header_correct_count),
                 new Comparator<StatItem>() {
                     @Override
                     public int compare(StatItem lhs, StatItem rhs) {
@@ -69,7 +69,7 @@ public class ScoresActivity extends BaseActivity implements SortableTable<StatIt
                     }
                 }, this
         );
-        orderingCorrectPercent = new OrderingHandler((TextView) findViewById(R.id.scores_header_correct_percent),
+        orderingCorrectPercent = new OrderingHandler<StatItem>((TextView) findViewById(R.id.scores_header_correct_percent),
                 new Comparator<StatItem>() {
                     @Override
                     public int compare(StatItem lhs, StatItem rhs) {
@@ -83,7 +83,7 @@ public class ScoresActivity extends BaseActivity implements SortableTable<StatIt
                     }
                 }, this
         );
-        orderingInTraining = new OrderingHandler((TextView) findViewById(R.id.scores_header_in_training),
+        orderingInTraining = new OrderingHandler<StatItem>((TextView) findViewById(R.id.scores_header_in_training),
                 new Comparator<StatItem>() {
                     @Override
                     public int compare(StatItem lhs, StatItem rhs) {
