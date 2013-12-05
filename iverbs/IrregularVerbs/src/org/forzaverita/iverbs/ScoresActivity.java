@@ -27,15 +27,11 @@ public class ScoresActivity extends BaseActivity {
     private static final String ARROW_UP = "\u25BC";
 
     private volatile Comparator<StatItem> comparator;
-    private TextView headerVerb;
-    private TextView headerCorrectCount;
-    private TextView headerCorrectPercent;
-    private TextView headerInTraining;
 
-    private boolean orderVerbAsc;
-    private boolean orderCorrectCountAsc;
-    private boolean orderCorrectPercentAsc;
-    private boolean orderInTrainingAsc;
+    private OrderingHandler orderingVerb;
+    private OrderingHandler orderingCorrectCount;
+    private OrderingHandler orderingCorrectPercent;
+    private OrderingHandler orderingInTraining;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,15 +47,71 @@ public class ScoresActivity extends BaseActivity {
                 return result;
             }
         };
-        headerVerb = (TextView) findViewById(R.id.scores_header_verb);
-        headerCorrectCount = (TextView) findViewById(R.id.scores_header_correct_count);
-        headerCorrectPercent = (TextView) findViewById(R.id.scores_header_correct_percent);
-        headerInTraining = (TextView) findViewById(R.id.scores_header_in_training);
+        configureOrdering();
         loadTable();
     }
 
+    private void configureOrdering() {
+        orderingVerb = new OrderingHandler(R.id.scores_header_verb,
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return rhs.getVerb().getForm1().compareTo(lhs.getVerb().getForm1());
+                    }
+                },
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return lhs.getVerb().getForm1().compareTo(rhs.getVerb().getForm1());
+                    }
+                }
+        );
+        orderingCorrectCount = new OrderingHandler(R.id.scores_header_correct_count,
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return rhs.getCorrect() - lhs.getCorrect();
+                    }
+                },
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return lhs.getCorrect() - rhs.getCorrect();
+                    }
+                }
+        );
+        orderingCorrectPercent = new OrderingHandler(R.id.scores_header_correct_percent,
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return (int) (rhs.getCorrectPercent() - lhs.getCorrectPercent());
+                    }
+                },
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return (int) (lhs.getCorrectPercent() - rhs.getCorrectPercent());
+                    }
+                }
+        );
+        orderingInTraining = new OrderingHandler(R.id.scores_header_in_training,
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return rhs.isInTraining() ? 1 : -1;
+                    }
+                },
+                new Comparator<StatItem>() {
+                    @Override
+                    public int compare(StatItem lhs, StatItem rhs) {
+                        return lhs.isInTraining() ? 1 : -1;
+                    }
+                }
+        );
+    }
+
     private void loadTable(Runnable... preLoadTasks) {
-        new LoadTableTask(comparator, preLoadTasks).execute();
+        new LoadTableTask(preLoadTasks).execute();
     }
 
     private class LoadTableTask extends AsyncTask<Void, Void, List<StatItem>> {
@@ -67,7 +119,7 @@ public class ScoresActivity extends BaseActivity {
         private ProgressDialog dialog;
         private Runnable[] preLoadTasks;
 
-        public LoadTableTask(Comparator<StatItem> comparator, Runnable... preLoadTasks) {
+        public LoadTableTask(Runnable... preLoadTasks) {
             this.preLoadTasks = preLoadTasks;
         }
 
@@ -108,8 +160,7 @@ public class ScoresActivity extends BaseActivity {
                 if (percent > 50) {
                     correctPercent.setTextColor(ScoresActivity.this.getResources().
                             getColor(R.color.train_correct));
-                }
-                else {
+                } else {
                     correctPercent.setTextColor(ScoresActivity.this.getResources().
                             getColor(R.color.train_wrong));
                 }
@@ -126,28 +177,28 @@ public class ScoresActivity extends BaseActivity {
         }
 
     }
-    
+
     public void onClickReset(View view) {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage(getString(R.string.question_submit)).
-    		setPositiveButton(getString(R.string.answer_yes), dialogClickListener).
-    		setNegativeButton(getString(R.string.answer_no), dialogClickListener).
-    		show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.question_submit)).
+                setPositiveButton(getString(R.string.answer_yes), dialogClickListener).
+                setNegativeButton(getString(R.string.answer_no), dialogClickListener).
+                show();
     }
-    
+
     private DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            switch (which){
-            case DialogInterface.BUTTON_POSITIVE:
-                service.resetStats();
-                Intent intent = new Intent(ScoresActivity.this, ScoresActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            	break;
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    service.resetStats();
+                    Intent intent = new Intent(ScoresActivity.this, ScoresActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    break;
 
-            case DialogInterface.BUTTON_NEGATIVE:
-                break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
             }
         }
     };
@@ -178,102 +229,61 @@ public class ScoresActivity extends BaseActivity {
     }
 
     private void clearHeaders() {
-        headerVerb.setText(R.string.scores_verb);
-        headerCorrectCount.setText(R.string.scores_correct_count);
-        headerCorrectPercent.setText(R.string.scores_correct_percent);
-        headerInTraining.setText(R.string.scores_in_training);
+        orderingVerb.clear();
+        orderingCorrectCount.clear();
+        orderingCorrectPercent.clear();
+        orderingInTraining.clear();
     }
 
     public void onClickHeaderVerb(View view) {
-        clearHeaders();
-        if (orderVerbAsc) {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return rhs.getVerb().getForm1().compareTo(lhs.getVerb().getForm1());
-                }
-            };
-            headerVerb.setText(headerVerb.getText() + ARROW_UP);
-        } else {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return lhs.getVerb().getForm1().compareTo(rhs.getVerb().getForm1());
-                }
-            };
-            headerVerb.setText(headerVerb.getText() + ARROW_DOWN);
-        }
-        loadTable();
-        orderVerbAsc ^= true;
+        orderingVerb.changeOrder();
     }
 
     public void onClickHeaderCorrectCount(View view) {
-        clearHeaders();
-        if (orderCorrectCountAsc) {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return rhs.getCorrect() - lhs.getCorrect();
-                }
-            };
-            headerCorrectCount.setText(headerCorrectCount.getText() + ARROW_UP);
-        } else {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return lhs.getCorrect() - rhs.getCorrect();
-                }
-            };
-            headerCorrectCount.setText(headerCorrectCount.getText() + ARROW_DOWN);
-        }
-        loadTable();
-        orderCorrectCountAsc ^= true;
+        orderingCorrectCount.changeOrder();
     }
 
     public void onClickHeaderCorrectPercent(View view) {
-        clearHeaders();
-        if (orderCorrectPercentAsc) {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return (int) (rhs.getCorrectPercent() - lhs.getCorrectPercent());
-                }
-            };
-            headerCorrectPercent.setText(headerCorrectPercent.getText() + ARROW_UP);
-        } else {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return (int) (lhs.getCorrectPercent() - rhs.getCorrectPercent());
-                }
-            };
-            headerCorrectPercent.setText(headerCorrectPercent.getText() + ARROW_DOWN);
-        }
-        loadTable();
-        orderCorrectPercentAsc ^= true;
+        orderingCorrectPercent.changeOrder();
     }
 
     public void onClickHeaderInTraining(View view) {
-        clearHeaders();
-        if (orderInTrainingAsc) {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return rhs.isInTraining() ? 1 : -1;
-                }
-            };
-            headerInTraining.setText(headerInTraining.getText() + ARROW_UP);
-        } else {
-            comparator = new Comparator<StatItem>() {
-                @Override
-                public int compare(StatItem lhs, StatItem rhs) {
-                    return lhs.isInTraining() ? 1 : -1;
-                }
-            };
-            headerInTraining.setText(headerInTraining.getText() + ARROW_DOWN);
+        orderingInTraining.changeOrder();
+    }
+
+    private class OrderingHandler {
+
+        volatile boolean orderAsc;
+        final TextView header;
+        final CharSequence text;
+        final Comparator<StatItem> comparatorAsc;
+        final Comparator<StatItem> comparatorDesc;
+
+        OrderingHandler(int headerId, Comparator<StatItem> comparatorAsc, Comparator<StatItem> comparatorDesc) {
+            this.header = (TextView) findViewById(headerId);
+            this.comparatorAsc = comparatorAsc;
+            this.comparatorDesc = comparatorDesc;
+            this.text = header.getText();
         }
-        loadTable();
-        orderInTrainingAsc ^= true;
+
+        void changeOrder() {
+            clearHeaders();
+            if (orderAsc) {
+                comparator = comparatorAsc;
+                header.setText(header.getText() + ARROW_UP);
+                loadTable();
+            } else {
+                comparator = comparatorDesc;
+                header.setText(header.getText() + ARROW_DOWN);
+                loadTable();
+            }
+            orderAsc ^= true;
+        }
+
+        void clear() {
+            header.setText(text);
+        }
+
     }
 
 }
