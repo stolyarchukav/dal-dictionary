@@ -13,20 +13,31 @@
         <TableRow style="@style/TableRow" >
 
             <TextView
+                android:id="@+id/table_header_form1"
                 style="@style/TableHeaderText"
-                android:text="@string/table_form_1" />
+                android:text="@string/table_form_1"
+                android:clickable="true"
+                android:onClick="onClickHeaderForm1" />
 
             <TextView
+                android:id="@+id/table_header_form2"
                 style="@style/TableHeaderText"
-                android:text="@string/table_form_2" />
+                android:text="@string/table_form_2"
+                android:clickable="true"
+                android:onClick="onClickHeaderForm2" />
 
             <TextView
+                android:id="@+id/table_header_form3"
                 style="@style/TableHeaderText"
-                android:text="@string/table_form_3" />
+                android:text="@string/table_form_3"
+                android:clickable="true"
+                android:onClick="onClickHeaderForm3" />
 
             <TextView android:id="@+id/table_header_translation"
                 style="@style/TableHeaderText"
-                android:text="@string/table_translation" />
+                android:text="@string/table_translation"
+                android:clickable="true"
+                android:onClick="onClickHeaderTranslation" />
         </TableRow>
     </TableLayout>
 

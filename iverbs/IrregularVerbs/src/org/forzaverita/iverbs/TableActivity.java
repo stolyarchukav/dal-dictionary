@@ -91,5 +91,21 @@ public class TableActivity extends BaseActivity {
 			}
 		});
     }
-    
+
+    public void onClickHeaderForm1(View view) {
+
+    }
+
+    public void onClickHeaderForm2(View view) {
+
+    }
+
+    public void onClickHeaderForm3(View view) {
+
+    }
+
+    public void onClickHeaderTranslation(View view) {
+
+    }
+
 }
