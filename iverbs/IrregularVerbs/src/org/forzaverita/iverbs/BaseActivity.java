@@ -107,6 +107,9 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
             case R.id.menu_more_apps :
                 moreApps();
                 break;
+            case R.id.menu_hide_ads :
+                hideAds();
+                break;
             case android.R.id.home:
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (upIntent != null) {
@@ -202,8 +205,21 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("market://search?q=pub:ForzaVerita")));
         } catch (ActivityNotFoundException e) {
-            Log.w(Constants.LOG_TAG, "Can't open market app page");
+            Log.w(Constants.LOG_TAG, "Can't open market app page with all apps");
         }
+    }
+
+    private void hideAds() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +
+                    getApplicationInfo().packageName + ".pay")));
+        } catch (ActivityNotFoundException e) {
+            Log.w(Constants.LOG_TAG, "Can't open market app page with pay app");
+        }
+    }
+
+    public void onClickHideAds(View view) {
+        hideAds();
     }
 
 }

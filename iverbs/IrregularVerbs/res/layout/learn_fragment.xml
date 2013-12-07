@@ -114,12 +114,6 @@
         android:layout_height="wrap_content"
         android:text="@string/learn_hint" />
 
-    <com.google.ads.AdView android:id="@+id/adView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        ads:adUnitId="@string/ad_mob_id"
-        ads:adSize="SMART_BANNER"
-        ads:loadAdOnCreate="true"
-        ads:testDevices="HT12WTD02717,015d3b65d45ff218" />
+    <include layout="@layout/advert" />
 
 </LinearLayout>

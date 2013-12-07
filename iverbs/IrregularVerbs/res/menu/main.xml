@@ -36,4 +36,8 @@
         android:title="@string/info_more_apps"
         android:showAsAction="ifRoom" />
 
+    <item android:id="@+id/menu_hide_ads"
+        android:title="@string/info_hide_ads"
+        android:showAsAction="ifRoom" />
+
 </menu>

@@ -60,4 +60,6 @@
         android:layout_height="wrap_content"
         style="@style/HintText" />
 
+    <include layout="@layout/advert" />
+
 </LinearLayout>

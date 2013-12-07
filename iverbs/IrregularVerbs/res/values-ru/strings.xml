@@ -37,7 +37,7 @@
     <string name="info_usage">
         <![CDATA[
         		<p><b>Справочник неправильных глаголов английского языка</b></p>
-        		<p>версия 1.5</p>
+        		<p>версия 1.6</p>
             	Возможности:<ul>
         		<li>Таблица: полный список глаголов</li>
         		<li>Изучение: Постраничный вывод глаголов с транскрипциями</li>
@@ -50,6 +50,7 @@
     <string name="info_more_apps"><u>Другие приложения</u></string>
     <string name="rate_app"><u>Будем очень признательны за оставленные комментарии и оценки</u></string>
     <string name="rate_app_short"><u>Оценить приложение</u></string>
+    <string name="info_hide_ads"><u>Убрать рекламу</u></string>
 
     <string name="train_title_quiz">Тест с вариантами</string>
     <string name="train_title_text">Текстовый режим</string>
