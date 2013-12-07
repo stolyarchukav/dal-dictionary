@@ -1,0 +1,205 @@
+package org.forzaverita.iverbs.pay;
+
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import org.forzaverita.iverbs.pay.data.Verb;
+import org.forzaverita.iverbs.pay.table.OrderingHandler;
+import org.forzaverita.iverbs.pay.table.SortableTable;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class TableActivity extends BaseActivity implements SortableTable<Verb> {
+
+    private volatile Comparator<Verb> comparator;
+
+    private OrderingHandler<Verb> orderingForm1;
+    private OrderingHandler<Verb> orderingForm2;
+    private OrderingHandler<Verb> orderingForm3;
+    private OrderingHandler<Verb> orderingTranslate;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.table);
+
+        configureOrdering();
+        orderingForm1.setOrder(true);
+    }
+
+    private void configureOrdering() {
+        orderingForm1 = new OrderingHandler<Verb>((TextView) findViewById(R.id.table_header_form1),
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return lhs.getForm1().compareTo(rhs.getForm1());
+                    }
+                },
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return rhs.getForm1().compareTo(lhs.getForm1());
+                    }
+                }, this
+        );
+        orderingForm2 = new OrderingHandler<Verb>((TextView) findViewById(R.id.table_header_form2),
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return lhs.getForm2().compareTo(rhs.getForm2());
+                    }
+                },
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return rhs.getForm2().compareTo(lhs.getForm2());
+                    }
+                }, this
+        );
+        orderingForm3 = new OrderingHandler<Verb>((TextView) findViewById(R.id.table_header_form3),
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return lhs.getForm3().compareTo(rhs.getForm3());
+                    }
+                },
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return rhs.getForm3().compareTo(lhs.getForm3());
+                    }
+                }, this
+        );
+        TextView headerTranslation = (TextView) findViewById(R.id.table_header_translation);
+        headerTranslation.setText(getString(R.string.table_translation) + "\n" +
+                getString(service.getLanguage().getIdString()));
+        orderingTranslate = new OrderingHandler<Verb>(headerTranslation,
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return lhs.getTranslation().compareTo(rhs.getTranslation());
+                    }
+                },
+                new Comparator<Verb>() {
+                    @Override
+                    public int compare(Verb lhs, Verb rhs) {
+                        return rhs.getTranslation().compareTo(lhs.getTranslation());
+                    }
+                }, this
+        );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.menu_table).setVisible(false);
+        return true;
+    }
+    
+    private void configureClickListener(final TextView text) {
+    	text.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				speak((String) text.getText());
+			}
+		});
+    }
+
+    public void onClickHeaderForm1(View view) {
+        orderingForm1.changeOrder();
+    }
+
+    public void onClickHeaderForm2(View view) {
+        orderingForm2.changeOrder();
+    }
+
+    public void onClickHeaderForm3(View view) {
+        orderingForm3.changeOrder();
+    }
+
+    public void onClickHeaderTranslation(View view) {
+        orderingTranslate.changeOrder();
+    }
+
+    @Override
+    public void clearHeaders() {
+        orderingForm1.clear();
+        orderingForm2.clear();
+        orderingForm3.clear();
+        orderingTranslate.clear();
+    }
+
+    @Override
+    public void setComparator(Comparator<Verb> comparator) {
+        this.comparator = comparator;
+    }
+
+    @Override
+    public void loadTable(final Runnable... preLoadTasks) {
+        new AsyncTask<Void, Void, List<Verb>>() {
+
+            private ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+                dialog = ProgressDialog.show(TableActivity.this,
+                        getString(R.string.progress_title), getString(R.string.progress_text));
+            }
+
+            @Override
+            protected List<Verb> doInBackground(Void... params) {
+                for (Runnable preLoadTask : preLoadTasks) {
+                    preLoadTask.run();
+                }
+                List<Verb> verbs = service.getVerbs();
+                return verbs;
+            }
+
+            @Override
+            protected void onPostExecute(List<Verb> verbs) {
+                dialog.dismiss();
+                float fontSize = service.getFontSize();
+                TableLayout layout = (TableLayout) findViewById(R.id.table_table);
+                layout.removeAllViews();
+                Collections.sort(verbs, comparator);
+                boolean odd = false;
+                for (Verb verb : verbs) {
+                    TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
+                    TextView form1 = (TextView) row.findViewById(R.id.table_form_1);
+                    form1.setText(verb.getForm1());
+                    form1.setTextSize(fontSize);
+                    configureClickListener(form1);
+                    TextView form2 = (TextView) row.findViewById(R.id.table_form_2);
+                    form2.setText(verb.getForm2());
+                    form2.setTextSize(fontSize);
+                    configureClickListener(form2);
+                    TextView form3 = (TextView) row.findViewById(R.id.table_form_3);
+                    form3.setText(verb.getForm3());
+                    form3.setTextSize(fontSize);
+                    configureClickListener(form3);
+                    TextView translation = (TextView) row.findViewById(R.id.table_translation);
+                    translation.setText(verb.getTranslation());
+                    translation.setTextSize(fontSize);
+                    if (odd ^= true) {
+                        int color = getResources().getColor(R.color.cell_background_odd);
+                        form1.setBackgroundColor(color);
+                        form2.setBackgroundColor(color);
+                        form3.setBackgroundColor(color);
+                        translation.setBackgroundColor(color);
+                    }
+                    layout.addView(row);
+                }
+            }
+
+        }.execute();
+    }
+
+}
