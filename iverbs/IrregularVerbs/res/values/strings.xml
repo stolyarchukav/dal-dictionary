@@ -37,7 +37,7 @@
     <string name="info_usage">
         <![CDATA[
         		<p><b>The reference book of english irregular verbs</b></p>
-        		<p>version 1.6</p>
+        		<p>version 1.7</p>
             	Features:<ul>
         		<li>Table: full list of verbs</li>
         		<li>Learn: scrollable page of verbs with transcriptions</li>
@@ -47,10 +47,10 @@
         		<li>Settings: speech rate, languages of translate</li></ul>
         	]]>
     </string>
-    <string name="info_more_apps"><u>Get more applications</u></string>
+    <string name="info_more_apps">Get more applications</string>
     <string name="rate_app"><u>Very appreciate for your comments and rates</u></string>
-    <string name="rate_app_short"><u>Rate application</u></string>
-    <string name="info_hide_ads"><u>Hide ads</u></string>
+    <string name="rate_app_short">Rate application</string>
+    <string name="info_hide_ads">Hide ads</string>
 
     <string name="train_title_quiz">Quiz mode</string>
     <string name="train_title_text">Text mode</string>

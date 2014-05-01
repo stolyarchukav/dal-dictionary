@@ -62,6 +62,4 @@
         android:text="@string/rate_app_short"
         android:textSize="12sp" />
 
-    <include layout="@layout/advert" />
-
 </LinearLayout>
