@@ -202,7 +202,6 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
                     TextView translation = (TextView) row.findViewById(R.id.table_translation);
                     translation.setText(verb.getTranslation());
                     translation.setTextSize(fontSize);
-                    configureClickListener(translation, verb.getTranslation());
                     if (odd ^= true) {
                         int color = getResources().getColor(R.color.cell_background_odd);
                         form1.setBackgroundColor(color);
