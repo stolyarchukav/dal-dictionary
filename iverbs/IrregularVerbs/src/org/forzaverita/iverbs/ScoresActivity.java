@@ -159,7 +159,7 @@ public class ScoresActivity extends BaseActivity implements SortableTable<StatIt
                 inTraining.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        service.setInTraining(stat.getVerb(), isChecked);
+                        service.setInTraining(stat.getVerb().getId(), isChecked);
                     }
                 });
                 table.addView(row);

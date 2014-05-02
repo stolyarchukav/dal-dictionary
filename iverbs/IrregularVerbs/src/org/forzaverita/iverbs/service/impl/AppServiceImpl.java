@@ -41,19 +41,24 @@ public class AppServiceImpl extends Application implements AppService {
 		database.open();
 		maxId = database.getMaxId();
 		preferences = new PreferencesServiceImpl(this);
-		List<Verb> verbs = database.getVerbs();
-		for (Verb verb : verbs) {
-			if (preferences.isInTraining(verb)) {
-				verbsInTraining.add(verb.getId());				
+		List<Integer> verbIds = database.getVerbIds();
+		for (Integer verbId : verbIds) {
+			if (preferences.isInTraining(verbId)) {
+				verbsInTraining.add(verbId);
 			}			
 		}
 		super.onCreate();
 	}
 	
 	@Override
-	public List<Verb> getVerbs() {
-		return database.getVerbs();
+	public List<Verb> getVerbs(boolean withTranscription) {
+		return database.getVerbs(withTranscription);
 	}
+
+    @Override
+    public List<Integer> getVerbIds() {
+        return database.getVerbIds();
+    }
 	
 	@Override
 	public Verb getVerb(int id) {
@@ -161,7 +166,7 @@ public class AppServiceImpl extends Application implements AppService {
 	@Override
 	public List<StatItem> getStats() {
 		List<StatItem> stats = new ArrayList<StatItem>();
-		for (Verb verb : getVerbs()) {
+		for (Verb verb : getVerbs(false)) {
 			stats.add(preferences.getStat(verb));			
 		}
 		return stats;
@@ -169,30 +174,29 @@ public class AppServiceImpl extends Application implements AppService {
 	
 	@Override
 	public void resetStats() {
-		for (Verb verb : getVerbs()) {
-			preferences.resetStat(verb);			
+		for (Integer verbId : getVerbIds()) {
+			preferences.resetStat(verbId);
 		}
 	}
 	
 	@Override
-	public void setInTraining(Verb verb, boolean inTraining) {
-		preferences.setInTraining(verb, inTraining);
-		Integer id = verb.getId();
+	public void setInTraining(Integer verbId, boolean inTraining) {
+		preferences.setInTraining(verbId, inTraining);
 		if (inTraining) {
-			if (! verbsInTraining.contains(id)) {
-				verbsInTraining.add(id);
+			if (! verbsInTraining.contains(verbId)) {
+				verbsInTraining.add(verbId);
 			}	
 		}
 		else {
-			verbsInTraining.remove(id);
+			verbsInTraining.remove(verbId);
 		}
 	}
 
     @Override
     public void setInTrainingAll(boolean inTraining) {
-        List<Verb> verbs = getVerbs();
-        for (Verb verb : verbs) {
-            setInTraining(verb, inTraining);
+        List<Integer> ids = getVerbIds();
+        for (Integer id : ids) {
+            setInTraining(id, inTraining);
         }
     }
 

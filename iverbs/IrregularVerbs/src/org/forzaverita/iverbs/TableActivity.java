@@ -26,6 +26,8 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
     private OrderingHandler<Verb> orderingForm3;
     private OrderingHandler<Verb> orderingTranslate;
 
+    private static boolean transcriptionVisible;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,11 +106,11 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
         return true;
     }
     
-    private void configureClickListener(final TextView text) {
-    	text.setOnClickListener(new View.OnClickListener() {
+    private void configureClickListener(View view, final String text) {
+    	view.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				speak((String) text.getText());
+				speak(text);
 			}
 		});
     }
@@ -127,6 +129,18 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
 
     public void onClickHeaderTranslation(View view) {
         orderingTranslate.changeOrder();
+    }
+
+    public void onCLickShowTranscription(View view) {
+        final TextView textView = (TextView) view;
+        transcriptionVisible ^= true;
+        if (transcriptionVisible) {
+            textView.setText(getString(R.string.table_hide_transcription));
+        }
+        else {
+            textView.setText(getString(R.string.table_show_transcription));
+        }
+        loadTable();
     }
 
     @Override
@@ -159,7 +173,7 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
                 for (Runnable preLoadTask : preLoadTasks) {
                     preLoadTask.run();
                 }
-                List<Verb> verbs = service.getVerbs();
+                List<Verb> verbs = service.getVerbs(transcriptionVisible);
                 return verbs;
             }
 
@@ -174,20 +188,21 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
                 for (Verb verb : verbs) {
                     TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
                     TextView form1 = (TextView) row.findViewById(R.id.table_form_1);
-                    form1.setText(verb.getForm1());
+                    form1.setText(separateLines(verb.getForm1(), verb.getForm1Transcription()));
                     form1.setTextSize(fontSize);
-                    configureClickListener(form1);
+                    configureClickListener(form1, verb.getForm1());
                     TextView form2 = (TextView) row.findViewById(R.id.table_form_2);
-                    form2.setText(verb.getForm2());
+                    form2.setText(separateLines(verb.getForm2(), verb.getForm2Transcription()));
                     form2.setTextSize(fontSize);
-                    configureClickListener(form2);
+                    configureClickListener(form2, verb.getForm2());
                     TextView form3 = (TextView) row.findViewById(R.id.table_form_3);
-                    form3.setText(verb.getForm3());
+                    form3.setText(separateLines(verb.getForm3(), verb.getForm3Transcription()));
                     form3.setTextSize(fontSize);
-                    configureClickListener(form3);
+                    configureClickListener(form3, verb.getForm3());
                     TextView translation = (TextView) row.findViewById(R.id.table_translation);
                     translation.setText(verb.getTranslation());
                     translation.setTextSize(fontSize);
+                    configureClickListener(translation, verb.getTranslation());
                     if (odd ^= true) {
                         int color = getResources().getColor(R.color.cell_background_odd);
                         form1.setBackgroundColor(color);
@@ -196,6 +211,14 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
                         translation.setBackgroundColor(color);
                     }
                     layout.addView(row);
+                }
+            }
+
+            private String separateLines(String verb, String transcription) {
+                if (transcriptionVisible) {
+                    return verb + System.getProperty("line.separator") + transcription;
+                } else {
+                    return verb;
                 }
             }
 

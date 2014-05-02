@@ -28,6 +28,8 @@
     <string name="table_form_3">Past Participle</string>
     <string name="table_translation">Перевод</string>
     <string name="table_click_hint">Нажмите на слово чтобы произнести</string>
+    <string name="table_show_transcription"><u>Показать транскрипцию</u></string>
+    <string name="table_hide_transcription"><u>Скрыть транскрипцию</u></string>
     
     <string name="learn_hint">Прокрутка стрелками или пальцем</string>
     

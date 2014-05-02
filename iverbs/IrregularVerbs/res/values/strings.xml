@@ -28,6 +28,8 @@
     <string name="table_form_3">Past Participle</string>
     <string name="table_translation">Translation</string>
     <string name="table_click_hint">Click on cell to speak word</string>
+    <string name="table_show_transcription"><u>Show transcription</u></string>
+    <string name="table_hide_transcription"><u>Hide transcription</u></string>
     
     <string name="learn_hint">Use arrows or touch to scroll</string>
     

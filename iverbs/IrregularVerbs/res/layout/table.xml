@@ -54,10 +54,13 @@
             android:stretchColumns="*" >
         </TableLayout>
     </ScrollView>
-    
-    <TextView android:text="@string/table_click_hint"
-        android:layout_width="fill_parent" 
+
+    <TextView android:id="@+id/table_set_transcription"
+        android:text="@string/table_show_transcription"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onCLickShowTranscription"
         style="@style/HintText" />
 
 </LinearLayout>

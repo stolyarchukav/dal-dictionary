@@ -10,7 +10,9 @@ public interface Database {
 
 	void open();
 
-	List<Verb> getVerbs();
+    List<Integer> getVerbIds();
+
+    List<Verb> getVerbs(boolean withTranscription);
 
 	Verb getVerb(int id);
 

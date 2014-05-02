@@ -13,9 +13,11 @@ import android.database.Cursor;
 
 public interface AppService {
 
-	List<Verb> getVerbs();
+	List<Verb> getVerbs(boolean withTranscription);
 
-	Verb getVerb(int id);
+    List<Integer> getVerbIds();
+
+    Verb getVerb(int id);
 
 	Verb getPreviousVerb();
 
@@ -49,7 +51,7 @@ public interface AppService {
 
 	void resetStats();
 
-	void setInTraining(Verb verb, boolean inTraining);
+	void setInTraining(Integer verbId, boolean inTraining);
 
     void setInTrainingAll(boolean inTraining);
 

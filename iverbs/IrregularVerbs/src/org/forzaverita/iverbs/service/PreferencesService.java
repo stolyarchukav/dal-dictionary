@@ -20,11 +20,11 @@ public interface PreferencesService {
 
 	StatItem getStat(Verb verb);
 	
-	void resetStat(Verb verb);
+	void resetStat(Integer verbId);
 
-	void setInTraining(Verb verb, boolean inTraining);
+	void setInTraining(Integer verbId, boolean inTraining);
 
-	boolean isInTraining(Verb verb);
+	boolean isInTraining(Integer verbId);
 
 	float getFontSize();
 
