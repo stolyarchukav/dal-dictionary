@@ -25,7 +25,7 @@ import static java.util.Arrays.asList;
 
 public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 
-	private static int DATA_VERSION = 3;
+	private static int DATA_VERSION = 4;
 	
 	private static String DB_NAME = "iverbs.sqlite";
 	private static String DB_PATH = "/data/data/org.forzaverita.iverbs/databases/" + DB_NAME;
