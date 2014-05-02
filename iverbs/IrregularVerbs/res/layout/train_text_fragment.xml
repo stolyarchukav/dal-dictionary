@@ -130,6 +130,8 @@
         style="@style/HintText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tran_hint" />
+        android:text="@string/tran_select_verbs"
+        android:clickable="true"
+        android:onClick="onCLickSelectVerbsToTrain"/>
 
 </LinearLayout>

@@ -67,6 +67,7 @@
     <string name="train_text_form_3">3rd form (past participle)</string>
     <string name="train_text_answer">Check answer</string>
     <string name="train_text_next">Next</string>
+    <string name="tran_select_verbs"><u>Select verbs to train</u></string>
 
     <string name="pref_speak">Speaker</string>
     <string name="pref_speak_speech_rate">Speech rate</string>
@@ -98,5 +99,4 @@
     <string name="answer_no">No</string>
 
     <string name="ad_mob_id">a1526599e1c1c36</string>
-
 </resources>

@@ -16,6 +16,8 @@ import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.fragment.TitledFragment;
 import org.forzaverita.iverbs.service.AppService;
 
+import static org.forzaverita.iverbs.train.TrainUtils.checkSelectedVerbs;
+
 public class TrainTextFragment extends TitledFragment {
 
     private View rootView;
@@ -74,7 +76,9 @@ public class TrainTextFragment extends TitledFragment {
         configureTitleSize(R.id.train_text_form2_title);
         configureTitleSize(R.id.train_text_form3_title);
 
-        createQuestion();
+        if (checkSelectedVerbs(service, getActivity())) {
+            createQuestion();
+        }
         return rootView;
     }
 

@@ -190,6 +190,7 @@ public class AppServiceImpl extends Application implements AppService {
 		else {
 			verbsInTraining.remove(verbId);
 		}
+        preferencesChanged();
 	}
 
     @Override
@@ -198,6 +199,7 @@ public class AppServiceImpl extends Application implements AppService {
         for (Integer id : ids) {
             setInTraining(id, inTraining);
         }
+        preferencesChanged();
     }
 
     @Override

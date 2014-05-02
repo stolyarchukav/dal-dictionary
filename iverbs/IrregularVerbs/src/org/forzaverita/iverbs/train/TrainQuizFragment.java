@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.forzaverita.iverbs.train.TrainUtils.checkSelectedVerbs;
+
 public class TrainQuizFragment extends TitledFragment {
 
     private final Random random = new Random();
@@ -56,7 +58,9 @@ public class TrainQuizFragment extends TitledFragment {
         counterCorrect.setText(String.valueOf(correctCount));
         counterWrong = (TextView) rootView.findViewById(R.id.train_count_wrong);
         counterWrong.setText(String.valueOf(wrongCount));
-        createQuestion();
+        if (checkSelectedVerbs(service, getActivity())) {
+            createQuestion();
+        }
         return rootView;
     }
 

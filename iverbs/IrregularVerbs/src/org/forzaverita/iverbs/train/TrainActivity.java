@@ -1,11 +1,14 @@
 package org.forzaverita.iverbs.train;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.View;
 
 import org.forzaverita.iverbs.BaseActivity;
 import org.forzaverita.iverbs.R;
+import org.forzaverita.iverbs.ScoresActivity;
 import org.forzaverita.iverbs.fragment.MapFragmentsPagerAdapter;
 import org.forzaverita.iverbs.fragment.TitledFragment;
 
@@ -37,6 +40,10 @@ public class TrainActivity extends BaseActivity {
         super.onCreateOptionsMenu(menu);
         menu.findItem(R.id.menu_train).setVisible(false);
         return true;
+    }
+
+    public void onCLickSelectVerbsToTrain(View view) {
+        startActivity(new Intent(this, ScoresActivity.class));
     }
 
 }
