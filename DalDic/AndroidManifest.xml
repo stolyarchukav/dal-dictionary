@@ -9,8 +9,12 @@
     <uses-permission android:name="android.permission.INTERNET"/>
   	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	
-    <application android:name=".service.impl.DalDicServiceImpl"
-    	android:icon="@drawable/icon" android:label="@string/app_name">
+    <application
+        android:name=".service.impl.DalDicServiceImpl"
+    	android:icon="@drawable/icon"
+        android:label="@string/app_name">
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <activity android:name=".DalDicActivity"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="stateHidden">
@@ -53,8 +57,10 @@
 		<activity android:name=".preferences.AppPreferenceActivity"
 				android:label="@string/app_name">
 		</activity>
-		<activity android:name="com.google.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|smallestScreenSize|screenSize" />
+
+        <!-- Activity required to show ad overlays. -->
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 		
 		<receiver android:name=".widget.WordWidgetProvider" android:label="@string/app_name">
     		<intent-filter>

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.forzaverita.daldic.advert.AdUtils;
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.data.Word;
 import org.forzaverita.daldic.menu.MenuUtils;
@@ -46,6 +47,7 @@ public class WordActivity extends Activity {
         setContentView(R.layout.word);
         service = (DalDicService) getApplicationContext();
         configureActivity();
+        AdUtils.loadAd(this);
     }
 
 	private void configureActivity() {

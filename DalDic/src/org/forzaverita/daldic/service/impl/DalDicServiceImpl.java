@@ -1,8 +1,8 @@
 package org.forzaverita.daldic.service.impl;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.Random;
+import android.app.Application;
+import android.database.Cursor;
+import android.graphics.Typeface;
 
 import org.forzaverita.daldic.data.Word;
 import org.forzaverita.daldic.data.WordsCache;
@@ -13,9 +13,9 @@ import org.forzaverita.daldic.service.DatabaseService;
 import org.forzaverita.daldic.service.PreferencesService;
 import org.forzaverita.daldic.widget.WidgetRefreshTask;
 
-import android.app.Application;
-import android.database.Cursor;
-import android.graphics.Typeface;
+import java.util.Date;
+import java.util.Map;
+import java.util.Random;
 
 public class DalDicServiceImpl extends Application implements DalDicService {
 	
@@ -38,7 +38,6 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 		fontFlow = Typeface.createFromAsset(getAssets(), "FLOW.otf");
 		preferencesService = new PreferencesServiceImpl(this);
 		dataBaseService = new DataBaseServiceImpl(this, preferencesService);
-		new StatisticUploader(this, preferencesService);
 	}
 	
 	@Override
