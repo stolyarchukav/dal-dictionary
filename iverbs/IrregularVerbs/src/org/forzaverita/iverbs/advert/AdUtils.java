@@ -7,8 +7,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
-import org.forzaverita.iverbs.R;
-
+import static org.forzaverita.iverbs.data.Constants.AD_UNIT_ID;
 import static org.forzaverita.iverbs.data.Constants.LOG_TAG;
 
 public class AdUtils {
@@ -19,7 +18,7 @@ public class AdUtils {
     public static void loadAd(Activity activity) {
         if (System.currentTimeMillis() - lastShow > AD_SHOW_INTERVAL_MS) {
             final InterstitialAd interstitialAd = new InterstitialAd(activity);
-            interstitialAd.setAdUnitId(activity.getString(R.string.ad_mob_id));
+            interstitialAd.setAdUnitId(AD_UNIT_ID);
 
             interstitialAd.setAdListener(new AdListener() {
                 @Override
