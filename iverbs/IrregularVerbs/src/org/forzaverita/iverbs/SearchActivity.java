@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.forzaverita.iverbs.data.Constants;
 import org.forzaverita.iverbs.data.Verb;
+import org.forzaverita.iverbs.learn.LearnActivity;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -25,7 +27,6 @@ public class SearchActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
-        setActivityTitle();
     	
         new AsyncTask<Void, Void, List<Verb>>() {
 
@@ -92,6 +93,13 @@ public class SearchActivity extends BaseActivity {
         	}
         	
         }.execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.menu_search).setVisible(false);
+        return true;
     }
 
 	private void startLearnActivity(int id) {

@@ -4,33 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout style="@style/TitleBar" >
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_home"
-            android:onClick="onClickHome"
-            android:src="@drawable/title_home" />
-
-        <ImageView
-            style="@style/TitleBarSeparator"
-            android:contentDescription="@string/description_info" />
-
-        <TextView style="@style/TitleBarText" />
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_info"
-            android:onClick="onClickInfo"
-            android:src="@drawable/title_info" />
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_search"
-            android:onClick="onClickSearch"
-            android:src="@drawable/title_search" />
-    </LinearLayout>
-
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -40,20 +13,31 @@
         <TableRow style="@style/TableRow" >
 
             <TextView
+                android:id="@+id/table_header_form1"
                 style="@style/TableHeaderText"
-                android:text="@string/table_form_1" />
+                android:text="@string/table_form_1"
+                android:clickable="true"
+                android:onClick="onClickHeaderForm1" />
 
             <TextView
+                android:id="@+id/table_header_form2"
                 style="@style/TableHeaderText"
-                android:text="@string/table_form_2" />
+                android:text="@string/table_form_2"
+                android:clickable="true"
+                android:onClick="onClickHeaderForm2" />
 
             <TextView
+                android:id="@+id/table_header_form3"
                 style="@style/TableHeaderText"
-                android:text="@string/table_form_3" />
+                android:text="@string/table_form_3"
+                android:clickable="true"
+                android:onClick="onClickHeaderForm3" />
 
             <TextView android:id="@+id/table_header_translation"
                 style="@style/TableHeaderText"
-                android:text="@string/table_translation" />
+                android:text="@string/table_translation"
+                android:clickable="true"
+                android:onClick="onClickHeaderTranslation" />
         </TableRow>
     </TableLayout>
 
@@ -70,10 +54,13 @@
             android:stretchColumns="*" >
         </TableLayout>
     </ScrollView>
-    
-    <TextView android:text="@string/table_click_hint"
-        android:layout_width="fill_parent" 
+
+    <TextView android:id="@+id/table_set_transcription"
+        android:text="@string/table_show_transcription"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onCLickShowTranscription"
         style="@style/HintText" />
 
 </LinearLayout>

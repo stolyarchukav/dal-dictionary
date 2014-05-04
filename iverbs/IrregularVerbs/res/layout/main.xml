@@ -1,34 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <LinearLayout style="@style/TitleBar" >
-
-        <ImageView
-            style="@style/TitleBarLogo"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launcher" />
-
-        <ImageView
-            style="@style/TitleBarSeparator"
-            android:contentDescription="@string/app_name" />
-
-        <TextView style="@style/TitleBarText" />
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_info"
-            android:onClick="onClickInfo"
-            android:src="@drawable/title_info" />
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_search"
-            android:onClick="onClickSearch"
-            android:src="@drawable/title_search" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

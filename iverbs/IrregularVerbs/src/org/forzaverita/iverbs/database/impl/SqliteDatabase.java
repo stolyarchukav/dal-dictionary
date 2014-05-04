@@ -1,17 +1,5 @@
 package org.forzaverita.iverbs.database.impl;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.forzaverita.iverbs.data.Constants;
-import org.forzaverita.iverbs.data.Verb;
-import org.forzaverita.iverbs.database.Database;
-import org.forzaverita.iverbs.service.AppService;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,9 +9,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import org.forzaverita.iverbs.data.Constants;
+import org.forzaverita.iverbs.data.Verb;
+import org.forzaverita.iverbs.database.Database;
+import org.forzaverita.iverbs.service.AppService;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 
-	private static int DATA_VERSION = 3;
+	private static int DATA_VERSION = 4;
 	
 	private static String DB_NAME = "iverbs.sqlite";
 	private static String DB_PATH = "/data/data/org.forzaverita.iverbs/databases/" + DB_NAME;
@@ -125,19 +127,40 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
-	
-	@Override
-	public List<Verb> getVerbs() {
-		Cursor cursor = database.query(VERB, new String[] {ID, FORM_1, FORM_2, FORM_3, getLang()}, 
-				null, null, null, null, null);
-		return extractWithoutTranscription(cursor);
-	}
 
-	private String getLang() {
+    @Override
+    public List<Integer> getVerbIds() {
+        Cursor cursor = database.query(VERB, new String[] {ID},
+                null, null, null, null, null);
+        return extractIds(cursor);
+    }
+
+    private List<Integer> extractIds(Cursor cursor) {
+        List<Integer> ids = new ArrayList<Integer>();
+        if (cursor.moveToFirst()) {
+            do {
+                ids.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return ids;
+    }
+
+    @Override
+    public List<Verb> getVerbs(boolean withTranscription) {
+        List<String> columns = new ArrayList<String>(asList(ID, FORM_1, FORM_2, FORM_3, getLang()));
+        if (withTranscription) {
+            columns.addAll(asList(FORM_1_TRANSCRIPTION, FORM_2_TRANSCRIPTION, FORM_3_TRANSCRIPTION));
+        }
+        Cursor cursor = database.query(VERB, columns.toArray(new String[0]), null, null, null, null, null);
+        return extractVerbs(cursor, withTranscription);
+    }
+
+    private String getLang() {
 		return ((AppService) context).getLanguage().name();
 	}
 
-	private List<Verb> extractWithoutTranscription(Cursor cursor) {
+	private List<Verb> extractVerbs(Cursor cursor, boolean withTranscription) {
 		List<Verb> verbs = new ArrayList<Verb>();
 		if (cursor.moveToFirst()) {
             do {
@@ -147,9 +170,13 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
             	verb.setForm2(cursor.getString(2));
             	verb.setForm3(cursor.getString(3));
             	verb.setTranslation(cursor.getString(4));
+                if (withTranscription) {
+                    verb.setForm1Transcription(cursor.getString(5));
+                    verb.setForm2Transcription(cursor.getString(6));
+                    verb.setForm3Transcription(cursor.getString(7));
+                }
             	verbs.add(verb);
-            }
-            while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
 		return verbs;
@@ -212,7 +239,7 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 				restrictionLike(FORM_3, query) + " or " +
 				restrictionLike(lang, query), 
 				null, null, null, null);
-		return extractWithoutTranscription(cursor);
+		return extractVerbs(cursor, false);
 	}
 	
 	private String restrictionLike(String field, String query) {

@@ -1,126 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
-    <LinearLayout style="@style/TitleBar" >
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_home"
-            android:onClick="onClickHome"
-            android:src="@drawable/title_home" />
-
-        <ImageView
-            style="@style/TitleBarSeparator"
-            android:contentDescription="@string/description_info" />
-
-        <TextView style="@style/TitleBarText" />
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_info"
-            android:onClick="onClickInfo"
-            android:src="@drawable/title_info" />
-
-        <ImageButton
-            style="@style/TitleBarAction"
-            android:contentDescription="@string/description_search"
-            android:onClick="onClickSearch"
-            android:src="@drawable/title_search" />
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.9" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/train_question_part_first" />
-
-            <TextView
-                android:id="@+id/train_question_form"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/train_key_text"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:text="@string/train_question_part_second" />
-
-            <TextView
-                android:id="@+id/train_question_verb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/train_key_text"
-                android:textSize="20sp" />
-
-            <TableLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="1" >
-
-                <TableRow>
-
-                    <Button
-                        android:id="@+id/train_answer_1"
-                        style="@style/ButtonAnswer" />
-
-                    <Button
-                        android:id="@+id/train_answer_2"
-                        style="@style/ButtonAnswer" />
-                </TableRow>
-
-                <TableRow>
-
-                    <Button
-                        android:id="@+id/train_answer_3"
-                        style="@style/ButtonAnswer" />
-
-                    <Button
-                        android:id="@+id/train_answer_4"
-                        style="@style/ButtonAnswer" />
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:id="@+id/train_count_correct"
-                        style="@style/CounterAnswer"
-                        android:textColor="@color/train_correct" />
-
-                    <TextView
-                        android:id="@+id/train_count_wrong"
-                        style="@style/CounterAnswer"
-                        android:textColor="@color/train_wrong" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
-    </ScrollView>
-
-    <TextView
-        style="@style/HintText"
-        android:layout_width="fill_parent"
+    <android.support.v4.view.PagerTabStrip
+        android:id="@+id/train_pager_tab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tran_hint" />
+        android:layout_gravity="top"
+        android:background="@color/title_background"
+        android:textColor="@color/title_text"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp" />
 
-</LinearLayout>
+</android.support.v4.view.ViewPager>

@@ -1,0 +1,13 @@
+---
+applications:
+- name: daldic-server
+  memory: 512M
+  instances: 1
+  url: daldic-server.cfapps.io
+  path: target/daldic-server-0.0.1.war
+  services:
+    daldic-mongodb:
+      label: mongolab
+      provider: mongolab
+      version: n/a
+      plan: sandbox

@@ -6,16 +6,18 @@ import java.util.List;
 
 import org.forzaverita.iverbs.data.Lang;
 import org.forzaverita.iverbs.data.StatItem;
-import org.forzaverita.iverbs.data.TrainMode;
+import org.forzaverita.iverbs.train.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
 
 import android.database.Cursor;
 
 public interface AppService {
 
-	List<Verb> getVerbs();
+	List<Verb> getVerbs(boolean withTranscription);
 
-	Verb getVerb(int id);
+    List<Integer> getVerbIds();
+
+    Verb getVerb(int id);
 
 	Verb getPreviousVerb();
 
@@ -49,8 +51,14 @@ public interface AppService {
 
 	void resetStats();
 
-	void setInTraining(Verb verb, boolean inTraining);
+	void setInTraining(Integer verbId, boolean inTraining);
+
+    void setInTrainingAll(boolean inTraining);
 
 	int getInTrainingCount();
+
+	float getFontSize();
+
+    int getVerbsCount();
 
 }

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">ForzaVerita donate</string>
-    <string name="title">Благодарим Вас за поддержку!\nВаша помощь позволяет нам уделять свободное время созданию новых интересных приложений и улучшению существующих</string>
-    <string name="apps_link"><u>Наши приложения</u></string>
-
-</resources>

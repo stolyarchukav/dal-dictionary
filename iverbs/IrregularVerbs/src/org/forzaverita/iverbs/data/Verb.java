@@ -1,6 +1,8 @@
 package org.forzaverita.iverbs.data;
 
-public class Verb {
+import java.io.Serializable;
+
+public class Verb implements Serializable {
 
 	private int id;
 	

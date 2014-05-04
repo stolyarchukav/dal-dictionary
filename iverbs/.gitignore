@@ -5,3 +5,7 @@ bin
 gen
 build
 .gradle
+.idea
+*.iml
+gradle*
+IrregularVerbsPay
