@@ -3,18 +3,25 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
+
+repositories {
+    mavenCentral()
+}
+
 apply plugin: 'android'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    //compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.google.android.gms:play-services:4.3.23'
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
 }
 
 android {
     compileSdkVersion 15
-    buildToolsVersion "17.0.0"
+    buildToolsVersion "19.0.3"
 
     sourceSets {
         main {
@@ -54,6 +61,10 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
 }
