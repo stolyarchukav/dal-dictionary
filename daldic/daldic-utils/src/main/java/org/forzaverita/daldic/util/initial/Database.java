@@ -13,8 +13,8 @@ import java.util.Map;
 public final class Database {
 	
 	public static enum DatabaseEngine {
-		H2("org.h2.Driver", "jdbc:h2:src/main/resources/daldich2"),
-		SQLITE("org.sqlite.JDBC", "jdbc:sqlite:src/main/resources/daldic.sqlite");
+		H2("org.h2.Driver", "jdbc:h2:huge_data/daldich2"),
+		SQLITE("org.sqlite.JDBC", "jdbc:sqlite:huge_data/daldic.sqlite");
 		
 		private DatabaseEngine(String driverClass, String connectionString) {
 			this.driverClass = driverClass;
@@ -38,7 +38,7 @@ public final class Database {
 			" word_ref) values (?, ?, ?, ?, ?)";
 	private static final String DELETE_WORD = "delete from word where word_id = ?";
 	
-	private static Map<DatabaseEngine, Database> INSTANCE = new HashMap<DatabaseEngine, Database>();
+	private static Map<DatabaseEngine, Database> INSTANCE = new HashMap<>();
 	
 	private Connection conn;
 
@@ -76,7 +76,7 @@ public final class Database {
 		}
 	}
 	
-	public Connection getConnecction() {
+	public Connection getConnection() {
 		return conn;
 	}
 	

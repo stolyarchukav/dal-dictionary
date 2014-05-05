@@ -16,7 +16,7 @@ public class SqliteToH2Loader {
 	public static void main(String[] args) throws Exception {
 		Database database = Database.getInstance(DatabaseEngine.H2);
 		System.out.println(database.getMaxWordId());
-		/*ResultSet rs = database.getConnecction().createStatement().executeQuery("select word, description, length(description) from word order by length(description) desc");
+		/*ResultSet rs = database.getConnection().createStatement().executeQuery("select word, description, length(description) from word order by length(description) desc");
 		if (rs.next()) {
 			System.out.println(rs.getString(1) + ", " + rs.getString(2) + ", " + rs.getLong(3));
 		}*/
@@ -42,16 +42,16 @@ public class SqliteToH2Loader {
 		}
 		
 		System.out.println("saved = " + saved + ", not saved = " + notSaved);
-		ResultSet rs = database.getConnecction().createStatement().executeQuery("select count(*) from word");
+		ResultSet rs = database.getConnection().createStatement().executeQuery("select count(*) from word");
 		rs.next();
 		System.out.println("Words count = " + rs.getInt(1));
 		
-		database.getConnecction().commit();
-		database.getConnecction().close();
+		database.getConnection().commit();
+		database.getConnection().close();
 	}
 
 	private static void createSchema(Database database) throws SQLException {
-		database.getConnecction().createStatement().execute("CREATE TABLE word (" +
+		database.getConnection().createStatement().execute("CREATE TABLE word (" +
 				"word_id INT PRIMARY KEY, word VARCHAR_IGNORECASE(30) NOT NULL," +
 				"description VARCHAR_IGNORECASE(20000), first_letter CHAR(1) NOT NULL, word_ref INT)");
 	}
