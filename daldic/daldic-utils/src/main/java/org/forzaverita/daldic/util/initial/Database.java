@@ -247,7 +247,7 @@ public final class Database {
 	}
 
 	public List<Integer> getIds(String text) {
-		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> result = new ArrayList<>();
 		try {
 			if (psSelectWordIdsByFilter == null) {
 				psSelectWordIdsByFilter = conn.prepareStatement(SELECT_WORD_IDS_BY_FILTER);
@@ -266,7 +266,7 @@ public final class Database {
 	}
 	
 	public List<Integer> getIds() {
-		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> result = new ArrayList<>();
 		try {
 			if (psSelectWordIds == null) {
 				psSelectWordIds = conn.prepareStatement(SELECT_WORD_IDS);
@@ -284,7 +284,7 @@ public final class Database {
 	}
 	
 	public List<Integer> getSuspectedTitleIds() {
-		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> result = new ArrayList<>();
 		List<Integer> ids = getIds();
 		for (int id : ids) {
 			Word word = getWord(id);

@@ -1,4 +1,4 @@
-package org.forzaverita.daldic.util;
+package org.forzaverita.daldic.util.accent;
 
 import org.apache.commons.lang3.StringUtils;
 
