@@ -15,6 +15,7 @@ public class AppPreferenceActivity extends PreferenceActivity implements OnShare
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        setTitle(R.string.pref);
 		addPreferencesFromResource(R.xml.preferences);
 		service =  (DalDicService) getApplicationContext();
 	}
