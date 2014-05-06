@@ -34,27 +34,30 @@ public class DataUpdater {
                     modified = true;
                 }
                 String desc = entity.getDescription();
-                if (desc.startsWith(word.toUpperCase())) {
-                    entity.setDescription(desc.replaceFirst(word.toUpperCase(), words.get(word).toUpperCase()));
-                    System.out.println("Description start: " + entity.getWord() + " --- " + word);
-                    modified = true;
-                }
-                int start = desc.indexOf(" " + word + " ");
-                if (start == -1) {
-                    start = desc.indexOf(" " + word + ".");
-                }
-                if (start == -1) {
-                    start = desc.indexOf(" " + word + ",");
-                }
-                if (start != -1) {
-                    desc = desc.substring(0, start + 1) + words.get(word).toLowerCase() + desc.substring(start + word.length());
-                    entity.setDescription(desc);
-                    System.out.println("Description: " + entity.getWord() + " --- " + word + " --- " + start);
-                    modified = true;
+                if (desc != null) {
+                    if (desc.startsWith(word.toUpperCase())) {
+                        entity.setDescription(desc.replaceFirst(word.toUpperCase(), words.get(word).toUpperCase()));
+                        System.out.println("Description start: " + entity.getWord() + " --- " + word);
+                        modified = true;
+                    }
+                    int start = desc.indexOf(" " + word + " ");
+                    if (start == -1) {
+                        start = desc.indexOf(" " + word + ".");
+                    }
+                    if (start == -1) {
+                        start = desc.indexOf(" " + word + ",");
+                    }
+                    if (start != -1) {
+                        desc = desc.substring(0, start + 1) + words.get(word).toLowerCase() + desc.substring(start + 1 + word.length());
+                        entity.setDescription(desc);
+                        System.out.println("Description: " + entity.getWord() + " --- " + word + " --- " + start);
+                        modified = true;
+                    }
                 }
             }
             if (modified) {
                 System.out.println(entity);
+                db.saveWord(entity);
             }
         }
         db.getConnection().close();

@@ -183,8 +183,8 @@ public final class Database {
 			if (word.getWordReference() == null) {
 				psUpdateWord.setNull(4, Types.INTEGER);
 			}
-			else if (word.getWordReference() != 0) {
-				psUpdateWord.setInt(4, word.getWordReference());
+			else {
+                psUpdateWord.setInt(4, word.getWordReference());
 			}
 			psUpdateWord.setInt(5, word.getId());
 			psUpdateWord.executeUpdate();
