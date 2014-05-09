@@ -25,8 +25,10 @@
 
     <string name="records_clear">Сбросить</string>
     <string name="records_sec">сек</string>
-    <string name="records_var_font_size">Перем. размер</string>
-    <string name="records_stable_font">Простой текст</string>
-    <string name="records_var_font_color">Перем. цвет</string>
-    <string name="records_var_font_color_size">Перем. цвет и размер</string>
+    <string name="records_var_font_size">Переменный размер</string>
+    <string name="records_fixed_font_size">Постоянный размер</string>
+    <string name="records_var_font_color">Переменный цвет</string>
+    <string name="records_fixed_font_color">Постоянный цвет</string>
+    <string name="records_reverse_order">Обратный порядок</string>
+    <string name="records_direct_order">Прямой порядок</string>
 </resources>

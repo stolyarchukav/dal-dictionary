@@ -8,8 +8,8 @@
     <string name="main_rate_app">Rate application</string>
 
     <string name="dig_seq_level">Select level</string>
-    <string name="dig_seq_var_font_size">variable font size</string>
-    <string name="dig_seq_var_font_color">variable font color</string>
+    <string name="dig_seq_var_font_size">various font size</string>
+    <string name="dig_seq_var_font_color">various font color</string>
     <string name="dig_seq_reverse_order">Reverse order</string>
     <string name="dig_seq_size_3">easy (3x3)</string>
     <string name="dig_seq_size_4">medium (4x4)</string>
@@ -25,8 +25,10 @@
 
     <string name="records_clear">Reset</string>
     <string name="records_sec">sec</string>
-    <string name="records_var_font_size">var size</string>
-    <string name="records_stable_font">stable font</string>
-    <string name="records_var_font_color">var font color</string>
-    <string name="records_var_font_color_size">var color and size</string>
+    <string name="records_var_font_size">various font size</string>
+    <string name="records_fixed_font_size">fixed font size</string>
+    <string name="records_var_font_color">various font color</string>
+    <string name="records_fixed_font_color">fixed font color</string>
+    <string name="records_reverse_order">reverse order</string>
+    <string name="records_direct_order">direct order</string>
 </resources>

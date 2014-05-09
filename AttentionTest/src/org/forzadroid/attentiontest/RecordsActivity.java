@@ -1,15 +1,24 @@
 package org.forzadroid.attentiontest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
+import org.forzadroid.attentiontest.advert.AdUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.forzadroid.attentiontest.Constants.DIGIT_KEY_PREFIX;
+import static org.forzadroid.attentiontest.Constants.REVERSE_KEY;
+import static org.forzadroid.attentiontest.Constants.VAR_FONT_COLOR_KEY;
+import static org.forzadroid.attentiontest.Constants.VAR_FONT_SIZE_KEY;
 
 public class RecordsActivity extends Activity {
 
@@ -17,10 +26,10 @@ public class RecordsActivity extends Activity {
 	private Map<Integer, TextView> textMap = new HashMap<Integer, TextView>();
 	private boolean varSize;
 	private boolean varColor;
-	private Button stableBtn;
-	private Button varSizeBtn;
-	private Button varColorBtn;
-	private Button varColorSizeBtn;
+    private boolean reverse;
+	private ToggleButton varSizeBtn;
+	private ToggleButton varColorBtn;
+	private ToggleButton reverseBtn;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,62 +37,33 @@ public class RecordsActivity extends Activity {
 		setContentView(R.layout.records);
 		
 		appState = (AttentionTestApplication) getApplicationContext();
-		
-		stableBtn = (Button) findViewById(R.id.rec_stable);
-		stableBtn.setOnClickListener(new View.OnClickListener() {
+
+		varSizeBtn = (ToggleButton) findViewById(R.id.rec_var_size);
+		varSizeBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onClick(View v) {
-				varSize = false;
-				varColor = false;
-				stableBtn.setEnabled(false);
-				varSizeBtn.setEnabled(true);
-				varColorBtn.setEnabled(true);
-				varColorSizeBtn.setEnabled(true);
-				updateRecords();
-			}
-		});
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                varSize = isChecked;
+                updateRecords();
+            }
+        });
 		
-		varSizeBtn = (Button) findViewById(R.id.rec_var_size);
-		varSizeBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				varSize = true;
-				varColor = false;
-				stableBtn.setEnabled(true);
-				varSizeBtn.setEnabled(false);
-				varColorBtn.setEnabled(true);
-				varColorSizeBtn.setEnabled(true);
-				updateRecords();
-			}
-		});
-		
-		varColorBtn = (Button) findViewById(R.id.rec_var_color);
-		varColorBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				varSize = false;
-				varColor = true;
-				stableBtn.setEnabled(true);
-				varSizeBtn.setEnabled(true);
-				varColorBtn.setEnabled(false);
-				varColorSizeBtn.setEnabled(true);
-				updateRecords();
-			}
-		});
-		
-		varColorSizeBtn = (Button) findViewById(R.id.rec_var_color_size);
-		varColorSizeBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				varSize = true;
-				varColor = true;
-				stableBtn.setEnabled(true);
-				varSizeBtn.setEnabled(true);
-				varColorBtn.setEnabled(true);
-				varColorSizeBtn.setEnabled(false);
-				updateRecords();
-			}
-		});
+		varColorBtn = (ToggleButton) findViewById(R.id.rec_var_color);
+        varColorBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                varColor = isChecked;
+                updateRecords();
+            }
+        });
+
+        reverseBtn = (ToggleButton) findViewById(R.id.rec_reverse);
+        reverseBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                reverse = isChecked;
+                updateRecords();
+            }
+        });
 
 		createRecordText((TableRow) findViewById(R.id.rec3), 3, true);
 		createRecordText((TableRow) findViewById(R.id.rec4), 4, false);
@@ -97,6 +77,8 @@ public class RecordsActivity extends Activity {
 				updateRecords();
 			}
 		});
+
+        AdUtils.loadAd(this);
 	}
 	
 	@Override
@@ -123,13 +105,16 @@ public class RecordsActivity extends Activity {
 	private void updateRecords() {
 		Map<String, Long> records = appState.getRecords();
 		for (Integer size : textMap.keySet()) {
-			String key = appState.DIGIT_KEY_PREFIX + size;
+			String key = DIGIT_KEY_PREFIX + size;
 			if (varColor) {
-				key += appState.VAR_FONT_COLOR_KEY;
+				key += VAR_FONT_COLOR_KEY;
 			}
 			if (varSize) {
-				key += appState.VAR_FONT_SIZE_KEY;
+				key += VAR_FONT_SIZE_KEY;
 			}
+            if (reverse) {
+                key += REVERSE_KEY;
+            }
 			Long time = records.get(key);
 			String timeStr = String.valueOf(time / 1000.0) + " " + getString(R.string.records_sec);
 			if (time == -1) {

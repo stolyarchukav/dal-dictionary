@@ -25,8 +25,10 @@
 
     <string name="records_clear">Reset</string>
     <string name="records_sec">sec</string>
-    <string name="records_var_font_size">variabile dim</string>
-    <string name="records_stable_font">carattere stabile</string>
-    <string name="records_var_font_color">variabile colore</string>
-    <string name="records_var_font_color_size">var colore e dim</string>
+    <string name="records_var_font_size">vario dimensione</string>
+    <string name="records_fixed_font_size">fisso dimensione</string>
+    <string name="records_var_font_color">vario colore</string>
+    <string name="records_fixed_font_color">fisso colore</string>
+    <string name="records_reverse_order">ordine inverso</string>
+    <string name="records_direct_order">ordine diretto</string>
 </resources>

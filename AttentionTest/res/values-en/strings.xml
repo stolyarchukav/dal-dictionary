@@ -25,8 +25,10 @@
 
     <string name="records_clear">Reset</string>
     <string name="records_sec">sec</string>
-    <string name="records_var_font_size">var size</string>
-    <string name="records_stable_font">stable font</string>
-    <string name="records_var_font_color">var font color</string>
-    <string name="records_var_font_color_size">var color and size</string>
+    <string name="records_var_font_size">various font size</string>
+    <string name="records_fixed_font_size">fixed font size</string>
+    <string name="records_var_font_color">various font color</string>
+    <string name="records_fixed_font_color">fixed font color</string>
+    <string name="records_reverse_order">reverse order</string>
+    <string name="records_direct_order">direct order</string>
 </resources>

@@ -13,13 +13,14 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.forzadroid.attentiontest.Constants.DIGIT_KEY_PREFIX;
+import static org.forzadroid.attentiontest.Constants.REVERSE_KEY;
+import static org.forzadroid.attentiontest.Constants.VAR_FONT_COLOR_KEY;
+import static org.forzadroid.attentiontest.Constants.VAR_FONT_SIZE_KEY;
+
 public class AttentionTestApplication extends Application {
 
 	private static final long DEFAULT_RECORD = -1L;
-	public static final String DIGIT_KEY_PREFIX = "digit";
-	public static final String VAR_FONT_SIZE_KEY = "varFontSize";
-	public static final String VAR_FONT_COLOR_KEY = "varFontColor";
-    public static final String REVERSE_KEY = "reverse";
 	private static final String PREFERENCES_FILE = "AttentionTest";
 	private AtomicInteger next = new AtomicInteger(1);
 	private Long startTime;

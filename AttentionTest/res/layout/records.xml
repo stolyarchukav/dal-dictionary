@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	
@@ -11,28 +10,21 @@
 			
 			<LinearLayout android:orientation="vertical" 
 				android:layout_width="fill_parent" android:layout_height="wrap_content">
-				<LinearLayout android:orientation="horizontal" 
-					android:layout_width="fill_parent" android:layout_height="wrap_content">
-					<Button android:id="@+id/rec_stable" 
-						android:text="@string/records_stable_font" 
-						android:layout_width="fill_parent" android:layout_height="fill_parent" 
-						android:layout_weight="1" android:enabled="false"/>
-					<Button android:id="@+id/rec_var_size" 
-						android:text="@string/records_var_font_size" 
-						android:layout_width="fill_parent" android:layout_height="fill_parent" 
-						android:layout_weight="1"/>
-				</LinearLayout>
-				<LinearLayout android:orientation="horizontal" 
-					android:layout_width="fill_parent" android:layout_height="wrap_content">
-					<Button android:id="@+id/rec_var_color" 
-						android:text="@string/records_var_font_color" 
-						android:layout_width="fill_parent" android:layout_height="fill_parent" 
-						android:layout_weight="1"/>
-					<Button android:id="@+id/rec_var_color_size" 
-						android:text="@string/records_var_font_color_size" 
-						android:layout_width="fill_parent" android:layout_height="fill_parent" 
-						android:layout_weight="1"/>
-				</LinearLayout>
+                <ToggleButton android:id="@+id/rec_var_size"
+                    android:textOn="@string/records_var_font_size"
+                    android:textOff="@string/records_fixed_font_size"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:layout_weight="1"/>
+                <ToggleButton android:id="@+id/rec_var_color"
+                    android:textOn="@string/records_var_font_color"
+                    android:textOff="@string/records_fixed_font_color"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:layout_weight="1"/>
+                <ToggleButton android:id="@+id/rec_reverse"
+                    android:textOn="@string/records_reverse_order"
+                    android:textOff="@string/records_direct_order"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:layout_weight="1"/>
 			</LinearLayout>
 			<TableLayout android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" android:stretchColumns="1">
