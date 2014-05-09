@@ -2,4 +2,5 @@
 <resources>
     <color name="title">#23cf34</color>
     <color name="table_row_odd">#23cf34</color>
+    <color name="promo_link">#ff28b8cf</color>
 </resources>

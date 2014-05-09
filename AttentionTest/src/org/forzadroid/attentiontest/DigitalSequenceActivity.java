@@ -36,6 +36,15 @@ public class DigitalSequenceActivity extends Activity {
 				appState.setVarFontColor(isChecked);
 			}
 		});
+
+        CheckBox reverseOrder = (CheckBox) findViewById(R.id.reverseOrder);
+        reverseOrder.setChecked(appState.isReverse());
+        reverseOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                appState.setReverse(isChecked);
+            }
+        });
 		
 		Button digSeq3 = (Button) findViewById(R.id.digSeq3);
 		digSeq3.setOnClickListener(new View.OnClickListener() {

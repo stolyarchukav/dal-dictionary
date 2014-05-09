@@ -1,5 +1,10 @@
 package org.forzadroid.attentiontest;
 
+import android.app.Application;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,17 +13,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import android.app.Application;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
-
 public class AttentionTestApplication extends Application {
 
 	private static final long DEFAULT_RECORD = -1L;
 	public static final String DIGIT_KEY_PREFIX = "digit";
 	public static final String VAR_FONT_SIZE_KEY = "varFontSize";
 	public static final String VAR_FONT_COLOR_KEY = "varFontColor";
+    public static final String REVERSE_KEY = "reverse";
 	private static final String PREFERENCES_FILE = "AttentionTest";
 	private AtomicInteger next = new AtomicInteger(1);
 	private Long startTime;
@@ -28,30 +29,37 @@ public class AttentionTestApplication extends Application {
 	private boolean varFontSize;
 	private boolean varFontColor;
 	private Random random = new Random();
-	
-	@Override
+    private boolean reverse;
+
+    @Override
 	public void onCreate() {
 		super.onCreate();
 		preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
 		records = new HashMap<String, Long>();
 		for (int q = 3; q <= 6; q++) {
 			String key = DIGIT_KEY_PREFIX + q;
-			records.put(key, preferences.getLong(key, DEFAULT_RECORD));
-			String keyVar = key + VAR_FONT_SIZE_KEY;
-			records.put(keyVar, preferences.getLong(keyVar, DEFAULT_RECORD));
-			keyVar = key + VAR_FONT_COLOR_KEY;
-			records.put(keyVar, preferences.getLong(keyVar, DEFAULT_RECORD));
-			keyVar = key + VAR_FONT_COLOR_KEY + VAR_FONT_SIZE_KEY;
-			records.put(keyVar, preferences.getLong(keyVar, DEFAULT_RECORD));
+			loadRecordItem(key);
+            loadRecordItem(key + VAR_FONT_SIZE_KEY);
+            loadRecordItem(key + VAR_FONT_COLOR_KEY);
+            loadRecordItem(key + REVERSE_KEY);
+            loadRecordItem(key + VAR_FONT_COLOR_KEY + VAR_FONT_SIZE_KEY);
+            loadRecordItem(key + VAR_FONT_COLOR_KEY + REVERSE_KEY);
+            loadRecordItem(key + VAR_FONT_SIZE_KEY + REVERSE_KEY);
+            loadRecordItem(key + VAR_FONT_COLOR_KEY + VAR_FONT_SIZE_KEY + REVERSE_KEY);
 		}
 		varFontSize = preferences.getBoolean(VAR_FONT_SIZE_KEY, false);
 		varFontColor = preferences.getBoolean(VAR_FONT_COLOR_KEY, false);
+        reverse = preferences.getBoolean(REVERSE_KEY, false);
 	}
-	
-	public void clearDigSequence() {
-		next = new AtomicInteger(1);
+
+    private void loadRecordItem(String key) {
+        records.put(key, preferences.getLong(key, DEFAULT_RECORD));
+    }
+
+    public void clearDigSequence() {
 		startTime = null;
 		values = null;
+        next = null;
 	}
 
 	public List<Integer> getValues(int size) {
@@ -62,9 +70,12 @@ public class AttentionTestApplication extends Application {
 		    }
 		    Collections.shuffle(values);
 		}
+        if (next == null) {
+            next = new AtomicInteger(reverse ? size * size : 1);
+        }
 	    return values;
 	}
-	
+
 	public AtomicInteger getNext() {
 		return next;
 	}
@@ -87,6 +98,9 @@ public class AttentionTestApplication extends Application {
 		if (varFontSize) {
 			 key += VAR_FONT_SIZE_KEY;
 		}
+        if (reverse) {
+            key += REVERSE_KEY;
+        }
 		Long record = records.get(key);
 		if (time < record || record == DEFAULT_RECORD) {
 			records.put(key, time);
@@ -106,23 +120,25 @@ public class AttentionTestApplication extends Application {
 	public void clearRecords() {
 		Editor editor = preferences.edit();
 		for (int q = 3; q <= 6; q++) {
-			String key = DIGIT_KEY_PREFIX + q;
-			records.put(key, DEFAULT_RECORD);
-			editor.putLong(key, DEFAULT_RECORD);
-			String keyVar = key + VAR_FONT_SIZE_KEY;
-			records.put(keyVar, DEFAULT_RECORD);
-			editor.putLong(keyVar, DEFAULT_RECORD);
-			keyVar = key + VAR_FONT_COLOR_KEY;
-			records.put(keyVar, DEFAULT_RECORD);
-			editor.putLong(keyVar, DEFAULT_RECORD);
-			keyVar = key + VAR_FONT_COLOR_KEY + VAR_FONT_SIZE_KEY;
-			records.put(keyVar, DEFAULT_RECORD);
-			editor.putLong(keyVar, DEFAULT_RECORD);
+            String key = DIGIT_KEY_PREFIX + q;
+            clearRecordItem(editor, key);
+            clearRecordItem(editor, key + VAR_FONT_SIZE_KEY);
+            clearRecordItem(editor, key + VAR_FONT_COLOR_KEY);
+            clearRecordItem(editor, key + REVERSE_KEY);
+            clearRecordItem(editor, key + VAR_FONT_COLOR_KEY + VAR_FONT_SIZE_KEY);
+            clearRecordItem(editor, key + VAR_FONT_COLOR_KEY + REVERSE_KEY);
+            clearRecordItem(editor, key + VAR_FONT_SIZE_KEY + REVERSE_KEY);
+            clearRecordItem(editor, key + VAR_FONT_COLOR_KEY + VAR_FONT_SIZE_KEY + REVERSE_KEY);
 		}
 		editor.commit();
 	}
-	
-	public void setVarFontSize(boolean varFontSize) {
+
+    private void clearRecordItem(Editor editor, String key) {
+        records.put(key, DEFAULT_RECORD);
+        editor.putLong(key, DEFAULT_RECORD);
+    }
+
+    public void setVarFontSize(boolean varFontSize) {
 		this.varFontSize = varFontSize;
 		preferences.edit().putBoolean(VAR_FONT_SIZE_KEY, varFontSize);
 	}
@@ -131,7 +147,12 @@ public class AttentionTestApplication extends Application {
 		this.varFontColor = varFontColor;
 		preferences.edit().putBoolean(VAR_FONT_COLOR_KEY, varFontColor);
 	}
-	
+
+    public void setReverse(boolean reverse) {
+        this.reverse = reverse;
+        preferences.edit().putBoolean(REVERSE_KEY, reverse);
+    }
+
 	public boolean isVarFontSize() {
 		return varFontSize;
 	}
@@ -139,7 +160,11 @@ public class AttentionTestApplication extends Application {
 	public boolean isVarFontColor() {
 		return varFontColor;
 	}
-	
+
+    public boolean isReverse() {
+        return reverse;
+    }
+
 	public float getFontSize(int size) {
 		float dig = 2;
 		if (varFontSize) {
@@ -157,7 +182,8 @@ public class AttentionTestApplication extends Application {
 	}
 	
 	public String getDigitalSquareTitle() {
-		StringBuilder text = new StringBuilder(getString(R.string.dig_square_title));
+        StringBuilder text = new StringBuilder(getString(reverse ?
+                R.string.dig_square_title_reverse : R.string.dig_square_title));
 		text.append(" [ ");
 		text.append(next.get());
 		text.append(" ]");
@@ -168,5 +194,5 @@ public class AttentionTestApplication extends Application {
 		}
 		return text.toString();
 	}
-	
+
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -33,19 +34,24 @@ public class AttentionTest extends Activity {
 				startActivity(intent);
 			}
 		});
-        
-        Button moreAppsBtn = (Button) findViewById(R.id.moreAppsButton);
-        moreAppsBtn.setTextColor(Color.GREEN);
-        moreAppsBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View paramView) {
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, 
-							Uri.parse("market://search?q=pub:ForzaVerita")));
-				}
-				catch (ActivityNotFoundException e) {
-				}
-			}
-		});
     }
+
+    public void onClickRateApp(View view) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +
+                    getApplicationInfo().packageName)));
+        } catch (ActivityNotFoundException e) {
+            Log.w(Constants.LOG_TAG, "Can't open market app page");
+        }
+    }
+
+    public void onClickMoreApps(View view) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("market://search?q=pub:ForzaVerita")));
+        } catch (ActivityNotFoundException e) {
+            Log.w(Constants.LOG_TAG, "Can't open market app page with all apps");
+        }
+    }
+
 }

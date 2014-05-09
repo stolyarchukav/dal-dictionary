@@ -74,13 +74,6 @@
 				android:text="@string/records_clear" 
 				android:textSize="20sp"
 				android:layout_margin="10dp" />
-				
-			<com.google.ads.AdView android:id="@+id/adView"
-                android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				ads:adUnitId="@string/ad_mob_id"
-                ads:adSize="BANNER"
-              	ads:loadAdOnCreate="true"/>
 			
 		</LinearLayout>
 	
