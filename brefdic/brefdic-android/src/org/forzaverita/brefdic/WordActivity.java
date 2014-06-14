@@ -80,7 +80,7 @@ public class WordActivity extends Activity {
         	}
         }
         configureWord(word);
-        configureGotoMain(fromWidget);
+        configureGotoMain();
 	}
 
 	private void configureWord(Word word) {
@@ -204,23 +204,18 @@ public class WordActivity extends Activity {
         }
 	}
 
-	private void configureGotoMain(boolean fromWidget) {
+	private void configureGotoMain() {
 		Button button = (Button) findViewById(R.id.word_goto_main);
-        if (fromWidget) {
-        	button.setVisibility(View.VISIBLE);
-        	button.setTypeface(service.getFont());
-        	button.setTextColor(Color.BLACK);
-        	button.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(WordActivity.this, BrEfDicActivity.class);
-					startActivity(intent);
-				}
-			});
-        }
-        else {
-        	button.setVisibility(View.GONE);
-        }
+        button.setVisibility(View.VISIBLE);
+        button.setTypeface(service.getFont());
+        button.setTextColor(Color.BLACK);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WordActivity.this, BrEfDicActivity.class);
+                startActivity(intent);
+            }
+        });
 	}
 	
 }
