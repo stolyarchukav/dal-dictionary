@@ -16,6 +16,7 @@ public class AppPreferenceActivity extends PreferenceActivity implements OnShare
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+        setTitle(R.string.pref);
 		service =  (AppService) getApplicationContext();
 	}
 	
