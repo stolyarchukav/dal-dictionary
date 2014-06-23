@@ -1,11 +1,5 @@
 package org.forzadroid.attentiontest;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,12 +17,20 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import org.forzadroid.attentiontest.advert.AdUtils;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class DigitalSquareActivity extends Activity {
 
 	private static final int MARGIN = 2;
 	private AttentionTestApplication appState;
 	private int size;
-	private AsyncTask<Void, String, Void> titleTimerTask;
+    private AsyncTask<Void, String, Void> titleTimerTask;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,11 @@ public class DigitalSquareActivity extends Activity {
 		
 		size = (Integer) getIntent().getExtras().get(Constants.DIG_SQUARE_SIZE);
 	    final int count = size * size;
-	    
-	    appState = (AttentionTestApplication) getApplicationContext();
-	    final AtomicInteger next = appState.getNext();
-	    final List<Integer> values = appState.getValues(size);
+
+        appState = (AttentionTestApplication) getApplicationContext();
+	    final boolean reverse = appState.isReverse();
+        final List<Integer> values = appState.getValues(size);
+        final AtomicInteger next = appState.getNext();
 	    final Set<Button> buttons = new HashSet<Button>(); 
 	    
 	    TableLayout layout = new TableLayout(this) {
@@ -85,14 +88,20 @@ public class DigitalSquareActivity extends Activity {
                 button.setTextSize(appState.getFontSize(size));
                 button.setTextColor(appState.getFontColor());
                 
-                updateButtonStatus(button, number < next.get());
+                updateButtonStatus(button, number, next.get(), reverse);
                 button.setOnClickListener(new View.OnClickListener() {
                 	public void onClick(View view) {
                 		if (button.getTag().equals(next.get())) {
                 			updateButtonStatus(button, true);
-                			if (next.incrementAndGet() > count) {
-                				finishGame();
-                			}
+                            if (reverse) {
+                                if (next.decrementAndGet() == 0) {
+                                    finishGame();
+                                }
+                            } else {
+                                if (next.incrementAndGet() > count) {
+                                    finishGame();
+                                }
+                            }
                 		}
                 		else {
                 			vibrator.vibrate(200);
@@ -113,16 +122,22 @@ public class DigitalSquareActivity extends Activity {
 	    
 		appState.startDigitTest();
 	}
-	
-	private void updateButtonStatus(Button button, boolean passed) {
-		button.setEnabled(! passed);
-		if (passed) {
-			button.setTextColor(Color.BLACK);
-		}
-		button.setBackgroundColor(passed ? Color.GRAY : Color.rgb(105, 214, 241));
+
+    private void updateButtonStatus(Button button, boolean passed) {
+        button.setEnabled(! passed);
+        if (passed) {
+            button.setTextColor(Color.BLACK);
+        }
+        button.setBackgroundColor(passed ? Color.GRAY : Color.rgb(105, 214, 241));
+    }
+
+    private void updateButtonStatus(Button button, int number, int next, boolean reverse) {
+        boolean passed = reverse ? number > next : number < next;
+		updateButtonStatus(button, passed);
 	}
 	
 	private void finishGame() {
+        AdUtils.loadAd(this);
 		String resultString = appState.finishDigitTest(size);
 		titleTimerTask.cancel(false);
 		

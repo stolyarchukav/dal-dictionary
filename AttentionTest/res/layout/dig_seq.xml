@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-	android:orientation="vertical" 
+	android:orientation="vertical"
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 	
 	<ScrollView	android:layout_width="fill_parent" android:layout_height="fill_parent">
@@ -14,8 +13,8 @@
 			<TextView android:layout_width="fill_parent" 
 				android:gravity="center"
 				android:layout_height="wrap_content" 
-				android:textSize="30sp" 
-				android:layout_margin="7px"
+				android:textSize="24sp"
+				android:layout_margin="6px"
 				android:text="@string/dig_seq_level"
 				android:textColor="@color/title" />
 				
@@ -23,50 +22,50 @@
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_var_font_size" 
-				android:textSize="20sp"
-				android:layout_margin="7px" />
+				android:textSize="16sp"
+				android:layout_margin="6px" />
 				
 			<CheckBox android:id="@+id/varFontColor"
 				android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_var_font_color" 
-				android:textSize="20sp"
-				android:layout_margin="10px" />
+				android:textSize="16sp"
+				android:layout_margin="8px" />
+
+            <CheckBox android:id="@+id/reverseOrder"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dig_seq_reverse_order"
+                android:textSize="16sp"
+                android:layout_margin="8px" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_3" 
-				android:textSize="20sp"
-				android:layout_margin="10px"
+				android:textSize="16sp"
+				android:layout_margin="8px"
 				android:id="@+id/digSeq3" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_4" 
-				android:textSize="20sp"
-				android:layout_margin="10px"
+				android:textSize="16sp"
+				android:layout_margin="8px"
 				android:id="@+id/digSeq4" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_5" 
-				android:textSize="20sp"
-				android:layout_margin="10px"
+				android:textSize="16sp"
+				android:layout_margin="8px"
 				android:id="@+id/digSeq5" />
 		
 			<Button android:layout_width="fill_parent" 
 				android:layout_height="wrap_content"
 				android:text="@string/dig_seq_size_6" 
-				android:textSize="20sp"
-				android:layout_margin="10px"
+				android:textSize="16sp"
+				android:layout_margin="8px"
 				android:id="@+id/digSeq6" />
-				
-			<com.google.ads.AdView android:id="@+id/adView"
-                android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				ads:adUnitId="@string/ad_mob_id"
-                ads:adSize="BANNER"
-              	ads:loadAdOnCreate="true"/>
 			
 		</LinearLayout>
 	

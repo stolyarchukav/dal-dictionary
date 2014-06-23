@@ -36,6 +36,7 @@ public class AlphabetActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.browse);
         setContentView(R.layout.alphabet);
         
         service = (DalDicService) getApplicationContext();
@@ -71,6 +72,7 @@ public class AlphabetActivity extends Activity {
                 	button.setLayoutParams(params);
                 	button.setTypeface(service.getFont(), Typeface.ITALIC);
                 	button.setTextSize(20);
+                    button.setTextColor(getResources().getColor(R.color.black));
                 	button.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {

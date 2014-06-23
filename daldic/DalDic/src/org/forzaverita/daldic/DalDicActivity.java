@@ -2,6 +2,7 @@ package org.forzaverita.daldic;
 
 import java.util.Date;
 
+import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.exception.DatabaseException;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
@@ -16,6 +17,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,6 +96,20 @@ public class DalDicActivity extends Activity {
 				}
 			}
 		});
+
+        Button hideAdsBtn = (Button) findViewById(R.id.hideAdsButton);
+        hideAdsBtn.setTypeface(font);
+        hideAdsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View paramView) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +
+                            getApplicationInfo().packageName + ".pay")));
+                } catch (ActivityNotFoundException e) {
+                    Log.w(Constants.LOG_TAG, "Can't open market app page with pay app");
+                }
+            }
+        });
         
         checkDatabase();
     }

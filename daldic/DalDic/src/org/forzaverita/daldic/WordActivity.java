@@ -89,6 +89,7 @@ public class WordActivity extends Activity {
 		if (descBuilder.length() > 0) {
 			description = descBuilder.toString();
 		}
+        description = description.replaceAll("[|]", "<p>");
 		return description;
 	}
 	

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
 	android:orientation="vertical" android:id="@+id/main_layout"
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 	
 	<TextView android:layout_width="fill_parent" 
 		android:gravity="center"
 		android:layout_height="wrap_content" 
-		android:textSize="30sp" 
+		android:textSize="30sp"
 		android:layout_margin="15px"
 		android:text="@string/main_title"
 		android:textColor="@color/title" />
@@ -32,13 +31,20 @@
 		android:text="@string/main_more_apps" 
 		android:textSize="15sp"
 		android:layout_margin="15px"
-		android:background="@null" />
-		
-	<com.google.ads.AdView android:id="@+id/adView"
-    	android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		ads:adUnitId="@string/ad_mob_id"
-        ads:adSize="BANNER"
-        ads:loadAdOnCreate="true"/>
+		android:background="@null"
+        android:textColor="@color/promo_link"
+        android:clickable="true"
+        android:onClick="onClickMoreApps" />
+
+    <Button android:id="@+id/rateAppButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_rate_app"
+        android:textSize="15sp"
+        android:layout_margin="15px"
+        android:background="@null"
+        android:textColor="@color/promo_link"
+        android:clickable="true"
+        android:onClick="onClickRateApp" />
         
 </LinearLayout>

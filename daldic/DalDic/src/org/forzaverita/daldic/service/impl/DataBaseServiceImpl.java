@@ -19,7 +19,7 @@ import android.util.Log;
 
 public class DataBaseServiceImpl implements DatabaseService {
 	
-	private static int DATA_VERSION = 8;
+	private static int DATA_VERSION = 9;
 	private static String WORD_ID = "word_id";
 	private static String WORD = "word";
 	private static String WORD_REF = "word_ref";
