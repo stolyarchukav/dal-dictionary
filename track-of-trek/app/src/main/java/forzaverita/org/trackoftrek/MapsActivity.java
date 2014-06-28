@@ -1,12 +1,20 @@
 package forzaverita.org.trackoftrek;
 
-import android.support.v4.app.FragmentActivity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import static forzaverita.org.trackoftrek.data.Constants.LOG_TAG;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -60,6 +68,44 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.setMyLocationEnabled(true);
+        mMap.addMarker(new MarkerOptions().position(new LatLng(41, 12)).title("Rome"));
+
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                makeUseOfNewLocation(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.d(LOG_TAG, "Location status changed: " + status);
+            }
+
+            public void onProviderEnabled(String provider) {
+                Log.d(LOG_TAG, "Location provider enabled: " + provider);
+            }
+
+            public void onProviderDisabled(String provider) {
+                Log.d(LOG_TAG, "Location provider disabled: " + provider);
+            }
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+        Log.d(LOG_TAG, "set up location manager: " + locationManager);
     }
+
+    private void makeUseOfNewLocation(Location location) {
+        Log.d(LOG_TAG, location.toString());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
+        mMap.addMarker(new MarkerOptions().position(
+                new LatLng(location.getLatitude(), location.getLongitude())).title("Current"));
+    }
+
 }
