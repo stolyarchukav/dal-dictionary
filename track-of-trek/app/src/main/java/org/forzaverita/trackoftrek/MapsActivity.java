@@ -1,4 +1,4 @@
-package forzaverita.org.trackoftrek;
+package org.forzaverita.trackoftrek;
 
 import android.content.Context;
 import android.location.Location;
@@ -14,17 +14,26 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static forzaverita.org.trackoftrek.data.Constants.LOG_TAG;
+import java.util.Date;
+
+import org.forzaverita.trackoftrek.data.Punto;
+import org.forzaverita.trackoftrek.service.AppService;
+
+import static org.forzaverita.trackoftrek.data.Constants.LOG_TAG;
 
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
+    private AppService service;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        service = (AppService) getApplicationContext();
         setUpMapIfNeeded();
+        service.storeLocation((new Punto(new Date(), 10.1, 506.7)));
     }
 
     @Override
@@ -78,7 +87,8 @@ public class MapsActivity extends FragmentActivity {
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
-                makeUseOfNewLocation(location);
+                useLocation(location);
+                storeLocation(location);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -101,7 +111,11 @@ public class MapsActivity extends FragmentActivity {
         Log.d(LOG_TAG, "set up location manager: " + locationManager);
     }
 
-    private void makeUseOfNewLocation(Location location) {
+    private void storeLocation(Location location) {
+        service.storeLocation(new Punto(new Date(), location.getLatitude(), location.getLongitude()));
+    }
+
+    private void useLocation(Location location) {
         Log.d(LOG_TAG, location.toString());
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
         mMap.addMarker(new MarkerOptions().position(

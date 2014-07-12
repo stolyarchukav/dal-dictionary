@@ -1,4 +1,4 @@
-package forzaverita.org.trackoftrek;
+package org.forzaverita.trackoftrek;
 
 import android.app.Activity;
 import android.content.Intent;
