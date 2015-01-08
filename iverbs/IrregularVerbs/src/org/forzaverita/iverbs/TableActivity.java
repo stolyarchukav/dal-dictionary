@@ -208,9 +208,6 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
         
         @Override
         protected void onPostExecute(List<Verb> verbs) {
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-            }
             TableActivity activity = activityReference.get();
             if (activity != null) {
                 float fontSize = activity.service.getFontSize();
@@ -244,6 +241,9 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
                     }
                     layout.addView(row);
                 }
+            }
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
             }
         }
 
