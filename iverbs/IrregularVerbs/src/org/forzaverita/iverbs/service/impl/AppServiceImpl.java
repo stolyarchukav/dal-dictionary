@@ -3,6 +3,7 @@ package org.forzaverita.iverbs.service.impl;
 import android.app.Application;
 import android.database.Cursor;
 
+import org.forzaverita.iverbs.analytics.TrackerUtils;
 import org.forzaverita.iverbs.data.Lang;
 import org.forzaverita.iverbs.data.StatItem;
 import org.forzaverita.iverbs.data.Verb;
@@ -47,6 +48,8 @@ public class AppServiceImpl extends Application implements AppService {
 				verbsInTraining.add(verbId);
 			}			
 		}
+
+        TrackerUtils.track(this.getApplicationContext());
 		super.onCreate();
 	}
 	

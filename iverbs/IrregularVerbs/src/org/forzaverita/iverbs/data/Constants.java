@@ -13,4 +13,6 @@ public class Constants {
 
     public static final String AD_UNIT_ID = "ca-app-pub-6144343637262129/5645461017";
 
+    public static final String ANALYTICS_ID = "UA-50552093-3";
+
 }
