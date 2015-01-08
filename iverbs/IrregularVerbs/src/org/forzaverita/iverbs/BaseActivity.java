@@ -51,7 +51,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnInitLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		service = (AppService) getApplicationContext();
-		tts = new TextToSpeech(this, this);
+		tts = new TextToSpeech(this.getApplicationContext(), this);
 		tts.setSpeechRate(service.getSpeechRate());
 		tts.setPitch(service.getPitch());
         tts.setLanguage(Locale.US);
