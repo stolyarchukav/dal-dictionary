@@ -1,19 +1,19 @@
 
 package org.forzaverita.iverbs.service;
 
-import java.util.Date;
-import java.util.List;
+import android.database.Cursor;
 
 import org.forzaverita.iverbs.data.Lang;
 import org.forzaverita.iverbs.data.StatItem;
-import org.forzaverita.iverbs.train.TrainMode;
 import org.forzaverita.iverbs.data.Verb;
+import org.forzaverita.iverbs.train.TrainMode;
 
-import android.database.Cursor;
+import java.util.Date;
+import java.util.List;
 
 public interface AppService {
 
-	List<Verb> getVerbs(boolean withTranscription);
+	List<Verb> getVerbs();
 
     List<Integer> getVerbIds();
 

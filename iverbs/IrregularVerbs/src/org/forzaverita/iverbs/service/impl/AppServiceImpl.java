@@ -35,6 +35,8 @@ public class AppServiceImpl extends Application implements AppService {
 	private Date preferenceChangeDate;
 	
 	private List<Integer> verbsInTraining = new ArrayList<Integer>();
+
+    private List<Verb> verbs;
 	
 	@Override
 	public void onCreate() {
@@ -48,14 +50,16 @@ public class AppServiceImpl extends Application implements AppService {
 				verbsInTraining.add(verbId);
 			}			
 		}
-
         TrackerUtils.track(this.getApplicationContext());
 		super.onCreate();
 	}
 	
 	@Override
-	public List<Verb> getVerbs(boolean withTranscription) {
-		return database.getVerbs(withTranscription);
+	public List<Verb> getVerbs() {
+        if (verbs == null) {
+            verbs = database.getVerbs();
+        }
+		return verbs;
 	}
 
     @Override
@@ -169,7 +173,7 @@ public class AppServiceImpl extends Application implements AppService {
 	@Override
 	public List<StatItem> getStats() {
 		List<StatItem> stats = new ArrayList<StatItem>();
-		for (Verb verb : getVerbs(false)) {
+		for (Verb verb : getVerbs()) {
 			stats.add(preferences.getStat(verb));			
 		}
 		return stats;

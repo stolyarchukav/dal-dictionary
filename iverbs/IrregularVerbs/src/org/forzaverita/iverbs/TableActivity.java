@@ -29,6 +29,8 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
 
     private static boolean transcriptionVisible;
 
+    private LoadTableTask task;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,14 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
 
         configureOrdering();
         orderingForm1.setOrder(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (task != null) {
+            task.dialog.cancel();
+        }
+        super.onDestroy();
     }
 
     private void configureOrdering() {
@@ -159,7 +169,8 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
 
     @Override
     public void loadTable(final Runnable... preLoadTasks) {
-        new LoadTableTask(this, preLoadTasks).execute();
+        task = new LoadTableTask(this, preLoadTasks);
+        task.execute();
     }
 
     private static class LoadTableTask extends AsyncTask<Void, Void, List<Verb>> {
@@ -190,14 +201,14 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
             }
             TableActivity activity = activityReference.get();
             if (activity != null) {
-                return activity.service.getVerbs(transcriptionVisible);
+                return activity.service.getVerbs();
             }
             return Collections.emptyList();
         }
         
         @Override
         protected void onPostExecute(List<Verb> verbs) {
-            if (dialog.isShowing()) {
+            if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
             TableActivity activity = activityReference.get();
