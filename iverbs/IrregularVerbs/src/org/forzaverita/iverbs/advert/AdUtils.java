@@ -7,16 +7,18 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import static org.forzaverita.iverbs.data.Constants.AD_UNIT_ID;
 import static org.forzaverita.iverbs.data.Constants.LOG_TAG;
 
 public class AdUtils {
 
     private static final long AD_SHOW_INTERVAL_MS = 1000 * 60 * 30;
-    private static long lastShow = 0;
+    private static AtomicLong lastShow = new AtomicLong();
 
     public static void loadAd(Activity activity) {
-        if (System.currentTimeMillis() - lastShow > AD_SHOW_INTERVAL_MS) {
+        if (System.currentTimeMillis() - lastShow.get() > AD_SHOW_INTERVAL_MS) {
             final InterstitialAd interstitialAd = new InterstitialAd(activity);
             interstitialAd.setAdUnitId(AD_UNIT_ID);
 
@@ -39,7 +41,7 @@ public class AdUtils {
                     .build();
 
             interstitialAd.loadAd(adRequest);
-            lastShow = System.currentTimeMillis();
+            lastShow.set(System.currentTimeMillis());
         }
     }
 

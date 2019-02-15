@@ -25,7 +25,7 @@ import static java.util.Arrays.asList;
 
 public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 
-	private static int DATA_VERSION = 4;
+	private static int DATA_VERSION = 5;
 	
 	private static String DB_NAME = "iverbs.sqlite";
 	private static String DB_PATH = "/data/data/org.forzaverita.iverbs/databases/" + DB_NAME;
@@ -147,20 +147,18 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
     }
 
     @Override
-    public List<Verb> getVerbs(boolean withTranscription) {
+    public List<Verb> getVerbs() {
         List<String> columns = new ArrayList<String>(asList(ID, FORM_1, FORM_2, FORM_3, getLang()));
-        if (withTranscription) {
-            columns.addAll(asList(FORM_1_TRANSCRIPTION, FORM_2_TRANSCRIPTION, FORM_3_TRANSCRIPTION));
-        }
+        columns.addAll(asList(FORM_1_TRANSCRIPTION, FORM_2_TRANSCRIPTION, FORM_3_TRANSCRIPTION));
         Cursor cursor = database.query(VERB, columns.toArray(new String[0]), null, null, null, null, null);
-        return extractVerbs(cursor, withTranscription);
+        return extractVerbs(cursor);
     }
 
     private String getLang() {
 		return ((AppService) context).getLanguage().name();
 	}
 
-	private List<Verb> extractVerbs(Cursor cursor, boolean withTranscription) {
+	private List<Verb> extractVerbs(Cursor cursor) {
 		List<Verb> verbs = new ArrayList<Verb>();
 		if (cursor.moveToFirst()) {
             do {
@@ -170,11 +168,9 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
             	verb.setForm2(cursor.getString(2));
             	verb.setForm3(cursor.getString(3));
             	verb.setTranslation(cursor.getString(4));
-                if (withTranscription) {
-                    verb.setForm1Transcription(cursor.getString(5));
-                    verb.setForm2Transcription(cursor.getString(6));
-                    verb.setForm3Transcription(cursor.getString(7));
-                }
+                verb.setForm1Transcription(cursor.getString(5));
+                verb.setForm2Transcription(cursor.getString(6));
+                verb.setForm3Transcription(cursor.getString(7));
             	verbs.add(verb);
             } while (cursor.moveToNext());
         }
@@ -239,7 +235,7 @@ public class SqliteDatabase extends SQLiteOpenHelper implements Database {
 				restrictionLike(FORM_3, query) + " or " +
 				restrictionLike(lang, query), 
 				null, null, null, null);
-		return extractVerbs(cursor, false);
+		return extractVerbs(cursor);
 	}
 	
 	private String restrictionLike(String field, String query) {

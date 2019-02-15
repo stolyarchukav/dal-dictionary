@@ -11,6 +11,8 @@ public class Constants {
 
 	public static final int FONT_SIZE_DEFAULT = 14;
 
-    public static final String AD_UNIT_ID = "a1526599e1c1c36";
+    public static final String AD_UNIT_ID = "ca-app-pub-6144343637262129/5645461017";
+
+    public static final String ANALYTICS_ID = "UA-50552093-3";
 
 }

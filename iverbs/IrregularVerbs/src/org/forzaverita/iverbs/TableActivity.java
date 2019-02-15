@@ -13,6 +13,7 @@ import org.forzaverita.iverbs.data.Verb;
 import org.forzaverita.iverbs.table.OrderingHandler;
 import org.forzaverita.iverbs.table.SortableTable;
 
+import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,6 +29,8 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
 
     private static boolean transcriptionVisible;
 
+    private LoadTableTask task;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,14 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
 
         configureOrdering();
         orderingForm1.setOrder(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (task != null) {
+            task.dialog.cancel();
+        }
+        super.onDestroy();
     }
 
     private void configureOrdering() {
@@ -158,52 +169,71 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
 
     @Override
     public void loadTable(final Runnable... preLoadTasks) {
-        new AsyncTask<Void, Void, List<Verb>>() {
+        task = new LoadTableTask(this, preLoadTasks);
+        task.execute();
+    }
 
-            private ProgressDialog dialog;
+    private static class LoadTableTask extends AsyncTask<Void, Void, List<Verb>> {
 
-            @Override
-            protected void onPreExecute() {
-                dialog = ProgressDialog.show(TableActivity.this,
-                        getString(R.string.progress_title), getString(R.string.progress_text));
+        private final WeakReference<TableActivity> activityReference;
+        private final Runnable[] preLoadTasks;
+
+        private ProgressDialog dialog;
+
+        public LoadTableTask(TableActivity activity, final Runnable... preLoadTasks) {
+            this.activityReference = new WeakReference<TableActivity>(activity);
+            this.preLoadTasks = preLoadTasks;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            TableActivity activity = activityReference.get();
+            if (activity != null) {
+                dialog = ProgressDialog.show(activity,
+                        activity.getString(R.string.progress_title), activity.getString(R.string.progress_text));
             }
+        }
 
-            @Override
-            protected List<Verb> doInBackground(Void... params) {
-                for (Runnable preLoadTask : preLoadTasks) {
-                    preLoadTask.run();
-                }
-                List<Verb> verbs = service.getVerbs(transcriptionVisible);
-                return verbs;
+        @Override
+        protected List<Verb> doInBackground(Void... params) {
+            for (Runnable preLoadTask : preLoadTasks) {
+                preLoadTask.run();
             }
-
-            @Override
-            protected void onPostExecute(List<Verb> verbs) {
-                dialog.dismiss();
-                float fontSize = service.getFontSize();
-                TableLayout layout = (TableLayout) findViewById(R.id.table_table);
+            TableActivity activity = activityReference.get();
+            if (activity != null) {
+                return activity.service.getVerbs();
+            }
+            return Collections.emptyList();
+        }
+        
+        @Override
+        protected void onPostExecute(List<Verb> verbs) {
+            TableActivity activity = activityReference.get();
+            if (activity != null) {
+                float fontSize = activity.service.getFontSize();
+                TableLayout layout = (TableLayout) activity.findViewById(R.id.table_table);
                 layout.removeAllViews();
-                Collections.sort(verbs, comparator);
+                Collections.sort(verbs, activity.comparator);
                 boolean odd = false;
                 for (Verb verb : verbs) {
-                    TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
+                    TableRow row = (TableRow) activity.getLayoutInflater().inflate(R.layout.table_row, null);
                     TextView form1 = (TextView) row.findViewById(R.id.table_form_1);
                     form1.setText(separateLines(verb.getForm1(), verb.getForm1Transcription()));
                     form1.setTextSize(fontSize);
-                    configureClickListener(form1, verb.getForm1());
+                    activity.configureClickListener(form1, verb.getForm1());
                     TextView form2 = (TextView) row.findViewById(R.id.table_form_2);
                     form2.setText(separateLines(verb.getForm2(), verb.getForm2Transcription()));
                     form2.setTextSize(fontSize);
-                    configureClickListener(form2, verb.getForm2());
+                    activity.configureClickListener(form2, verb.getForm2());
                     TextView form3 = (TextView) row.findViewById(R.id.table_form_3);
                     form3.setText(separateLines(verb.getForm3(), verb.getForm3Transcription()));
                     form3.setTextSize(fontSize);
-                    configureClickListener(form3, verb.getForm3());
+                    activity.configureClickListener(form3, verb.getForm3());
                     TextView translation = (TextView) row.findViewById(R.id.table_translation);
                     translation.setText(verb.getTranslation());
                     translation.setTextSize(fontSize);
                     if (odd ^= true) {
-                        int color = getResources().getColor(R.color.cell_background_odd);
+                        int color = activity.getResources().getColor(R.color.cell_background_odd);
                         form1.setBackgroundColor(color);
                         form2.setBackgroundColor(color);
                         form3.setBackgroundColor(color);
@@ -212,16 +242,19 @@ public class TableActivity extends BaseActivity implements SortableTable<Verb> {
                     layout.addView(row);
                 }
             }
-
-            private String separateLines(String verb, String transcription) {
-                if (transcriptionVisible) {
-                    return verb + System.getProperty("line.separator") + transcription;
-                } else {
-                    return verb;
-                }
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
             }
+        }
 
-        }.execute();
+    private String separateLines(String verb, String transcription) {
+        if (transcriptionVisible) {
+            return verb + System.getProperty("line.separator") + transcription;
+        } else {
+            return verb;
+        }
     }
+
+}
 
 }

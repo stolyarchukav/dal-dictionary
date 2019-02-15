@@ -1,10 +1,10 @@
 package org.forzaverita.iverbs.database;
 
-import java.util.List;
+import android.database.Cursor;
 
 import org.forzaverita.iverbs.data.Verb;
 
-import android.database.Cursor;
+import java.util.List;
 
 public interface Database {
 
@@ -12,7 +12,7 @@ public interface Database {
 
     List<Integer> getVerbIds();
 
-    List<Verb> getVerbs(boolean withTranscription);
+    List<Verb> getVerbs();
 
 	Verb getVerb(int id);
 
