@@ -52,5 +52,5 @@
     <string name="bookmarks_empty">Bookmarks list is empty</string>
     <string name="word_previous">Previous</string>
     <string name="word_next">Next</string>
-    <string name="main_hide_ads"><u>Hide ads</u></string>
+    <string name="menu_main_page">Main page</string>
 </resources>
