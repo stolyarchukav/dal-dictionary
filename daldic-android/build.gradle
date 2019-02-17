@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.1'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+repositories {
+    google()
+    jcenter()
+}
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        applicationId "org.forzaverita.daldic"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 13
+        versionName "1.13"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}

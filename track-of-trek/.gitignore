@@ -1,7 +1,0 @@
-/gen
-.project
-.idea
-*.iml
-/build
-/.gradle
-gradlew*

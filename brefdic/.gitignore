@@ -1,8 +1,0 @@
-.project
-.settings
-.gradle
-gradle
-.idea
-gradlew*
-*.iml
-build

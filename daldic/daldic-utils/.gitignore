@@ -1,7 +1,0 @@
-*.iml
-.gradle
-.idea
-build
-bin
-huge_data
-out
