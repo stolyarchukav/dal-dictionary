@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -69,6 +70,7 @@ public class DalDicActivity extends Activity {
         
         Button rateBtn = findViewById(R.id.rate_app);
         rateBtn.setTypeface(font);
+        rateBtn.setPaintFlags(rateBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         rateBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
@@ -83,6 +85,7 @@ public class DalDicActivity extends Activity {
         
         Button moreAppsBtn = findViewById(R.id.moreAppsButton);
         moreAppsBtn.setTypeface(font);
+        moreAppsBtn.setPaintFlags(moreAppsBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         moreAppsBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
