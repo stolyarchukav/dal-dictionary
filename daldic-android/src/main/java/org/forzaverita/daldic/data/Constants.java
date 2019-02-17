@@ -10,8 +10,6 @@ public class Constants {
 	
 	public static int WORDS_COUNT = 45037;
 	
-	public static final String AD_UNIT_ID = "a14f11ed24b1489";
-	
 	public static final int PREF_REFRESH_INTERVAL = 15;
 	public static final boolean PREF_REFRESH_AUTO = true;
 	public static final boolean PREF_TEXT_CAPITAL_LETTERS = false;

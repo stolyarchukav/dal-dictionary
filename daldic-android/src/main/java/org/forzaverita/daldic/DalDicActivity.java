@@ -1,12 +1,5 @@
 package org.forzaverita.daldic;
 
-import java.util.Date;
-
-import org.forzaverita.daldic.data.Constants;
-import org.forzaverita.daldic.exception.DatabaseException;
-import org.forzaverita.daldic.menu.MenuUtils;
-import org.forzaverita.daldic.service.DalDicService;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -17,12 +10,17 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.forzaverita.daldic.exception.DatabaseException;
+import org.forzaverita.daldic.menu.MenuUtils;
+import org.forzaverita.daldic.service.DalDicService;
+
+import java.util.Date;
 
 public class DalDicActivity extends Activity {
 	
@@ -46,12 +44,12 @@ public class DalDicActivity extends Activity {
         
         Typeface font = ((DalDicService) getApplicationContext()).getFont();
         
-        TextView title = (TextView) findViewById(R.id.title);
+        TextView title = findViewById(R.id.title);
         title.setTypeface(font);
-        TextView author = (TextView) findViewById(R.id.author);
+        TextView author = findViewById(R.id.author);
         author.setTypeface(font);
         
-        Button browseBtn = (Button) findViewById(R.id.browse);
+        Button browseBtn = findViewById(R.id.browse);
         browseBtn.setTypeface(font);
         browseBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -60,7 +58,7 @@ public class DalDicActivity extends Activity {
 			}
 		});
         
-        Button searchBtn = (Button) findViewById(R.id.search);
+        Button searchBtn = findViewById(R.id.search);
         searchBtn.setTypeface(font);
         searchBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -69,7 +67,7 @@ public class DalDicActivity extends Activity {
 			}
 		});
         
-        Button rateBtn = (Button) findViewById(R.id.rate_app);
+        Button rateBtn = findViewById(R.id.rate_app);
         rateBtn.setTypeface(font);
         rateBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -83,7 +81,7 @@ public class DalDicActivity extends Activity {
 			}
 		});
         
-        Button moreAppsBtn = (Button) findViewById(R.id.moreAppsButton);
+        Button moreAppsBtn = findViewById(R.id.moreAppsButton);
         moreAppsBtn.setTypeface(font);
         moreAppsBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -96,20 +94,6 @@ public class DalDicActivity extends Activity {
 				}
 			}
 		});
-
-        Button hideAdsBtn = (Button) findViewById(R.id.hideAdsButton);
-        hideAdsBtn.setTypeface(font);
-        hideAdsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View paramView) {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" +
-                            getApplicationInfo().packageName + ".pay")));
-                } catch (ActivityNotFoundException e) {
-                    Log.w(Constants.LOG_TAG, "Can't open market app page with pay app");
-                }
-            }
-        });
         
         checkDatabase();
     }
