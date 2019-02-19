@@ -53,11 +53,11 @@ public class AlphabetActivity extends Activity {
 				}
 				
 				int width = MeasureSpec.getSize(widthMeasureSpec);
-				int colums = width / 100;
+				int columns = width / 180;
 			    TableRow row = null;
 			    int w = 0;
 			    for (char q = 'А'; q <= 'Я'; q++) {
-                	if (w++ % colums == 0) {
+                	if (w++ % columns == 0) {
                 		row = new TableRow(AlphabetActivity.this);
                         addView(row);
                 	}
@@ -65,9 +65,9 @@ public class AlphabetActivity extends Activity {
                 	button.setBackgroundResource(R.drawable.selector_dashboard_button);
                 	button.setText("" + q);
                 	button.setTag(q);
-                	button.setWidth(width / colums - MARGIN * 2); 
+                	button.setWidth(width / columns - MARGIN * 2);
                 	TableRow.LayoutParams params = new TableRow.LayoutParams(
-                			LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+                			LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
                 	button.setLayoutParams(params);
                 	button.setTypeface(service.getFont(), Typeface.ITALIC);
