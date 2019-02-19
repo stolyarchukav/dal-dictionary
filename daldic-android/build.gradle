@@ -22,8 +22,8 @@ android {
         applicationId "org.forzaverita.daldic"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 13
-        versionName "1.13"
+        versionCode 14
+        versionName "1.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
