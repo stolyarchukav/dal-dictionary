@@ -103,7 +103,7 @@ public class DalDicActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return MenuUtils.createOptionsMenu(menu, this);
+		return MenuUtils.createOptionsMenuNoBar(menu, this);
 	}
 	
 	@Override
