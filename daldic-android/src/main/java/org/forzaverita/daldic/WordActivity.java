@@ -151,7 +151,8 @@ public class WordActivity extends Activity {
 	}
 	
 	private void configureBookmark(final boolean bookmarked, Button button) {
-		button.setBackgroundResource(bookmarked ? R.drawable.bookmark_on : R.drawable.bookmark_off);
+		int drawable = bookmarked ? R.drawable.bookmark_on : R.drawable.bookmark_off;
+		button.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
 	}
 	
 	private void configureWordView(String description) {

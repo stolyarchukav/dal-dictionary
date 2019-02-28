@@ -15,28 +15,30 @@
     	<Button android:id="@+id/word_previous"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:layout_weight="0.4"
-        	android:layout_gravity="left"
+			android:layout_weight="0.4"
+        	android:layout_gravity="start"
 		    android:background="@drawable/selector_word_button"
-        	android:drawableLeft="@drawable/left_arrow_64"
+        	android:drawableStart="@drawable/left_arrow_64"
 		    android:textSize="14sp"
         	android:textColor="#000000"
 		    android:drawablePadding="-10sp"
         	android:text="@string/word_previous" />
-        			
-    	<Button android:id="@+id/bookmark"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_gravity="center"
-		    android:background="@drawable/bookmark_on" />
+
+		<Button
+			android:id="@+id/bookmark"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:background="@android:color/transparent"
+			android:drawableTop="@drawable/bookmark_on" />
     	
     	<Button android:id="@+id/word_next"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:layout_weight="0.4"
-			android:layout_gravity="right"
+			android:layout_weight="0.4"
+        	android:layout_gravity="end"
 			android:background="@drawable/selector_word_button"
-        	android:drawableRight="@drawable/right_arrow_64"
+        	android:drawableEnd="@drawable/right_arrow_64"
         	android:textSize="14sp"
         	android:textColor="#000000"
 			android:drawablePadding="-10sp"
