@@ -41,13 +41,13 @@ public class PreferencesServiceImpl implements PreferencesService {
 	}
 	
 	@Override
-	public boolean isInteranalStorage() {
+	public boolean isInternalStorage() {
 		return preferences.getBoolean(INTERNAL_STORAGE, false);
 	}
 	
 	@Override
-	public void switchPreferencedStorage() {
-		preferences.edit().putBoolean(INTERNAL_STORAGE, ! isInteranalStorage()).apply();
+	public void switchPreferredStorage() {
+		preferences.edit().putBoolean(INTERNAL_STORAGE, ! isInternalStorage()).apply();
 	}
 	
 	@Override

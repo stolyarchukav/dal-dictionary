@@ -7,9 +7,9 @@ import org.forzaverita.daldic.preferences.TextFont;
 
 public interface PreferencesService {
 
-	boolean isInteranalStorage();
+	boolean isInternalStorage();
 
-	void switchPreferencedStorage();
+	void switchPreferredStorage();
 
 	String getDatabasePath();
 	

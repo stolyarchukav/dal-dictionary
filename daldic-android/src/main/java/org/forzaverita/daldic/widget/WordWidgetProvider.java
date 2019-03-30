@@ -106,7 +106,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		@Override
 		public void previous() {
 			showLoading();
-			String word = service.getPreviuosWord();
+			String word = service.getPreviousWord();
 			refreshWord(word);
 		}
 		

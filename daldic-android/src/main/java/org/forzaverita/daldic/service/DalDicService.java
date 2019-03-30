@@ -25,7 +25,7 @@ public interface DalDicService {
 
 	String getNextWord();
 
-	String getPreviuosWord();
+	String getPreviousWord();
 	
 	Word getCurrentWord();
 	

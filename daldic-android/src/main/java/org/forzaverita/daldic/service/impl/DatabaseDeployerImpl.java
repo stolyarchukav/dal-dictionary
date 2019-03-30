@@ -49,7 +49,7 @@ public class DatabaseDeployerImpl implements DatabaseDeployer {
 			try {
 				file = getDatabaseFile(false);
 				copyDataBase(file);
-				preferencesService.switchPreferencedStorage();
+				preferencesService.switchPreferredStorage();
 			}
 			catch (Exception e2) {
 				throw new DatabaseException(context.getString(R.string.error_db_install));
@@ -83,7 +83,7 @@ public class DatabaseDeployerImpl implements DatabaseDeployer {
     }
     
     private File getDatabaseFile(boolean preference) throws Exception {
-    	boolean internal = preferencesService.isInteranalStorage();
+    	boolean internal = preferencesService.isInternalStorage();
     	if (internal == preference) {
     		return openInternalFile();
     	}

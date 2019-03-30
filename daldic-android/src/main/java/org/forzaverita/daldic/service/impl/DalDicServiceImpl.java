@@ -127,8 +127,8 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	}
 	
 	@Override
-	public String getPreviuosWord() {
-		Word word = wordsCache.previuos();
+	public String getPreviousWord() {
+		Word word = wordsCache.previous();
 		if (word == null) {
 			word = generateRandomWord();
 			wordsCache.addToBegin(word);

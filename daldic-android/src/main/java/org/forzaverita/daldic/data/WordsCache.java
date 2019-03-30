@@ -20,7 +20,7 @@ public class WordsCache {
 		return word;
 	}
 	
-	public Word previuos() {
+	public Word previous() {
 		Word word = cache[getPreviousIndex()];
 		if (word != null) {
 			index = getPreviousIndex();
