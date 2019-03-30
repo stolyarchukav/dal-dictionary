@@ -66,5 +66,6 @@ public interface PreferencesService {
 	void clearEventOpenWordWidget();
 
 	void clearEventBookmark();
-	
+
+	void clearHistory();
 }

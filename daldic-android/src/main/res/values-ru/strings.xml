@@ -53,4 +53,5 @@
     <string name="word_previous">Предыдущее</string>
     <string name="word_next">Следующее</string>
     <string name="menu_main_page">Главная страница</string>
+    <string name="clear_list">Удалить всё</string>
 </resources>

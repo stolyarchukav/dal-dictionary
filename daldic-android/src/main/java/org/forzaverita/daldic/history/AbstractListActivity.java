@@ -57,10 +57,10 @@ public abstract class AbstractListActivity extends ListActivity {
     	@Override
     	protected void onPostExecute(Map<Integer, String> words) {
     		dialog.dismiss();
-    		TextView textView = (TextView) parent.findViewById(R.id.word_not_found);
+    		TextView textView = parent.findViewById(R.id.word_not_found);
     		if (words != null && ! words.isEmpty()) {
-    			ArrayList<Entry<Integer, String>> wordList = new ArrayList<Entry<Integer, String>>(
-    					words.entrySet());
+    			ArrayList<Entry<Integer, String>> wordList = new ArrayList<>(
+						words.entrySet());
     			Collections.reverse(wordList);
     			setListAdapter(new ArrayAdapter<Entry<Integer, String>>(AbstractListActivity.this, R.layout.wordlist_item, wordList) {
                 	@Override
@@ -73,7 +73,7 @@ public abstract class AbstractListActivity extends ListActivity {
                         	row = convertView;
                         }
                         
-                        TextView tv = (TextView) row.findViewById(android.R.id.text1);
+                        TextView tv = row.findViewById(android.R.id.text1);
                         tv.setText(Html.fromHtml(getItem(position).getValue()));
                         tv.setTypeface(service.getFont());
                         tv.setTextColor(Color.BLACK);
@@ -120,8 +120,8 @@ public abstract class AbstractListActivity extends ListActivity {
 		setContentView(R.layout.wordlist);
 		service = (DalDicService) getApplicationContext();
 	
-		inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        parent = (LinearLayout) findViewById(R.id.wordlist);
+		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        parent = findViewById(R.id.wordlist);
         
         new SearchTask().execute();
 	}

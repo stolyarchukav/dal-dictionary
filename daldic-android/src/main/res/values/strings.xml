@@ -53,4 +53,5 @@
     <string name="word_previous">Previous</string>
     <string name="word_next">Next</string>
     <string name="menu_main_page">Main page</string>
+    <string name="clear_list">Clear all</string>
 </resources>

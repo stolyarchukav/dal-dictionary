@@ -1,6 +1,9 @@
 package org.forzaverita.daldic.history;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import java.util.Map;
 
@@ -12,6 +15,14 @@ public class HistoryActivity extends AbstractListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.history);
+		Button clearAll = findViewById(R.id.clear_all);
+		clearAll.setVisibility(View.VISIBLE);
+		clearAll.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				getService().clearHistory();
+			}
+		});
     }
 
 	@Override

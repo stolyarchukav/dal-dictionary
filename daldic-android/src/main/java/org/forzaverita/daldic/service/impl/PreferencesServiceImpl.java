@@ -257,5 +257,10 @@ public class PreferencesServiceImpl implements PreferencesService {
 	public void clearEventBookmark() {
 		preferences.edit().remove(STAT_BOOKMARK_KEY).commit();
 	}
-	
+
+	@Override
+	public void clearHistory() {
+		preferences.edit().remove(HISTORY_KEY).apply();
+	}
+
 }

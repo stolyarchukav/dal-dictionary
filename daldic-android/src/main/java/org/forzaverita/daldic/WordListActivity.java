@@ -68,7 +68,7 @@ public class WordListActivity extends ListActivity {
             	String idStr = intent.getData().getLastPathSegment();
             	if (idStr != null) {
             		Integer id = Integer.parseInt(idStr);
-            		words = new HashMap<Integer, String>();
+            		words = new HashMap<>();
             		words.put(id, intent.getExtras().getString(SearchManager.EXTRA_DATA_KEY));
             		startWordActivity(id);
             	}
@@ -93,7 +93,7 @@ public class WordListActivity extends ListActivity {
     	@Override
     	protected void onPostExecute(Map<Integer, String> words) {
     		dialog.dismiss();
-    		TextView textView = (TextView) parent.findViewById(R.id.word_not_found);
+    		TextView textView = parent.findViewById(R.id.word_not_found);
     		if (words != null && ! words.isEmpty()) {
     			ArrayList<Entry<Integer, String>> wordList = new ArrayList<Entry<Integer, String>>(
     					words.entrySet());
@@ -142,7 +142,7 @@ public class WordListActivity extends ListActivity {
     	}
 
 		private void configureSearchFullButton() {
-			Button searchFull = (Button) parent.findViewById(R.id.search_full);
+			Button searchFull = parent.findViewById(R.id.search_full);
 			if (searchType == SearchType.BEGIN && queryString.length() > 2) {
 				searchFull.setTypeface(service.getFont());
 	    		searchFull.setVisibility(View.VISIBLE);
@@ -177,7 +177,7 @@ public class WordListActivity extends ListActivity {
         service = (DalDicService) getApplicationContext();
         
         inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        parent = (LinearLayout) findViewById(R.id.wordlist);
+        parent = findViewById(R.id.wordlist);
         
         new SearchTask().execute();
     }

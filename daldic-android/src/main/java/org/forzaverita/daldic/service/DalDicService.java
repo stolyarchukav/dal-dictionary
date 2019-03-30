@@ -45,6 +45,8 @@ public interface DalDicService {
 
 	Map<Integer, String> getHistory();
 
+	void clearHistory();
+
 	void addToHistory(Integer id, String word);
 
 	String getWordById(Integer wordId);

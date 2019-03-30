@@ -189,7 +189,12 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	public Map<Integer, String> getHistory() {
 		return preferencesService.getHistory();
 	}
-	
+
+	@Override
+	public void clearHistory() {
+		preferencesService.clearHistory();
+	}
+
 	@Override
 	public void addToHistory(Integer id, String word) {
 		preferencesService.addToHistory(id, word);
