@@ -1,18 +1,25 @@
 package org.forzaverita.daldic.service.impl;
 
-import static org.forzaverita.daldic.data.Constants.*;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.forzaverita.daldic.preferences.TextAlignment;
 import org.forzaverita.daldic.preferences.TextFont;
 import org.forzaverita.daldic.service.PreferencesService;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_ALIGN;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_CAPITAL_LETTERS;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_FONT;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_AUTO;
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_INTERVAL;
+import static org.forzaverita.daldic.data.Constants.PREF_REFRESH_AUTO;
+import static org.forzaverita.daldic.data.Constants.PREF_REFRESH_INTERVAL;
+import static org.forzaverita.daldic.data.Constants.PREF_TEXT_CAPITAL_LETTERS;
 
 public class PreferencesServiceImpl implements PreferencesService {
 
@@ -261,6 +268,11 @@ public class PreferencesServiceImpl implements PreferencesService {
 	@Override
 	public void clearHistory() {
 		preferences.edit().remove(HISTORY_KEY).apply();
+	}
+
+	@Override
+	public void clearBookmarks() {
+		preferences.edit().remove(BOOKMARK_KEY).apply();
 	}
 
 }

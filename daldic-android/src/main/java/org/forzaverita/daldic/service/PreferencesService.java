@@ -68,4 +68,7 @@ public interface PreferencesService {
 	void clearEventBookmark();
 
 	void clearHistory();
+
+	void clearBookmarks();
+
 }

@@ -1,8 +1,10 @@
 package org.forzaverita.daldic.history;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -62,6 +64,7 @@ public abstract class AbstractListActivity extends ListActivity {
     			ArrayList<Entry<Integer, String>> wordList = new ArrayList<>(
 						words.entrySet());
     			Collections.reverse(wordList);
+    			configureClearButton(wordList.size());
     			setListAdapter(new ArrayAdapter<Entry<Integer, String>>(AbstractListActivity.this, R.layout.wordlist_item, wordList) {
                 	@Override
                 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -142,8 +145,38 @@ public abstract class AbstractListActivity extends ListActivity {
 		startActivity(intent);
 	}
 
+	private void configureClearButton(int size) {
+		if (size > 0) {
+			Button clearAll = findViewById(R.id.clear_all);
+			clearAll.setVisibility(View.VISIBLE);
+			clearAll.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					showClearConfirmation();
+				}
+			});
+		}
+	}
+
+	private void showClearConfirmation() {
+		new AlertDialog.Builder(this)
+				.setMessage(R.string.are_you_sure)
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						doClear();
+						finish();
+						startActivity(getIntent());
+					}
+				})
+				.setNegativeButton(R.string.no, null)
+				.show();
+	}
+
 	protected abstract Map<Integer, String> getResultList();
-	
+
+	protected abstract void doClear();
+
 	protected abstract String getEmptyText();
 	
 	protected final DalDicService getService() {

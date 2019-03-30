@@ -249,5 +249,10 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 		bookmarksChanged = false;
 		return result;
 	}
-	
+
+	@Override
+	public void clearBookmarks() {
+		preferencesService.clearBookmarks();
+	}
+
 }

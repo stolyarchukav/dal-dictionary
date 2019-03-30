@@ -26,7 +26,12 @@ public class BookmarksActivity extends AbstractListActivity {
 	protected Map<Integer, String> getResultList() {
 		return getService().getBookmarks();
 	}
-	
+
+	@Override
+	protected void doClear() {
+		getService().clearBookmarks();
+	}
+
 	@Override
 	protected String getEmptyText() {
 		return getString(R.string.bookmarks_empty);
