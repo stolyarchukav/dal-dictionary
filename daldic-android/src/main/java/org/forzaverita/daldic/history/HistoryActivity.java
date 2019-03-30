@@ -1,5 +1,7 @@
 package org.forzaverita.daldic.history;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,9 +33,19 @@ public class HistoryActivity extends AbstractListActivity {
 			clearAll.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					getService().clearHistory();
-					finish();
-					startActivity(getIntent());
+					new AlertDialog.Builder(HistoryActivity.this)
+							.setMessage(R.string.are_you_sure)
+							.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									getService().clearHistory();
+									finish();
+									startActivity(getIntent());
+								}
+							})
+							.setNegativeButton(R.string.no, null)
+							.show();
+
 				}
 			});
 		}

@@ -54,4 +54,7 @@
     <string name="word_next">Next</string>
     <string name="menu_main_page">Main page</string>
     <string name="clear_list">Clear all</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
