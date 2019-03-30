@@ -32,7 +32,8 @@ public class PreferencesServiceImpl implements PreferencesService {
 	private static final String STAT_OPEN_WORD_KEY = "statOpenWord";
 	private static final String STAT_OPEN_WORD_WIDGET_KEY = "statOpenWordWidget";
 	private static final String STAT_BOOKMARK_KEY = "statBookmark";
-	
+	private static final int MAX_WORDS_COUNT = 30;
+
 	private SharedPreferences preferences;
 	
 	public PreferencesServiceImpl(Context context) {
@@ -46,7 +47,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public void switchPreferencedStorage() {
-		preferences.edit().putBoolean(INTERNAL_STORAGE, ! isInteranalStorage()).commit();
+		preferences.edit().putBoolean(INTERNAL_STORAGE, ! isInteranalStorage()).apply();
 	}
 	
 	@Override
@@ -56,7 +57,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public void setDatabasePath(String databasePath) {
-		preferences.edit().putString(DATABASE_PATH, databasePath).commit();
+		preferences.edit().putString(DATABASE_PATH, databasePath).apply();
 	}
 	
 	@Override
@@ -91,7 +92,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public void addToHistory(Integer id, String word) {
-		addToWords(id, word, HISTORY_KEY, 30);
+		addToWords(id, word, HISTORY_KEY);
 	}
 	
 	@Override
@@ -101,12 +102,12 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public void addBookmark(Integer id, String word) {
-		addToWords(id, word, BOOKMARK_KEY, 30);
+		addToWords(id, word, BOOKMARK_KEY);
 	}
 	
 	@Override
 	public void removeBookmark(Integer id) {
-		removeFromWords(id, BOOKMARK_KEY);
+		removeFromWords(id);
 	}
 	
 	@Override
@@ -115,7 +116,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	}
 
 	private Map<Integer, String> loadWords(String prefKey) {
-		Map<Integer, String> result = new LinkedHashMap<Integer, String>();
+		Map<Integer, String> result = new LinkedHashMap<>();
 		String wordsStr = preferences.getString(prefKey, "");
 		String[] words = wordsStr.split(";");
 		for (String token : words) {
@@ -127,9 +128,9 @@ public class PreferencesServiceImpl implements PreferencesService {
 		return result;
 	}
 	
-	private void addToWords(Integer id, String word, String prefKey, int maxSize) {
+	private void addToWords(Integer id, String word, String prefKey) {
 		Map<Integer, String> words = loadWords(prefKey);
-		if (words.size() >= maxSize) {
+		if (words.size() >= MAX_WORDS_COUNT) {
 			if  (words.keySet().iterator().hasNext()) {
 				words.remove(words.keySet().iterator().next());
 			}
@@ -139,10 +140,10 @@ public class PreferencesServiceImpl implements PreferencesService {
 		buildAndSaveWords(prefKey, words);
 	}
 	
-	private void removeFromWords(Integer id, String prefKey) {
-		Map<Integer, String> words = loadWords(prefKey);
+	private void removeFromWords(Integer id) {
+		Map<Integer, String> words = loadWords(PreferencesServiceImpl.BOOKMARK_KEY);
 		words.remove(id);
-		buildAndSaveWords(prefKey, words);
+		buildAndSaveWords(PreferencesServiceImpl.BOOKMARK_KEY, words);
 	}
 
 	private void buildAndSaveWords(String prefKey, Map<Integer, String> words) {
@@ -153,7 +154,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 			builder.append(words.get(key));
 			builder.append(";");
 		}
-		preferences.edit().putString(prefKey, builder.toString()).commit();
+		preferences.edit().putString(prefKey, builder.toString()).apply();
 	}
 
 	@Override
@@ -187,7 +188,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 			str += ";";
 		}
 		str += id;
-		preferences.edit().putString(prefKey, str).commit();
+		preferences.edit().putString(prefKey, str).apply();
 	}
 	
 	@Override
@@ -242,27 +243,27 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public void clearEventSearch() {
-		preferences.edit().remove(STAT_SEARCH_KEY).commit();
+		preferences.edit().remove(STAT_SEARCH_KEY).apply();
 	}
 	
 	@Override
 	public void clearEventFullSearch() {
-		preferences.edit().remove(STAT_FULL_SEARCH_KEY).commit();
+		preferences.edit().remove(STAT_FULL_SEARCH_KEY).apply();
 	}
 	
 	@Override
 	public void clearEventOpenWord() {
-		preferences.edit().remove(STAT_OPEN_WORD_KEY).commit();
+		preferences.edit().remove(STAT_OPEN_WORD_KEY).apply();
 	}
 	
 	@Override
 	public void clearEventOpenWordWidget() {
-		preferences.edit().remove(STAT_OPEN_WORD_WIDGET_KEY).commit();
+		preferences.edit().remove(STAT_OPEN_WORD_WIDGET_KEY).apply();
 	}
 	
 	@Override
 	public void clearEventBookmark() {
-		preferences.edit().remove(STAT_BOOKMARK_KEY).commit();
+		preferences.edit().remove(STAT_BOOKMARK_KEY).apply();
 	}
 
 	@Override
