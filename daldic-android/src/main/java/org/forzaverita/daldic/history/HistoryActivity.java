@@ -5,9 +5,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import java.util.Map;
-
 import org.forzaverita.daldic.R;
+
+import java.util.Map;
 
 public class HistoryActivity extends AbstractListActivity {
 
@@ -15,19 +15,28 @@ public class HistoryActivity extends AbstractListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.history);
-		Button clearAll = findViewById(R.id.clear_all);
-		clearAll.setVisibility(View.VISIBLE);
-		clearAll.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				getService().clearHistory();
-			}
-		});
-    }
+	}
 
 	@Override
 	protected Map<Integer, String> getResultList() {
-		return getService().getHistory();
+		Map<Integer, String> history = getService().getHistory();
+		configureClearButton(history.size());
+		return history;
+	}
+
+	private void configureClearButton(int size) {
+    	if (size > 0) {
+			Button clearAll = findViewById(R.id.clear_all);
+			clearAll.setVisibility(View.VISIBLE);
+			clearAll.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					getService().clearHistory();
+					finish();
+					startActivity(getIntent());
+				}
+			});
+		}
 	}
 	
 	@Override

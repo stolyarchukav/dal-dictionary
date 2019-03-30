@@ -1,17 +1,5 @@
 package org.forzaverita.daldic.history;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.forzaverita.daldic.R;
-import org.forzaverita.daldic.WordActivity;
-import org.forzaverita.daldic.data.Constants;
-import org.forzaverita.daldic.menu.MenuUtils;
-import org.forzaverita.daldic.service.DalDicService;
-
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,6 +18,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.forzaverita.daldic.R;
+import org.forzaverita.daldic.WordActivity;
+import org.forzaverita.daldic.data.Constants;
+import org.forzaverita.daldic.menu.MenuUtils;
+import org.forzaverita.daldic.service.DalDicService;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public abstract class AbstractListActivity extends ListActivity {
 
 	private static final int MARGIN = 5;
@@ -38,7 +38,7 @@ public abstract class AbstractListActivity extends ListActivity {
 	private LayoutInflater inflater;
 	private LinearLayout parent;
 	private Date lastPreferencesCheck = new Date();
-	
+
 	private class SearchTask extends AsyncTask<Void, Void, Map<Integer, String>> {
     	
     	ProgressDialog dialog;
@@ -100,7 +100,7 @@ public abstract class AbstractListActivity extends ListActivity {
     	}
 
 		private void configureSearchFullButton() {
-			Button searchFull = (Button) parent.findViewById(R.id.search_full);
+			Button searchFull = parent.findViewById(R.id.search_full);
 			searchFull.setVisibility(View.GONE);
 		}
 	}
