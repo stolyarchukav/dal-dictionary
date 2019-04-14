@@ -95,8 +95,8 @@ public class WordListActivity extends ListActivity {
     		dialog.dismiss();
     		TextView textView = parent.findViewById(R.id.word_not_found);
     		if (words != null && ! words.isEmpty()) {
-    			ArrayList<Entry<Integer, String>> wordList = new ArrayList<Entry<Integer, String>>(
-    					words.entrySet());
+    			ArrayList<Entry<Integer, String>> wordList = new ArrayList<>(
+                        words.entrySet());
     			Collections.sort(wordList, new Comparator<Entry<Integer, String>>() {
     				@Override
     				public int compare(Entry<Integer, String> object1,
@@ -115,7 +115,7 @@ public class WordListActivity extends ListActivity {
                         	row = convertView;
                         }
                         
-                        TextView tv = (TextView) row.findViewById(android.R.id.text1);
+                        TextView tv = row.findViewById(android.R.id.text1);
                         tv.setText(Html.fromHtml(getItem(position).getValue()));
                         tv.setTypeface(service.getFont());
                         tv.setTextColor(Color.BLACK);
