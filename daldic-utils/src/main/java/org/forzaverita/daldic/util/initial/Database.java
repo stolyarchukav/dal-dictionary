@@ -14,7 +14,7 @@ public final class Database {
 	
 	public static enum DatabaseEngine {
 		H2("org.h2.Driver", "jdbc:h2:huge_data/daldich2"),
-		SQLITE("org.sqlite.JDBC", "jdbc:sqlite:huge_data/daldic.sqlite");
+		SQLITE("org.sqlite.JDBC", "jdbc:sqlite:daldic-utils\\src\\main\\resources\\daldic.db");
 		
 		private DatabaseEngine(String driverClass, String connectionString) {
 			this.driverClass = driverClass;
