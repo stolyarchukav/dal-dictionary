@@ -8,12 +8,12 @@ buildscript {
     }
 }
 
-apply plugin: 'com.android.application'
-
 repositories {
     google()
     jcenter()
 }
+
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
