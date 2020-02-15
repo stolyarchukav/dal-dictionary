@@ -16,12 +16,12 @@ repositories {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "org.forzaverita.daldic"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode 20
         versionName "1.20"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
