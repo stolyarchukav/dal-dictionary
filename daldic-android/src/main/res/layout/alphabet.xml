@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/texture">
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/texture">
     
-    <ScrollView android:id="@+id/alphabet"	
+    <ScrollView android:id="@+id/alphabet"
     	android:layout_width="fill_parent" 
-    	android:layout_height="fill_parent"
+    	android:layout_height="0dp"
     	android:layout_weight="0.9" />
 
 </LinearLayout>

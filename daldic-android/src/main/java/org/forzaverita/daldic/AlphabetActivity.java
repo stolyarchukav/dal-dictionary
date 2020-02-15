@@ -1,11 +1,5 @@
 package org.forzaverita.daldic;
 
-import java.util.Date;
-
-import org.forzaverita.daldic.data.Constants;
-import org.forzaverita.daldic.menu.MenuUtils;
-import org.forzaverita.daldic.service.DalDicService;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -17,6 +11,12 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
+import org.forzaverita.daldic.data.Constants;
+import org.forzaverita.daldic.menu.MenuUtils;
+import org.forzaverita.daldic.service.DalDicService;
+
+import java.util.Date;
 
 public class AlphabetActivity extends Activity {
     
@@ -40,50 +40,57 @@ public class AlphabetActivity extends Activity {
         setContentView(R.layout.alphabet);
         
         service = (DalDicService) getApplicationContext();
-        
-        ScrollView parent = (ScrollView) findViewById(R.id.alphabet);
-        
+
+        ScrollView parent = findViewById(R.id.alphabet);
+
         final TableLayout layout = new TableLayout(this) {
         	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-				
         		// Check child count to avoid duplicate buttons
 				if  (getChildCount() > 0) {
 					return;
 				}
-				
 				int width = MeasureSpec.getSize(widthMeasureSpec);
-				int columns = width / 180;
+				int columns = width / 250;
 			    TableRow row = null;
 			    int w = 0;
-			    for (char q = 'А'; q <= 'Я'; q++) {
+			    for (char letter = 'А'; letter <= 'Я'; letter++) {
                 	if (w++ % columns == 0) {
-                		row = new TableRow(AlphabetActivity.this);
+                		row = raw();
                         addView(row);
                 	}
-                	final Button button = new Button(AlphabetActivity.this);
-                	button.setBackgroundResource(R.drawable.selector_dashboard_button);
-                	button.setText("" + q);
-                	button.setTag(q);
-                	button.setWidth(width / columns - MARGIN * 2);
-                	TableRow.LayoutParams params = new TableRow.LayoutParams(
-                			LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-                	params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
-                	button.setLayoutParams(params);
-                	button.setTypeface(service.getFont(), Typeface.ITALIC);
-                	button.setTextSize(20);
-                    button.setTextColor(getResources().getColor(R.color.black));
-                	button.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							startWordListActivity((Character) view.getTag());
-						}
-					});
-                	row.addView(button);
+					if (row != null) {
+						row.addView(letterButton(letter));
+					}
                 }
 			    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         	}
-        };
+
+			private TableRow raw() {
+				return new TableRow(AlphabetActivity.this);
+			}
+
+			private Button letterButton(char letter) {
+				final Button button = new Button(AlphabetActivity.this);
+				button.setBackgroundResource(R.drawable.selector_dashboard_button);
+				button.setText(String.valueOf(letter));
+				button.setTag(letter);
+				TableRow.LayoutParams params = new TableRow.LayoutParams(
+						LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+				params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
+				button.setLayoutParams(params);
+				button.setTypeface(service.getFont(), Typeface.ITALIC);
+				button.setTextSize(20);
+				button.setTextColor(getResources().getColor(R.color.black));
+				button.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						startWordListActivity((Character) view.getTag());
+					}
+				});
+				return button;
+			}
+		};
         parent.addView(layout);
     }
 	
