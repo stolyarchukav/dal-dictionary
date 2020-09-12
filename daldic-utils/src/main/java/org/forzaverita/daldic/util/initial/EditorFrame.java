@@ -2,8 +2,7 @@ package org.forzaverita.daldic.util.initial;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -34,7 +33,7 @@ public class EditorFrame extends JFrame {
 	public EditorFrame() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationByPlatform(true);
-		setSize(800, 500);
+		setSize(1024, 768);
 		
 		setLayout(new BorderLayout());
 		
@@ -44,21 +43,26 @@ public class EditorFrame extends JFrame {
 		add(topPanel, BorderLayout.NORTH);
 		
 		filter = new JTextField("см.");
+		filter.setFont(font());
 		topPanel.add(filter);
 		
 		JButton filterApply = new JButton("apply filter");
+		filterApply.setFont(font());
 		filterApply.addActionListener(e -> loadIdsByFilter());
 		topPanel.add(filterApply);
 		
 		spinner = new JSpinner();
+		spinner.setFont(font());
 		spinner.setPreferredSize(new Dimension(100, topPanel.getHeight()));
 		topPanel.add(spinner);
 		
 		JButton spinnerApply = new JButton("load word");
+		spinnerApply.setFont(font());
 		spinnerApply.addActionListener(e -> loadWord((Integer) spinner.getValue()));
 		topPanel.add(spinnerApply);
 		
 		JButton firstWord = new JButton("first word");
+		firstWord.setFont(font());
 		firstWord.addActionListener(e -> {
 			index = 0;
 			updateSpinner();
@@ -67,13 +71,11 @@ public class EditorFrame extends JFrame {
 		topPanel.add(firstWord);
 		
 		JButton lastWord = new JButton("last word");
-		lastWord.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				index = ids.size() - 1;
-				updateSpinner();
-				loadWord();
-			}
+		lastWord.setFont(font());
+		lastWord.addActionListener(e -> {
+			index = ids.size() - 1;
+			updateSpinner();
+			loadWord();
 		});
 		topPanel.add(lastWord);
 		
@@ -83,32 +85,27 @@ public class EditorFrame extends JFrame {
 		add(updatePanel, BorderLayout.SOUTH);
 		
 		JButton delete = new JButton("delete");
-		delete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				deleteWord();
-			}
-		});
+		delete.setFont(font());
+		delete.addActionListener(e -> deleteWord());
 		updatePanel.add(delete);
 		
 		JButton save = new JButton("save");
-		save.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				saveCurrentWord();
-			}
-		});
+		save.setFont(font());
+		save.addActionListener(e -> saveCurrentWord());
 		updatePanel.add(save);
 		
 		JButton createRef = new JButton("create ref");
+		createRef.setFont(font());
 		createRef.addActionListener(e -> createRef());
 		updatePanel.add(createRef);
 		
 		JButton refToSelected = new JButton("ref to selected");
+		refToSelected.setFont(font());
 		refToSelected.addActionListener(e -> refToSelected());
 		updatePanel.add(refToSelected);
 		
 		JButton next = new JButton("next");
+		next.setFont(font());
 		next.addActionListener(e -> {
 			if (index != ids.size() - 1) {
 				index++;
@@ -119,6 +116,7 @@ public class EditorFrame extends JFrame {
 		add(next, BorderLayout.EAST);
 		
 		JButton prev = new JButton("prev");
+		prev.setFont(font());
 		prev.addActionListener(e -> {
 			if (index != 0) {
 				index--;
@@ -134,20 +132,28 @@ public class EditorFrame extends JFrame {
 		add(wordPanel);
 		
 		wordField = new JTextField("");
+		wordField.setFont(font());
 		wordPanel.add(wordField);
 		descArea = new JTextArea("");
+		descArea.setFont(font());
 		descArea.setLineWrap(true);
 		wordPanel.add(descArea);
 		firstLetterField = new JTextField("");
+		firstLetterField.setFont(font());
 		wordPanel.add(firstLetterField);
 		wordRefField = new JTextField("");
+		wordRefField.setFont(font());
 		wordPanel.add(wordRefField);
 		
 		loadIdsByFilter();
 		updateSpinner();
 		loadWord();
 	}
-	
+
+	private Font font() {
+		return new Font(Font.SANS_SERIF, Font.PLAIN, 24);
+	}
+
 	protected void deleteWord() {
 		if (! Database.getInstance().deleteWord(ids.get(index))) {
 			alert("Word not deleted. See error log");
