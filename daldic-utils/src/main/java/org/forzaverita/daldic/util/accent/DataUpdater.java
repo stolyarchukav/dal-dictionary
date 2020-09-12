@@ -1,6 +1,5 @@
 package org.forzaverita.daldic.util.accent;
 
-import org.apache.commons.lang3.StringUtils;
 import org.forzaverita.daldic.util.initial.Database;
 import org.forzaverita.daldic.util.initial.Word;
 
@@ -65,7 +64,7 @@ public class DataUpdater {
 
     private static Map<String, String> getAccentWords() throws IOException {
         Map<String, String> words = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("words_result.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("daldic-utils/src/main/resources/words_result.txt"))) {
             while (br.ready()) {
                 String word = br.readLine().toLowerCase().trim();
                 words.put(word.replace("́", ""), word);

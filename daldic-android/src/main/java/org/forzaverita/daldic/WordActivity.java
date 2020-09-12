@@ -157,7 +157,7 @@ public class WordActivity extends Activity {
 	
 	private void configureWordView(String description) {
 		if (description != null) {
-        	WebView text = (WebView) findViewById(R.id.word_text);
+        	WebView text = findViewById(R.id.word_text);
         	text.setBackgroundColor(0x00000000);
         	text.getSettings().setDefaultFontSize(25);
         	text.getSettings().setSupportZoom(true);

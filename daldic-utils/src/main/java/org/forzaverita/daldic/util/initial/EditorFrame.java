@@ -47,12 +47,7 @@ public class EditorFrame extends JFrame {
 		topPanel.add(filter);
 		
 		JButton filterApply = new JButton("apply filter");
-		filterApply.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				loadIdsByFilter();
-			}			
-		});
+		filterApply.addActionListener(e -> loadIdsByFilter());
 		topPanel.add(filterApply);
 		
 		spinner = new JSpinner();
@@ -60,22 +55,14 @@ public class EditorFrame extends JFrame {
 		topPanel.add(spinner);
 		
 		JButton spinnerApply = new JButton("load word");
-		spinnerApply.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				loadWord((Integer) spinner.getValue());
-			}
-		});
+		spinnerApply.addActionListener(e -> loadWord((Integer) spinner.getValue()));
 		topPanel.add(spinnerApply);
 		
 		JButton firstWord = new JButton("first word");
-		firstWord.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				index = 0;
-				updateSpinner();
-				loadWord();
-			}
+		firstWord.addActionListener(e -> {
+			index = 0;
+			updateSpinner();
+			loadWord();
 		});
 		topPanel.add(firstWord);
 		
@@ -114,46 +101,30 @@ public class EditorFrame extends JFrame {
 		updatePanel.add(save);
 		
 		JButton createRef = new JButton("create ref");
-		createRef.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				createRef();
-			}
-		});
+		createRef.addActionListener(e -> createRef());
 		updatePanel.add(createRef);
 		
 		JButton refToSelected = new JButton("ref to selected");
-		refToSelected.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				refToSelected();
-			}
-		});
+		refToSelected.addActionListener(e -> refToSelected());
 		updatePanel.add(refToSelected);
 		
 		JButton next = new JButton("next");
-		next.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (index != ids.size() - 1) {
-					index++;
-				}
-				updateSpinner();
-				loadWord();
+		next.addActionListener(e -> {
+			if (index != ids.size() - 1) {
+				index++;
 			}
+			updateSpinner();
+			loadWord();
 		});
 		add(next, BorderLayout.EAST);
 		
 		JButton prev = new JButton("prev");
-		prev.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (index != 0) {
-					index--;
-				}
-				updateSpinner();
-				loadWord();
+		prev.addActionListener(e -> {
+			if (index != 0) {
+				index--;
 			}
+			updateSpinner();
+			loadWord();
 		});
 		add(prev, BorderLayout.WEST);
 		
