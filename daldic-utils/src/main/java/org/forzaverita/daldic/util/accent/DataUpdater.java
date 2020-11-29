@@ -59,7 +59,7 @@ public class DataUpdater {
                 db.saveWord(entity);
             }
         }
-        db.getConnection().close();
+        db.close();
     }
 
     private static Map<String, String> getAccentWords() throws IOException {

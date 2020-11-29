@@ -10,21 +10,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Database {
-	
-	public static enum DatabaseEngine {
+public final class Database implements AutoCloseable {
+
+	public enum DatabaseEngine {
 		H2("org.h2.Driver", "jdbc:h2:huge_data/daldich2"),
 		SQLITE("org.sqlite.JDBC", "jdbc:sqlite:daldic-utils\\src\\main\\resources\\daldic.db");
-		
-		private DatabaseEngine(String driverClass, String connectionString) {
+
+		DatabaseEngine(String driverClass, String connectionString) {
 			this.driverClass = driverClass;
 			this.connectionString = connectionString;
 		}
-		
+
 		private String driverClass;
 		private String connectionString;
 	}
-	
+
 	private static final String SELECT_WORD_IDS = "select word_id from word";
 	private static final String SELECT_WORD_IDS_BY_FILTER = "select word_id from word where description like ?";
 	private static final String SELECT_MAX_WORD_ID = "select max(word_id) from word";
@@ -81,21 +81,20 @@ public final class Database {
 	}
 	
 	public Integer getMaxWordId() {
-		Integer maxId = null;
 		try {
 			if (psSelectMaxWordId == null) {
 				psSelectMaxWordId = conn.prepareStatement(SELECT_MAX_WORD_ID);
 			}
-			ResultSet rs = psSelectMaxWordId.executeQuery();
-			if (rs.next()) {
-				maxId = rs.getInt(1);
+			try (ResultSet rs = psSelectMaxWordId.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
 			}
-			rs.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return maxId;
+		return null;
 	}
 	
 	public Word getWord(int id) {
@@ -308,6 +307,11 @@ public final class Database {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void close() throws Exception {
+		conn.close();
 	}
 
 }

@@ -16,8 +16,6 @@ import javax.swing.JTextField;
 
 public class EditorFrame extends JFrame {
 
-	private static final long serialVersionUID = -7690905826247434960L;
-	
 	private int index;
 	private List<Integer> ids;
 	private Word word;
