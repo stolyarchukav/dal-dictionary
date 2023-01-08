@@ -75,7 +75,7 @@ public class DalDicActivity extends Activity {
 			@Override
 			public void onClick(View paramView) {
 				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + 
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" +
 							getApplicationInfo().packageName)));
 				}
 				catch (ActivityNotFoundException e) {
@@ -91,7 +91,7 @@ public class DalDicActivity extends Activity {
 			public void onClick(View paramView) {
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, 
-							Uri.parse("market://search?q=pub:ForzaVerita")));
+							Uri.parse("http://play.google.com/store/search?q=pub:ForzaVerita")));
 				}
 				catch (ActivityNotFoundException e) {
 				}
