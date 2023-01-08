@@ -1,5 +1,7 @@
 package org.forzaverita.daldic.util.accent;
 
+import org.forzaverita.daldic.util.SpecialCharacters;
+
 import java.io.*;
 
 public class RawAccentsProcessor {
@@ -21,7 +23,7 @@ public class RawAccentsProcessor {
                         word = word.replace("]", "");
                         word = word.trim().toLowerCase();
                         word = word.split(" ")[0];
-                        if (word.contains("́")) {
+                        if (word.contains(SpecialCharacters.ACCENT)) {
                             writer.println(word);
                         }
                     }

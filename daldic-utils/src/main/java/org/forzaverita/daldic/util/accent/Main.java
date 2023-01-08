@@ -1,6 +1,7 @@
 package org.forzaverita.daldic.util.accent;
 
 import org.apache.commons.lang3.StringUtils;
+import org.forzaverita.daldic.util.SpecialCharacters;
 
 import java.io.*;
 import java.net.URL;
@@ -20,7 +21,7 @@ public class Main {
                             if (word == null) {
                                 word = StringUtils.substringBetween(line, ">", "</span>");
                             }
-                            if (word != null && word.contains("́")) {
+                            if (word != null && word.contains(SpecialCharacters.ACCENT)) {
                                 System.out.println(word);
                                 writer.println(word);
                             }

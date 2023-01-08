@@ -1,5 +1,6 @@
 package org.forzaverita.daldic.util.initial;
 
+import org.forzaverita.daldic.util.accent.WordFormatter;
 import org.forzaverita.daldic.util.db.Database;
 
 import java.awt.BorderLayout;
@@ -198,7 +199,7 @@ public class EditorFrame extends JFrame {
 	
 	private void setCurrentWord(Word word) {
 		this.word = word;
-		wordField.setText(word.getWord());
+		wordField.setText(WordFormatter.formattedWord(word));
 		descArea.setText(word.getDescription());
 		firstLetterField.setText(word.getFirstLetter());
 		wordRefField.setText(String.valueOf(word.getWordReference()));

@@ -1,5 +1,7 @@
 package org.forzaverita.daldic.util.accent;
 
+import org.forzaverita.daldic.util.SpecialCharacters;
+
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
@@ -11,8 +13,8 @@ public class Test {
             System.out.println(s.charAt(i));
         }
         System.out.println(s);
-        System.out.println("Аба" + "́" + "ка");
-        System.out.println(Arrays.toString("́".getBytes()));
+        System.out.println("Аба" + SpecialCharacters.ACCENT + "ка");
+        System.out.println(Arrays.toString(SpecialCharacters.ACCENT.getBytes()));
         System.out.println(Arrays.toString(s.getBytes()));
         s.chars().forEach(ch -> System.out.println("" + ch));
         IntStream.range(0, 3000).forEach(i -> {

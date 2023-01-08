@@ -3,7 +3,8 @@ CREATE TABLE word (
     word TEXT NOT NULL,
 	description TEXT NOT NULL,
 	first_letter TEXT NOT NULL,
-	word_ref NUMERIC NOT NULL
+	word_ref NUMERIC NOT NULL,
+	accent_position INTEGER
 );
 
 CREATE INDEX idx_word_word ON word(word ASC);

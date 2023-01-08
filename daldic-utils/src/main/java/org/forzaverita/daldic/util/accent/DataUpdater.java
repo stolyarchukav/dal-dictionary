@@ -1,5 +1,6 @@
 package org.forzaverita.daldic.util.accent;
 
+import org.forzaverita.daldic.util.SpecialCharacters;
 import org.forzaverita.daldic.util.db.Database;
 import org.forzaverita.daldic.util.initial.Word;
 
@@ -67,7 +68,7 @@ public class DataUpdater {
         try (BufferedReader br = new BufferedReader(new FileReader("daldic-utils/src/main/resources/words_result.txt"))) {
             while (br.ready()) {
                 String word = br.readLine().toLowerCase().trim();
-                words.put(word.replace("́", ""), word);
+                words.put(word.replace(SpecialCharacters.ACCENT, ""), word);
             }
         }
         return words;

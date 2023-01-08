@@ -11,14 +11,20 @@ public class Word {
 	private String firstLetter;
 	
 	private Integer wordReference;
+
+	private Integer accentPosition;
 	
 	/* Methods */
 	
 	@Override
 	public String toString() {
-		return "Word [id=" + id + ", word=" + word + ", description="
-				+ description + ", firstLetter=" + firstLetter
-				+ ", wordReference=" + wordReference + "]";
+		return "Word [id=" + id +
+				", word=" + word +
+				", description=" + description +
+				", firstLetter=" + firstLetter +
+				", wordReference=" + wordReference +
+				", accentPosition=" + accentPosition +
+				"]";
 	}
 
 	/* Getters and Setters */
@@ -62,5 +68,13 @@ public class Word {
 	public Integer getWordReference() {
 		return wordReference;
 	}
-	
+
+	public Integer getAccentPosition() {
+		return accentPosition;
+	}
+
+	public void setAccentPosition(Integer accentPosition) {
+		this.accentPosition = accentPosition;
+	}
+
 }

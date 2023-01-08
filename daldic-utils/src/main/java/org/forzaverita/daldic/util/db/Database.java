@@ -31,15 +31,15 @@ public final class Database implements AutoCloseable {
 	private static final String SELECT_WORD_IDS_BY_FILTER = "select word_id from word where description like ?";
 	private static final String SELECT_MAX_WORD_ID = "select max(word_id) from word";
 	private static final String SELECT_WORD_BY_ID = "select word_id, word, description, first_letter," +
-			" word_ref from word where word_id = ?";
+			" word_ref, accent_position from word where word_id = ?";
 	private static final String SELECT_WORD_BY_NAME = "select word_id, word, description, first_letter," +
-			" word_ref from word where upper(word) = ?";
+			" word_ref, accent_position from word where upper(word) = ?";
 	private static final String SELECT_WORD_BY_NAME_CONTAINS = "select word_id, word, description, first_letter," +
-			" word_ref from word where word like ?";
+			" word_ref, accent_position from word where word like ?";
 	private static final String UPDATE_WORD = "update word set word = ?, description = ?," +
-			" first_letter = ?, word_ref = ? where word_id = ?";
+			" first_letter = ?, word_ref = ?, accent_position = ? where word_id = ?";
 	private static final String INSERT_WORD = "insert into word (word_id, word, description, first_letter," +
-			" word_ref) values (?, ?, ?, ?, ?)";
+			" word_ref, accent_position) values (?, ?, ?, ?, ?, ?)";
 	private static final String DELETE_WORD = "delete from word where word_id = ?";
 
 	private static final Map<DatabaseEngine, Database> INSTANCE = new ConcurrentHashMap<>();
@@ -117,6 +117,7 @@ public final class Database implements AutoCloseable {
 				word.setDescription(rs.getString(3));
 				word.setFirstLetter(rs.getString(4));
 				word.setWordReference(rs.getInt(5));
+				word.setAccentPosition(rs.getInt(6));
 			}
 			rs.close();
 		}
@@ -149,6 +150,7 @@ public final class Database implements AutoCloseable {
 				word.setDescription(rs.getString(3));
 				word.setFirstLetter(rs.getString(4));
 				word.setWordReference(rs.getInt(5));
+				word.setAccentPosition(rs.getInt(6));
 				words.add(word);
 			}
 			rs.close();
@@ -175,6 +177,11 @@ public final class Database implements AutoCloseable {
 			else {
 				psUpdateWord.setInt(5, word.getWordReference());
 			}
+			if (word.getAccentPosition() == null) {
+				psUpdateWord.setNull(6, Types.INTEGER);
+			} else {
+				psUpdateWord.setInt(6, word.getAccentPosition());
+			}
 			psUpdateWord.executeUpdate();
 			result = true;
 		}
@@ -199,7 +206,12 @@ public final class Database implements AutoCloseable {
 			else {
                 psUpdateWord.setInt(4, word.getWordReference());
 			}
-			psUpdateWord.setInt(5, word.getId());
+			if (word.getAccentPosition() == null) {
+				psUpdateWord.setNull(5, Types.INTEGER);
+			} else {
+				psUpdateWord.setInt(5, word.getAccentPosition());
+			}
+			psUpdateWord.setInt(6, word.getId());
 			psUpdateWord.executeUpdate();
 			result = true;
 		}
