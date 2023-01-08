@@ -1,7 +1,8 @@
 package org.forzaverita.daldic.util.initial;
 
+import org.forzaverita.daldic.util.db.Database;
+
 import java.io.BufferedInputStream;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

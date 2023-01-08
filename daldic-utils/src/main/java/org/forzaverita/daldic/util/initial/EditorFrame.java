@@ -1,5 +1,7 @@
 package org.forzaverita.daldic.util.initial;
 
+import org.forzaverita.daldic.util.db.Database;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,13 +22,13 @@ public class EditorFrame extends JFrame {
 	private List<Integer> ids;
 	private Word word;
 
-	private JTextField wordField;
-	private JTextArea descArea;
-	private JTextField firstLetterField;
-	private JTextField wordRefField;
-	private JTextField filter;
+	private final JTextField wordField;
+	private final JTextArea descArea;
+	private final JTextField firstLetterField;
+	private final JTextField wordRefField;
+	private final JTextField filter;
 
-	private JSpinner spinner;
+	private final JSpinner spinner;
 
 	public EditorFrame() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

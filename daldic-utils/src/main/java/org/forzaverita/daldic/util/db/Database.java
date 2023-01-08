@@ -1,4 +1,6 @@
-package org.forzaverita.daldic.util.initial;
+package org.forzaverita.daldic.util.db;
+
+import org.forzaverita.daldic.util.initial.Word;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,9 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class Database implements AutoCloseable {
 
@@ -21,8 +23,8 @@ public final class Database implements AutoCloseable {
 			this.connectionString = connectionString;
 		}
 
-		private String driverClass;
-		private String connectionString;
+		private final String driverClass;
+		private final String connectionString;
 	}
 
 	private static final String SELECT_WORD_IDS = "select word_id from word";
@@ -32,13 +34,15 @@ public final class Database implements AutoCloseable {
 			" word_ref from word where word_id = ?";
 	private static final String SELECT_WORD_BY_NAME = "select word_id, word, description, first_letter," +
 			" word_ref from word where upper(word) = ?";
+	private static final String SELECT_WORD_BY_NAME_CONTAINS = "select word_id, word, description, first_letter," +
+			" word_ref from word where word like ?";
 	private static final String UPDATE_WORD = "update word set word = ?, description = ?," +
 			" first_letter = ?, word_ref = ? where word_id = ?";
 	private static final String INSERT_WORD = "insert into word (word_id, word, description, first_letter," +
 			" word_ref) values (?, ?, ?, ?, ?)";
 	private static final String DELETE_WORD = "delete from word where word_id = ?";
-	
-	private static Map<DatabaseEngine, Database> INSTANCE = new HashMap<>();
+
+	private static final Map<DatabaseEngine, Database> INSTANCE = new ConcurrentHashMap<>();
 	
 	private Connection conn;
 
@@ -47,6 +51,7 @@ public final class Database implements AutoCloseable {
 	private PreparedStatement psSelectMaxWordId;
 	private PreparedStatement psSelectWordById;
 	private PreparedStatement psSelectWordByName;
+	private PreparedStatement psSelectWordByNameContains;
 	private PreparedStatement psUpdateWord;
 	private PreparedStatement psInsertWord;
 	private PreparedStatement psDeleteWord;
@@ -120,29 +125,38 @@ public final class Database implements AutoCloseable {
 		}
 		return word;
 	}
-	
+
+	public List<Word> getWordsContains(String wordNameContains) {
+		return getWord("%" + wordNameContains + "%", SELECT_WORD_BY_NAME_CONTAINS, psSelectWordByNameContains);
+	}
+
 	public Word getWord(String wordName) {
-		Word word = null;
+		return getWord(wordName, SELECT_WORD_BY_NAME, psSelectWordByName).stream().findFirst().orElse(null);
+	}
+
+	private List<Word> getWord(String searchValue, String query, PreparedStatement statement) {
+		List<Word> words = new ArrayList<>();
 		try {
-			if (psSelectWordByName == null) {
-				psSelectWordByName = conn.prepareStatement(SELECT_WORD_BY_NAME);
+			if (statement == null) {
+				statement = conn.prepareStatement(query);
 			}
-			psSelectWordByName.setString(1, wordName.toUpperCase());
-			ResultSet rs = psSelectWordByName.executeQuery();
-			if (rs.next()) {
-				word = new Word();
+			statement.setString(1, searchValue.toUpperCase());
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				Word word = new Word();
 				word.setId(rs.getInt(1));
 				word.setWord(rs.getString(2));
 				word.setDescription(rs.getString(3));
 				word.setFirstLetter(rs.getString(4));
 				word.setWordReference(rs.getInt(5));
+				words.add(word);
 			}
 			rs.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return word;
+		return words;
 	}
 	
 	public boolean createWord(Word word) {

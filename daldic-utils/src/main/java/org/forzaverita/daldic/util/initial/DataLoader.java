@@ -1,5 +1,7 @@
 package org.forzaverita.daldic.util.initial;
 
+import org.forzaverita.daldic.util.db.Database;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;

@@ -1,6 +1,6 @@
 package org.forzaverita.daldic.util.initial.h2;
 
-import org.forzaverita.daldic.util.initial.Database;
+import org.forzaverita.daldic.util.db.Database;
 import org.forzaverita.daldic.util.initial.Word;
 
 import java.sql.ResultSet;
@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.forzaverita.daldic.util.initial.Database.DatabaseEngine;
+import static org.forzaverita.daldic.util.db.Database.DatabaseEngine;
 
 public class SqliteToH2Loader {
 	

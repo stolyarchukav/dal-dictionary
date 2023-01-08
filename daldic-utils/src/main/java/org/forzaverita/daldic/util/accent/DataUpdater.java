@@ -1,6 +1,6 @@
 package org.forzaverita.daldic.util.accent;
 
-import org.forzaverita.daldic.util.initial.Database;
+import org.forzaverita.daldic.util.db.Database;
 import org.forzaverita.daldic.util.initial.Word;
 
 import java.io.BufferedReader;
