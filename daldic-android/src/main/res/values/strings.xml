@@ -6,7 +6,7 @@
     <string name="browse">By alphabet</string>
     <string name="search">Search</string>
     <string name="search_hint">Begin of word</string>
-    <string name="word_not_found">Unfortunatly, words were not found</string>
+    <string name="word_not_found">Unfortunately, words were not found</string>
     <string name="search_string_empty">Please, type text for search</string>
     <string name="progress_title">Loading</string>
     <string name="progress_text">Loading, please wait...</string>
