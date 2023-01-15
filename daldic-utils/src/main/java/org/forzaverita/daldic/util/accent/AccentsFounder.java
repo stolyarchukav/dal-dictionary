@@ -21,6 +21,9 @@ public class AccentsFounder {
             word.setAccentPosition(accent);
             System.out.println(WordFormatter.formattedWord(word));
             System.out.println(word);
+            if (!Database.getInstance().saveWord(word)) {
+                throw new RuntimeException();
+            }
         });
         System.out.println(words.size());
     }
