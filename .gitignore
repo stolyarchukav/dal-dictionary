@@ -5,3 +5,5 @@ build
 local.properties
 release
 debug
+daldic.db
+daldic.jet
