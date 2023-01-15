@@ -1,7 +1,11 @@
 package org.forzaverita.daldic.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
+import android.app.SearchManager;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
+import android.util.Log;
 
 import org.forzaverita.daldic.R;
 import org.forzaverita.daldic.data.Constants;
@@ -10,28 +14,27 @@ import org.forzaverita.daldic.service.DatabaseDeployer;
 import org.forzaverita.daldic.service.DatabaseService;
 import org.forzaverita.daldic.service.PreferencesService;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.provider.BaseColumns;
-import android.util.Log;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataBaseServiceImpl implements DatabaseService {
-	
-	private static int DATA_VERSION = 9;
-	private static String WORD_ID = "word_id";
-	private static String WORD = "word";
-	private static String WORD_REF = "word_ref";
-	private static String DESCRIPTION = "description";
-	private static String FIRST_LETTER = "first_letter";
-	private static String DALDIC_METADATA = "daldic_metadata";
-	private static String DATA_VERSION_FIELD = "data_version";
+
+	private static final String ACCENT = "́";
+	private static final int DATA_VERSION = 10;
+	private static final String WORD_ID = "word_id";
+	private static final String WORD = "word";
+	private static final String WORD_REF = "word_ref";
+	private static final String DESCRIPTION = "description";
+	private static final String FIRST_LETTER = "first_letter";
+	private static final String ACCENT_POSITION = "accent_position";
+	private static final String DALDIC_METADATA = "daldic_metadata";
+	private static final String DATA_VERSION_FIELD = "data_version";
     
+    private final DatabaseDeployer databaseDeployer;
+	private final Context context;
+
 	private SQLiteDatabase database;
-    private DatabaseDeployer databaseDeployer;
-	private Context context;
-	
+
 	public DataBaseServiceImpl(Context context, PreferencesService preferencesService) {
 		this.context = context;
 		databaseDeployer = new DatabaseDeployerImpl(context, preferencesService);
@@ -100,7 +103,7 @@ public class DataBaseServiceImpl implements DatabaseService {
     public Map<Integer, String> getWordsBeginWith(String begin, boolean capitalLetters) {
     	openDataBase();
     	try {
-    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, 
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, ACCENT_POSITION},
     				WORD + " like '" + begin.trim().toUpperCase() + "%'",
             		null, null, null, null);
             return getIdWordMapFromCursor(cursor, capitalLetters);
@@ -114,7 +117,7 @@ public class DataBaseServiceImpl implements DatabaseService {
     public Map<Integer, String> getWordsBeginWith(char letter, boolean capitalLetters) {
     	openDataBase();
     	try {
-    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD}, 
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, ACCENT_POSITION},
     				FIRST_LETTER + " = '" + letter + "'",
             		null, null, null, null);
             return getIdWordMapFromCursor(cursor, capitalLetters);
@@ -128,7 +131,7 @@ public class DataBaseServiceImpl implements DatabaseService {
     public Map<Integer, String> getWordsFullSearch(String query, boolean capitalLetters) {
     	openDataBase();
     	try {
-    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, DESCRIPTION}, 
+    		Cursor cursor = database.query(WORD, new String[] {WORD_ID, WORD, DESCRIPTION, ACCENT_POSITION},
     				"upper(" + DESCRIPTION + ") like '%" + query.trim().toUpperCase() + "%'",
             		null, null, null, null);
             return getIdWordDescMapFromCursor(cursor, capitalLetters, query);
@@ -142,14 +145,17 @@ public class DataBaseServiceImpl implements DatabaseService {
 	public String[] getWordAndDescriptionById(long id) {
 		openDataBase();
 		try {
-			Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION, WORD_REF}, 
+			Cursor cursor = database.query(WORD, new String[] {WORD, DESCRIPTION, WORD_REF, ACCENT_POSITION},
 					WORD_ID + " = " + id,
 	        		null, null, null, null);
 			String[] result = null;
 			if (cursor.moveToFirst()) {
+				String word = cursor.getString(0);
+				String description = cursor.getString(1);
 				Integer ref = cursor.getInt(2);
 				String refDesc = getReferenceDesc(ref);
-				result = new String[] {cursor.getString(0), cursor.getString(1), refDesc};
+				int accentPosition = cursor.getInt(3);
+				result = new String[] {formattedWord(word, accentPosition), description, refDesc};
 			}
 			cursor.close();
 			return result;
@@ -179,14 +185,15 @@ public class DataBaseServiceImpl implements DatabaseService {
    	}
 
 	private Map<Integer, String> getIdWordMapFromCursor(Cursor cursor, boolean capitalLetters) {
-		Map<Integer, String> result = new HashMap<Integer, String>();
+		Map<Integer, String> result = new HashMap<>();
 		if (cursor.moveToFirst()) {
             do {
             	String word = cursor.getString(1);
+				int accentPosition = cursor.getInt(2);
             	if (! capitalLetters) {
             		word = word.charAt(0) + word.substring(1).toLowerCase();
             	}
-            	result.put(cursor.getInt(0), word);
+            	result.put(cursor.getInt(0), formattedWord(word, accentPosition));
             }
             while (cursor.moveToNext());
         }
@@ -195,10 +202,10 @@ public class DataBaseServiceImpl implements DatabaseService {
 	}
 	
 	private Map<Integer, String> getIdWordDescMapFromCursor(Cursor cursor,	boolean capitalLetters, String query) {
-		 Map<Integer, String> result = new HashMap<Integer, String>();
+		 Map<Integer, String> result = new HashMap<>();
 		 if (cursor.moveToFirst()) {
 			 do {
-				 String word = cursor.getString(1);
+				 String word = formattedWord(cursor.getString(1), cursor.getInt(3));
 				 String desc = cursor.getString(2);
 				 StringBuilder wordDesc = new StringBuilder();
 				 if (capitalLetters) {
@@ -239,12 +246,12 @@ public class DataBaseServiceImpl implements DatabaseService {
 	public String getWordById(Integer wordId) {
 		openDataBase();
 		try {
-			Cursor cursor = database.query(WORD, new String[] {WORD}, 
+			Cursor cursor = database.query(WORD, new String[] {WORD, ACCENT_POSITION},
 					WORD_ID + " = " + wordId,
 	        		null, null, null, null);
 			String result = null;
 			if (cursor.moveToFirst()) {
-				result = cursor.getString(0);
+				result = formattedWord(cursor.getString(0), cursor.getInt(1));
 			}
 			cursor.close();
 			return result;
@@ -263,6 +270,13 @@ public class DataBaseServiceImpl implements DatabaseService {
 				WORD + " as " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA},
 				WORD + " like '" + begin.trim().toUpperCase() + "%'", 
 				null, null, null, null, "10");
+	}
+
+	private static String formattedWord(String word, int accentPosition) {
+		if (accentPosition >= 0) {
+			return new StringBuilder().append(word).insert(accentPosition, ACCENT).toString();
+		}
+		return word;
 	}
 	
 }
