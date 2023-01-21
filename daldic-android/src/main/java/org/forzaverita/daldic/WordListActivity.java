@@ -41,7 +41,7 @@ public class WordListActivity extends ListActivity {
 	private LayoutInflater inflater;
 	private LinearLayout parent;
 	private Date lastPreferencesCheck = new Date();
-	
+
 	private class SearchTask extends AsyncTask<Void, Void, Map<Integer, String>> {
     	
     	ProgressDialog dialog;
@@ -143,16 +143,13 @@ public class WordListActivity extends ListActivity {
 
 		private void configureSearchFullButton() {
 			Button searchFull = parent.findViewById(R.id.search_full);
-			if (searchType == SearchType.BEGIN && queryString.length() > 2) {
+			if (searchType == SearchType.BEGIN) {
 				searchFull.setTypeface(service.getFont());
 	    		searchFull.setVisibility(View.VISIBLE);
-	    		searchFull.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View paramView) {
-						Intent intent = new Intent(WordListActivity.this, WordListActivity.class);
-						intent.putExtra(Constants.SEARCH_QUERY_FULL, queryString);
-						startActivity(intent);
-					}
+	    		searchFull.setOnClickListener(paramView -> {
+					Intent intent = new Intent(WordListActivity.this, WordListActivity.class);
+					intent.putExtra(Constants.SEARCH_QUERY_FULL, queryString);
+					startActivity(intent);
 				});
 			}
 			else {
