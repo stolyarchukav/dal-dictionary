@@ -73,7 +73,8 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:background="@drawable/border_thin_black"
-				android:layout_margin="3dp">
+				android:layout_margin="3dp"
+				android:layout_marginTop="10dp">
 
 				<TextView
 					android:layout_width="fill_parent"
@@ -102,7 +103,7 @@
 						android:background="@drawable/selector_dashboard_button"
 						android:drawableTop="@drawable/menu_search_full"
 						android:textColor="#000000"
-						android:textSize="10sp"
+						android:textSize="11sp"
 						android:text="@string/do_search" />
 
 				</LinearLayout>
@@ -114,9 +115,11 @@
     			android:layout_height="wrap_content"
     			android:text="@string/rate_app"
     			android:gravity="center_horizontal|center_vertical"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="30dp"
                 android:textColor="@color/black"
-				android:background="@null" />
+				android:background="@null"
+				android:textSize="12sp"
+				android:drawableLeft="@drawable/button_rate"/>
     		
     		<Button android:id="@+id/moreAppsButton"
 				android:layout_width="fill_parent" 
@@ -126,6 +129,7 @@
 				android:layout_marginTop="10dp"
 				android:layout_marginBottom="20dp"
                 android:textColor="@color/black"
+				android:textSize="12sp"
                 android:background="@null" />
 
     	</LinearLayout>
