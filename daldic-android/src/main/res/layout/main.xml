@@ -66,14 +66,55 @@
 			        android:drawablePadding="-5dp"
         			android:text="@string/search" />
     			
-    		</LinearLayout>	
-    	
+    		</LinearLayout>
+
+			<LinearLayout android:id="@+id/search_full_layout"
+				android:orientation="vertical"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/border_thin_black"
+				android:layout_margin="3dp">
+
+				<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/search_full"
+					android:textSize="14sp"
+					android:padding="5dp"
+					/>
+
+				<LinearLayout android:orientation="horizontal"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:padding="5dp">
+
+					<EditText android:id="@+id/search_full_text"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="0.9"
+						android:hint="@string/search_string_empty"
+					/>
+
+					<Button android:id="@+id/search_full_button"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="0.1"
+						android:background="@drawable/selector_dashboard_button"
+						android:drawableTop="@drawable/menu_search_full"
+						android:textColor="#000000"
+						android:textSize="10sp"
+						android:text="@string/do_search" />
+
+				</LinearLayout>
+
+			</LinearLayout>
+
     		<Button android:id="@+id/rate_app" 
     			android:layout_width="fill_parent" 
     			android:layout_height="wrap_content"
     			android:text="@string/rate_app"
-    			android:gravity="center_horizontal|center_vertical" 
-    			android:layout_margin="30px"
+    			android:gravity="center_horizontal|center_vertical"
+				android:layout_marginTop="20dp"
                 android:textColor="@color/black"
 				android:background="@null" />
     		
@@ -82,8 +123,8 @@
 				android:layout_height="wrap_content"
 				android:text="@string/main_more_apps" 
 				android:gravity="center_horizontal|center_vertical" 
-				android:layout_marginTop="15px"
-				android:layout_marginBottom="40px"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="20dp"
                 android:textColor="@color/black"
                 android:background="@null" />
 

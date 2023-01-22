@@ -5,6 +5,7 @@
     <string name="title">Explanatory Dictionary of the Living Great Russian Language</string>
     <string name="browse">By alphabet</string>
     <string name="search">Search</string>
+    <string name="do_search">Start</string>
     <string name="search_hint">Begin of word</string>
     <string name="word_not_found">Unfortunately, words were not found</string>
     <string name="search_string_empty">Please, type text for search</string>
@@ -12,6 +13,7 @@
     <string name="progress_text">Loading, please wait…</string>
     <string name="goto_menu">Go to search menu</string>
     <string name="rate_app"><u>Very appreciate for your comments and rates</u></string>
+    <string name="enter_text_for_search">Enter the word to search</string>
     <string name="error_search_try_again">Error on search. Please, try again</string>
     <string name="error_db_open">Error on opening database. Please, try to reinstall application</string>
     <string name="error_db_install">Error on database installation. Please, check that device has at least 35 MB of free memory (internal or SD-card)</string>

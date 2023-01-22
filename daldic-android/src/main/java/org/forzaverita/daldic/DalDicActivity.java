@@ -15,8 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.exception.DatabaseException;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
@@ -65,6 +67,23 @@ public class DalDicActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				onSearchRequested();
+			}
+		});
+
+		EditText searchText = findViewById(R.id.search_full_text);
+		Button searchFullTextBtn = findViewById(R.id.search_full_button);
+		searchFullTextBtn.setTypeface(font);
+		searchFullTextBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String searchValue = searchText.getText().toString().trim();
+				if (!searchValue.isEmpty()) {
+					Intent intent = new Intent(DalDicActivity.this, WordListActivity.class);
+					intent.putExtra(Constants.SEARCH_QUERY_FULL, searchValue);
+					startActivity(intent);
+				} else {
+					searchText.setError(getString(R.string.enter_text_for_search));
+				}
 			}
 		});
         
