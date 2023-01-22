@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -82,12 +81,7 @@ public class AlphabetActivity extends Activity {
 				button.setTypeface(service.getFont(), Typeface.ITALIC);
 				button.setTextSize(20);
 				button.setTextColor(getResources().getColor(R.color.black));
-				button.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						startWordListActivity((Character) view.getTag());
-					}
-				});
+				button.setOnClickListener(view -> startWordListActivity((Character) view.getTag()));
 				return button;
 			}
 		};

@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -54,66 +53,49 @@ public class DalDicActivity extends Activity {
         
         Button browseBtn = findViewById(R.id.browse);
         browseBtn.setTypeface(font);
-        browseBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startBrowseActivity();
-			}
-		});
+        browseBtn.setOnClickListener(v -> startBrowseActivity());
         
         Button searchBtn = findViewById(R.id.search);
         searchBtn.setTypeface(font);
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onSearchRequested();
-			}
-		});
+        searchBtn.setOnClickListener(v -> onSearchRequested());
 
 		EditText searchText = findViewById(R.id.search_full_text);
 		Button searchFullTextBtn = findViewById(R.id.search_full_button);
 		searchFullTextBtn.setTypeface(font);
-		searchFullTextBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String searchValue = searchText.getText().toString().trim();
-				if (!searchValue.isEmpty()) {
-					Intent intent = new Intent(DalDicActivity.this, WordListActivity.class);
-					intent.putExtra(Constants.SEARCH_QUERY_FULL, searchValue);
-					startActivity(intent);
-				} else {
-					searchText.setError(getString(R.string.enter_text_for_search));
-				}
+		searchFullTextBtn.setOnClickListener(v -> {
+			String searchValue = searchText.getText().toString().trim();
+			if (!searchValue.isEmpty()) {
+				Intent intent = new Intent(DalDicActivity.this, WordListActivity.class);
+				intent.putExtra(Constants.SEARCH_QUERY_FULL, searchValue);
+				startActivity(intent);
+			} else {
+				searchText.setError(getString(R.string.enter_text_for_search));
 			}
 		});
         
         Button rateBtn = findViewById(R.id.rate_app);
         rateBtn.setTypeface(font);
         rateBtn.setPaintFlags(rateBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        rateBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View paramView) {
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" +
-							getApplicationInfo().packageName)));
-				}
-				catch (ActivityNotFoundException e) {
-				}
+        rateBtn.setOnClickListener(paramView -> {
+			try {
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" +
+						getApplicationInfo().packageName)));
+			}
+			catch (ActivityNotFoundException e) {
+				Log.e(Constants.LOG_TAG, "Error opening app rate", e);
 			}
 		});
         
         Button moreAppsBtn = findViewById(R.id.moreAppsButton);
         moreAppsBtn.setTypeface(font);
         moreAppsBtn.setPaintFlags(moreAppsBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        moreAppsBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View paramView) {
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, 
-							Uri.parse("http://play.google.com/store/search?q=pub:ForzaVerita")));
-				}
-				catch (ActivityNotFoundException e) {
-				}
+        moreAppsBtn.setOnClickListener(paramView -> {
+			try {
+				startActivity(new Intent(Intent.ACTION_VIEW,
+						Uri.parse("http://play.google.com/store/search?q=pub:ForzaVerita")));
+			}
+			catch (ActivityNotFoundException e) {
+				Log.e(Constants.LOG_TAG, "Error opening apps list", e);
 			}
 		});
         
@@ -161,12 +143,7 @@ public class DalDicActivity extends Activity {
             		if (error != null) {
             			new AlertDialog.Builder(DalDicActivity.this).
             				setMessage(error).
-            				setOnCancelListener(new DialogInterface.OnCancelListener() {
-								@Override
-								public void onCancel(DialogInterface paramDialogInterface) {
-									finish();
-								}
-							}).
+            				setOnCancelListener(paramDialogInterface -> finish()).
             				create().show();
             		}
             	}

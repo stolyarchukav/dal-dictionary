@@ -1,12 +1,5 @@
 package org.forzaverita.daldic.widget;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import org.forzaverita.daldic.R;
-import org.forzaverita.daldic.WordActivity;
-import org.forzaverita.daldic.service.DalDicService;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -17,10 +10,17 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import org.forzaverita.daldic.R;
+import org.forzaverita.daldic.WordActivity;
+import org.forzaverita.daldic.service.DalDicService;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class WordWidgetProvider extends AppWidgetProvider {
 	
-	private static String ACTION_WIDGET_PREVIOUS = "org.forzaverita.daldic.ACTION_WIDGET_PREVIOUS";
-	private static String ACTION_WIDGET_NEXT = "org.forzaverita.daldic.ACTION_WIDGET_NEXT";
+	private static final String ACTION_WIDGET_PREVIOUS = "org.forzaverita.daldic.ACTION_WIDGET_PREVIOUS";
+	private static final String ACTION_WIDGET_NEXT = "org.forzaverita.daldic.ACTION_WIDGET_NEXT";
 	
 	private DalDicService service;
 	
@@ -52,10 +52,10 @@ public class WordWidgetProvider extends AppWidgetProvider {
     }
 	
 	private class RefreshTask extends Thread implements WidgetRefreshTask {
-		private RemoteViews views;
-		private AppWidgetManager appWidgetManager;
-		private Context context;
-		private Lock lock = new ReentrantLock();
+		private final RemoteViews views;
+		private final AppWidgetManager appWidgetManager;
+		private final Context context;
+		private final Lock lock = new ReentrantLock();
 		
 		public RefreshTask(Context context, AppWidgetManager appWidgetManager, 
 				RemoteViews views) {
@@ -178,8 +178,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		if (service == null) {
 			service = ((DalDicService) context.getApplicationContext());
 		}
-		WidgetRefreshTask task = service.getWidgetRefreshTask();
-		return task;
+		return service.getWidgetRefreshTask();
 	}
 	
 	private void updateWidget(Context context) {

@@ -23,9 +23,9 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	private Typeface fontCuprum;
 	private Typeface fontFlow;
 	private DatabaseService dataBaseService;
-	private Random random = new Random();
+	private final Random random = new Random();
 	private WidgetRefreshTask widgetRefreshTask;
-	private WordsCache wordsCache = new WordsCache();
+	private final WordsCache wordsCache = new WordsCache();
 	private PreferencesService preferencesService;
 	private Date preferenceChangeDate;
 	private boolean bookmarksChanged;

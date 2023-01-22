@@ -4,7 +4,7 @@ public class WordsCache {
 
 	private static final int SIZE = 20;
 	
-	private Word[] cache = new Word[SIZE];
+	private final Word[] cache = new Word[SIZE];
 	
 	private int index = 0;
 	

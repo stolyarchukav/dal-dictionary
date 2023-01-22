@@ -105,18 +105,15 @@ public class WordActivity extends Activity {
 		final AtomicBoolean bookmarked = new AtomicBoolean(service.isBookmarked(wordId));
 		final Button buttonBookmark = (Button) findViewById(R.id.bookmark);
 		configureBookmark(bookmarked.get(), buttonBookmark);
-		buttonBookmark.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (bookmarked.get()) {
-					service.removeBookmark(wordId);					
-				}
-				else {
-					service.addBookmark(wordId, word);
-				}
-				bookmarked.set(! bookmarked.get());
-				configureBookmark(bookmarked.get(), buttonBookmark);
+		buttonBookmark.setOnClickListener(v -> {
+			if (bookmarked.get()) {
+				service.removeBookmark(wordId);
 			}
+			else {
+				service.addBookmark(wordId, word);
+			}
+			bookmarked.set(! bookmarked.get());
+			configureBookmark(bookmarked.get(), buttonBookmark);
 		});
 		final Button buttonPrevious = (Button) findViewById(R.id.word_previous);
 		buttonPrevious.setOnClickListener(new View.OnClickListener() {
@@ -189,12 +186,9 @@ public class WordActivity extends Activity {
         	button.setVisibility(View.VISIBLE);
         	button.setTypeface(service.getFont());
         	button.setTextColor(Color.BLACK);
-        	button.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(WordActivity.this, DalDicActivity.class);
-					startActivity(intent);
-				}
+        	button.setOnClickListener(v -> {
+				Intent intent = new Intent(WordActivity.this, DalDicActivity.class);
+				startActivity(intent);
 			});
         }
         else {

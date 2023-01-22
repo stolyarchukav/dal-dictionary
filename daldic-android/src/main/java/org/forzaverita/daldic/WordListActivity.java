@@ -1,18 +1,5 @@
 package org.forzaverita.daldic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.forzaverita.daldic.data.Constants;
-import org.forzaverita.daldic.data.SearchType;
-import org.forzaverita.daldic.menu.MenuUtils;
-import org.forzaverita.daldic.service.DalDicService;
-
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -26,12 +13,23 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.forzaverita.daldic.data.Constants;
+import org.forzaverita.daldic.data.SearchType;
+import org.forzaverita.daldic.menu.MenuUtils;
+import org.forzaverita.daldic.service.DalDicService;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class WordListActivity extends ListActivity {
 	
@@ -97,13 +95,7 @@ public class WordListActivity extends ListActivity {
     		if (words != null && ! words.isEmpty()) {
     			ArrayList<Entry<Integer, String>> wordList = new ArrayList<>(
                         words.entrySet());
-    			Collections.sort(wordList, new Comparator<Entry<Integer, String>>() {
-    				@Override
-    				public int compare(Entry<Integer, String> object1,
-    						Entry<Integer, String> object2) {
-    					return object1.getValue().compareTo(object2.getValue());
-    				}
-				});
+    			Collections.sort(wordList, (object1, object2) -> object1.getValue().compareTo(object2.getValue()));
     			setListAdapter(new ArrayAdapter<Entry<Integer, String>>(WordListActivity.this, R.layout.wordlist_item, wordList) {
                 	@Override
                 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -121,12 +113,7 @@ public class WordListActivity extends ListActivity {
                         tv.setTextColor(Color.BLACK);
                         
                         row.setTag(getItem(position).getKey());
-                        row.setOnClickListener(new View.OnClickListener() {
-    						@Override
-    						public void onClick(View paramView) {
-    							startWordActivity((Integer) paramView.getTag());
-    						}
-    					});
+                        row.setOnClickListener(paramView -> startWordActivity((Integer) paramView.getTag()));
                         row.setPadding(MARGIN, MARGIN, MARGIN, MARGIN);
                         return row;
                 	}
