@@ -89,7 +89,7 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 		else if (typeface == Typeface.SERIF) {
 			return TextFont.SERIF;
 		}
-		else 	return TextFont.MONOSPACE;
+		return TextFont.SANS_SERIF;
 	}
 	
 	@Override

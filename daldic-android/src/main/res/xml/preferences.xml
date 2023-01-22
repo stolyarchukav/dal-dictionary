@@ -36,7 +36,7 @@
 			android:summary="@string/pref_text_font_summary"
 			android:entries="@array/pref_text_font_names"
 			android:entryValues="@array/pref_text_font_values"
-			android:defaultValue="PHILOSOPHER" />
+			android:defaultValue="SANS_SERIF" />
 		
 	</PreferenceCategory>
 	

@@ -82,7 +82,7 @@ public class PreferencesServiceImpl implements PreferencesService {
 	
 	@Override
 	public TextFont getTextFont() {
-		return TextFont.valueOf(preferences.getString(NAME_PREF_TEXT_FONT, TextFont.PHILOSOPHER.name()));
+		return TextFont.valueOf(preferences.getString(NAME_PREF_TEXT_FONT, TextFont.SANS_SERIF.name()));
 	}
 	
 	@Override
