@@ -3,7 +3,7 @@
     <item android:id="@+id/menu_settings"
           android:icon="@drawable/menu_settings"
           android:title="@string/pref" />
-    <item android:id="@+id/menu_seacrh"
+    <item android:id="@+id/menu_search"
           android:icon="@drawable/menu_search"
           android:title="@string/search" />
     <item android:id="@+id/menu_history"

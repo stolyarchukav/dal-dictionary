@@ -46,7 +46,7 @@ public class MenuUtils {
 			case R.id.menu_settings :
 				activity.startActivity(new Intent(activity, AppPreferenceActivity.class));
 				break;
-			case R.id.menu_seacrh :
+			case R.id.menu_search :
 				activity.onSearchRequested();
 				break;
 			case R.id.menu_history :
