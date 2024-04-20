@@ -8,7 +8,7 @@ public class WordFormatter {
     public static String formattedWord(Word word) {
         String name = word.getWord();
         Integer accentPosition = word.getAccentPosition();
-        if (accentPosition != null) {
+        if (accentPosition != null && accentPosition >= 0) {
             return new StringBuilder().append(name).insert(accentPosition, SpecialCharacters.ACCENT).toString();
         }
         return name;
