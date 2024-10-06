@@ -1,50 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/texture_widget"
-    android:layout_margin="10px">
-    
-    <ImageButton android:id="@+id/widget_left" 
-		android:layout_width="wrap_content" 
+    android:layout_margin="10dp">
+
+    <ImageButton android:id="@+id/widget_left"
+		android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:background="@null"
-    	android:src="@drawable/selector_left_arrow"
-    	android:layout_margin="5px" 
-    	android:layout_gravity="center_vertical|left" />
-    
+        android:contentDescription="@string/word_previous"
+        android:src="@drawable/selector_left_arrow"
+    	android:layout_margin="5dp"
+    	android:layout_gravity="center_vertical|start" />
+
     <FrameLayout android:id="@+id/widget_loading"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
     	android:layout_weight=".80" >
-    	
+
     	<ProgressBar style="@android:style/Widget.ProgressBar.Small.Inverse"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:indeterminate="true"
     		android:layout_gravity="center_vertical|center_horizontal" />
-    		
+
     </FrameLayout>
-    
-    <TextView android:id="@+id/widget_word" 
-		android:layout_width="fill_parent" 
+
+    <TextView android:id="@+id/widget_word"
+		android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
     	android:layout_weight=".80"
     	android:textSize="14sp"
     	android:typeface="serif"
-    	android:layout_marginLeft="5px"
-    	android:layout_marginRight="5px"
-    	android:layout_marginTop="10px" 
-    	android:layout_marginBottom="10px"
+    	android:layout_marginLeft="5dp"
+    	android:layout_marginRight="5dp"
+    	android:layout_marginTop="10dp"
+    	android:layout_marginBottom="10dp"
     	android:visibility="gone" />
-    
-    <ImageButton android:id="@+id/widget_right" 
-		android:layout_width="wrap_content" 
+
+    <ImageButton android:id="@+id/widget_right"
+		android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:background="@null"
-    	android:src="@drawable/selector_right_arrow"
-    	android:layout_margin="5px" 
-    	android:layout_gravity="center_vertical|right" />
+        android:contentDescription="@string/word_next"
+        android:src="@drawable/selector_right_arrow"
+    	android:layout_margin="5dp"
+    	android:layout_gravity="center_vertical|end" />
     
 </LinearLayout>
