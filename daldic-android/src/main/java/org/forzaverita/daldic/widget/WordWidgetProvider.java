@@ -40,8 +40,8 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		Intent previousIntent = new Intent(context, WordWidgetProvider.class);
 		previousIntent.setAction(ACTION_WIDGET_PREVIOUS);
-		PendingIntent pendingPreviuosIntent = PendingIntent.getBroadcast(context, 0, previousIntent, PendingIntent.FLAG_MUTABLE);
-		views.setOnClickPendingIntent(R.id.widget_left, pendingPreviuosIntent);
+		PendingIntent pendingPreviosIntent = PendingIntent.getBroadcast(context, 0, previousIntent, PendingIntent.FLAG_MUTABLE);
+		views.setOnClickPendingIntent(R.id.widget_left, pendingPreviosIntent);
 		
 		Intent nextIntent = new Intent(context, WordWidgetProvider.class);
 		nextIntent.setAction(ACTION_WIDGET_NEXT);
@@ -98,22 +98,14 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		@Override
 		public void next() {
-			showLoading();
 			String word = service.getNextWord();
 			refreshWord(word);
 		}
 		
 		@Override
 		public void previous() {
-			showLoading();
 			String word = service.getPreviousWord();
 			refreshWord(word);
-		}
-		
-		private void showLoading() {
-			views.setViewVisibility(R.id.widget_word, View.GONE);
-			views.setViewVisibility(R.id.widget_loading, View.VISIBLE);
-			updateWidget();
 		}
 
 		private void refreshWord(String word) {
