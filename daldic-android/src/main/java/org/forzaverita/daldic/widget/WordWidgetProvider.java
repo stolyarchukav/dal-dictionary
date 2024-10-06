@@ -40,12 +40,12 @@ public class WordWidgetProvider extends AppWidgetProvider {
 		
 		Intent previousIntent = new Intent(context, WordWidgetProvider.class);
 		previousIntent.setAction(ACTION_WIDGET_PREVIOUS);
-		PendingIntent pendingPreviuosIntent = PendingIntent.getBroadcast(context, 0, previousIntent, 0);
+		PendingIntent pendingPreviuosIntent = PendingIntent.getBroadcast(context, 0, previousIntent, PendingIntent.FLAG_MUTABLE);
 		views.setOnClickPendingIntent(R.id.widget_left, pendingPreviuosIntent);
 		
 		Intent nextIntent = new Intent(context, WordWidgetProvider.class);
 		nextIntent.setAction(ACTION_WIDGET_NEXT);
-		PendingIntent pendingNextIntent = PendingIntent.getBroadcast(context, 0, nextIntent, 0);
+		PendingIntent pendingNextIntent = PendingIntent.getBroadcast(context, 0, nextIntent, PendingIntent.FLAG_MUTABLE);
 		views.setOnClickPendingIntent(R.id.widget_right, pendingNextIntent);
 		
 		appWidgetManager.updateAppWidget(appWidgetIds, views);
@@ -118,7 +118,7 @@ public class WordWidgetProvider extends AppWidgetProvider {
 
 		private void refreshWord(String word) {
 			Intent intent = new Intent(context, WordActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
             
             views.setViewVisibility(R.id.widget_loading, View.GONE);
             views.setViewVisibility(R.id.widget_word, View.VISIBLE);
