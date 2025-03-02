@@ -1,26 +1,32 @@
 package org.forzaverita.daldic;
 
-import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class AlphabetActivity extends Activity {
+public class AlphabetActivity extends ListActivity {
     
 	private static final int MARGIN = 5;
 	private DalDicService service;
+	private LayoutInflater inflater;
 	private Date lastPreferencesCheck = new Date();
 
 	@Override
@@ -37,55 +43,35 @@ public class AlphabetActivity extends Activity {
         super.onCreate(savedInstanceState);
         setTitle(R.string.browse);
         setContentView(R.layout.alphabet);
+		inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         service = (DalDicService) getApplicationContext();
-
-        ScrollView parent = findViewById(R.id.alphabet);
-
-        final TableLayout layout = new TableLayout(this) {
-        	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        		// Check child count to avoid duplicate buttons
-				if  (getChildCount() > 0) {
-					return;
+		List<Character> letters = new ArrayList<>();
+		for (char letter = 'А'; letter <= 'Я'; letter++) {
+			letters.add(letter);
+		}
+		setListAdapter(new ArrayAdapter<Character>(AlphabetActivity.this, R.layout.wordlist_item, letters) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View row;
+				if (convertView == null) {
+					row = inflater.inflate(R.layout.wordlist_item, null);
 				}
-				int width = MeasureSpec.getSize(widthMeasureSpec);
-				int columns = width / 250;
-			    TableRow row = null;
-			    int w = 0;
-			    for (char letter = 'А'; letter <= 'Я'; letter++) {
-                	if (w++ % columns == 0) {
-                		row = raw();
-                        addView(row);
-                	}
-					if (row != null) {
-						row.addView(letterButton(letter));
-					}
-                }
-			    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        	}
+				else {
+					row = convertView;
+				}
 
-			private TableRow raw() {
-				return new TableRow(AlphabetActivity.this);
-			}
+				TextView tv = row.findViewById(android.R.id.text1);
+				tv.setText(Html.fromHtml(getItem(position).toString()));
+				tv.setTypeface(service.getFont());
+				tv.setTextColor(Color.BLACK);
 
-			private Button letterButton(char letter) {
-				final Button button = new Button(AlphabetActivity.this);
-				button.setBackgroundResource(R.drawable.selector_dashboard_button);
-				button.setText(String.valueOf(letter));
-				button.setTag(letter);
-				TableRow.LayoutParams params = new TableRow.LayoutParams(
-						LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-				params.setMargins(MARGIN, MARGIN, MARGIN, MARGIN);
-				button.setLayoutParams(params);
-				button.setTypeface(service.getFont(), Typeface.ITALIC);
-				button.setTextSize(20);
-				button.setTextColor(getResources().getColor(R.color.black));
-				button.setOnClickListener(view -> startWordListActivity((Character) view.getTag()));
-				return button;
+				row.setTag(getItem(position));
+				row.setOnClickListener(paramView -> startWordListActivity((Character) paramView.getTag()));
+				row.setPadding(MARGIN, MARGIN, MARGIN, MARGIN);
+				return row;
 			}
-		};
-        parent.addView(layout);
+		});
     }
 	
 	@Override

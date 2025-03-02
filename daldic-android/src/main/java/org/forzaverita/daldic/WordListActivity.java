@@ -101,7 +101,7 @@ public class WordListActivity extends ListActivity {
                 	public View getView(int position, View convertView, ViewGroup parent) {
                 		View row;
                         if (convertView == null) {
-                        	row =  inflater.inflate(R.layout.wordlist_item, null);
+                        	row = inflater.inflate(R.layout.wordlist_item, null);
                         }
                         else {
                         	row = convertView;
