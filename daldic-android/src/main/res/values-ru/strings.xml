@@ -5,6 +5,7 @@
     <string name="title">Толковый словарь живого великорусского языка</string>
     <string name="browse">По алфавиту</string>
     <string name="search">Поиск</string>
+    <string name="random_word">Случайное слово</string>
     <string name="do_search">Искать</string>
     <string name="search_hint">Начало слова</string>
     <string name="word_not_found">К сожалению, не найдено ни одного слова по запросу</string>

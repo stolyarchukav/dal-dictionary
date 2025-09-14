@@ -26,7 +26,9 @@ public interface DalDicService {
 	String getNextWord();
 
 	String getPreviousWord();
-	
+
+	Word generateRandomWord();
+
 	Word getCurrentWord();
 	
 	void setWidgetRefreshTask(WidgetRefreshTask task);

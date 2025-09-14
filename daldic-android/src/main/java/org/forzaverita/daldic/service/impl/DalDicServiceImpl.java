@@ -136,7 +136,8 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 		return word.getDescription();
 	}
 
-	private Word generateRandomWord() {
+	@Override
+	public Word generateRandomWord() {
 		int count = dataBaseService.getWordsCount();
 		Word word = null;
 		while (word == null) {

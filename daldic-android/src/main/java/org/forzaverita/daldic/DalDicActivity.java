@@ -62,6 +62,10 @@ public class DalDicActivity extends Activity {
         searchBtn.setTypeface(font);
         searchBtn.setOnClickListener(v -> onSearchRequested());
 
+		Button randomWordBtn = findViewById(R.id.random_word);
+		randomWordBtn.setTypeface(font);
+		randomWordBtn.setOnClickListener(v -> randomWord());
+
 		EditText searchText = findViewById(R.id.search_full_text);
 		Button searchFullTextBtn = findViewById(R.id.search_full_button);
 		searchFullTextBtn.setTypeface(font);
@@ -158,5 +162,15 @@ public class DalDicActivity extends Activity {
 		Intent intent = new Intent(this, AlphabetActivity.class);
 		startActivity(intent);
 	}
-	
+
+	private void randomWord() {
+		startWordActivity(service.generateRandomWord().getId());
+	}
+
+	private void startWordActivity(Integer wordId) {
+		Intent intent = new Intent(this, WordActivity.class);
+		intent.putExtra(Constants.WORD_ID, wordId);
+		startActivity(intent);
+	}
+
 }

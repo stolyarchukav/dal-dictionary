@@ -5,6 +5,7 @@
     <string name="title">Explanatory Dictionary of the Living Great Russian Language</string>
     <string name="browse">By alphabet</string>
     <string name="search">Search</string>
+    <string name="random_word">Random word</string>
     <string name="do_search">Start</string>
     <string name="search_hint">Begin of word</string>
     <string name="word_not_found">Unfortunately, words were not found</string>
