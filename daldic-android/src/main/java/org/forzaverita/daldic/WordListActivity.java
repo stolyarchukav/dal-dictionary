@@ -23,6 +23,7 @@ import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.data.SearchType;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
+import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -158,6 +159,7 @@ public class WordListActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordlist);
+		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.wordlist));
         service = (DalDicService) getApplicationContext();
         
         inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -39,26 +39,20 @@ public class MenuUtils {
 	}
 	
 	public static boolean optionsItemSelected(MenuItem item, Activity activity) {
-		switch (item.getItemId()) {
-            case android.R.id.home :
-                activity.startActivity(new Intent(activity, DalDicActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                break;
-			case R.id.menu_settings :
-				activity.startActivity(new Intent(activity, AppPreferenceActivity.class));
-				break;
-			case R.id.menu_search :
-				activity.onSearchRequested();
-				break;
-			case R.id.menu_history :
-				activity.startActivity(new Intent(activity, HistoryActivity.class));
-				break;
-			case R.id.menu_bookmarks :
-				activity.startActivity(new Intent(activity, BookmarksActivity.class));
-				break;
-			case R.id.menu_home:
-				activity.startActivity(new Intent(activity, DalDicActivity.class));
-				break;
-		}
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            activity.startActivity(new Intent(activity, DalDicActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        } else if (itemId == R.id.menu_settings) {
+            activity.startActivity(new Intent(activity, AppPreferenceActivity.class));
+        } else if (itemId == R.id.menu_search) {
+            activity.onSearchRequested();
+        } else if (itemId == R.id.menu_history) {
+            activity.startActivity(new Intent(activity, HistoryActivity.class));
+        } else if (itemId == R.id.menu_bookmarks) {
+            activity.startActivity(new Intent(activity, BookmarksActivity.class));
+        } else if (itemId == R.id.menu_home) {
+            activity.startActivity(new Intent(activity, DalDicActivity.class));
+        }
 		return true;
 	}
 	

@@ -2,6 +2,7 @@ package org.forzaverita.daldic.preferences;
 
 import org.forzaverita.daldic.R;
 import org.forzaverita.daldic.service.DalDicService;
+import org.forzaverita.daldic.util.CommonViewUtil;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -17,6 +18,7 @@ public class AppPreferenceActivity extends PreferenceActivity implements OnShare
 		super.onCreate(savedInstanceState);
         setTitle(R.string.pref);
 		addPreferencesFromResource(R.xml.preferences);
+		CommonViewUtil.addEdgeToEdgeMargins(findViewById(android.R.id.list));
 		service =  (DalDicService) getApplicationContext();
 	}
 	

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
+import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,6 +44,7 @@ public class AlphabetActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setTitle(R.string.browse);
         setContentView(R.layout.alphabet);
+		CommonViewUtil.addEdgeToEdgeMargins(findViewById(android.R.id.list));
 		inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         service = (DalDicService) getApplicationContext();

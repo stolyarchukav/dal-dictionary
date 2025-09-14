@@ -16,6 +16,7 @@ import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.data.Word;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
+import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +45,7 @@ public class WordActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word);
+		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.word_top_panel));
         service = (DalDicService) getApplicationContext();
         configureActivity();
     }

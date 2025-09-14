@@ -21,6 +21,7 @@ import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.exception.DatabaseException;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
+import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.util.Date;
 
@@ -42,7 +43,9 @@ public class DalDicActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        service = (DalDicService) getApplicationContext();
+		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.root));
+
+		service = (DalDicService) getApplicationContext();
         
         Typeface font = ((DalDicService) getApplicationContext()).getFont();
         
@@ -98,7 +101,7 @@ public class DalDicActivity extends Activity {
 				Log.e(Constants.LOG_TAG, "Error opening apps list", e);
 			}
 		});
-        
+
         checkDatabase();
     }
 	
