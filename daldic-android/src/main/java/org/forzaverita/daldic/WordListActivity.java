@@ -1,11 +1,8 @@
 package org.forzaverita.daldic;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -14,45 +11,49 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.data.SearchType;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
-import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class WordListActivity extends ListActivity {
-	
-	private static final int MARGIN = 5;
-    
+public class WordListActivity extends AppCompatActivity {
+
 	private DalDicService service;
-	private LayoutInflater inflater;
-	private LinearLayout parent;
 	private Date lastPreferencesCheck = new Date();
+	private RecyclerView recyclerView;
+	private TextView wordNotFound;
+	private Button searchFull;
+	private Button clearAll;
 
 	private class SearchTask extends AsyncTask<Void, Void, Map<Integer, String>> {
-    	
+
     	ProgressDialog dialog;
     	String queryString;
     	SearchType searchType;
-    	
+
     	@Override
     	protected void onPreExecute() {
-    		dialog = ProgressDialog.show(WordListActivity.this, 
+    		dialog = ProgressDialog.show(WordListActivity.this,
     				getString(R.string.progress_title), getString(R.string.progress_text));
     	}
-    	
+
     	@Override
     	protected Map<Integer, String> doInBackground(Void... paramArrayOfParams) {
     		Map<Integer, String> words = null;
@@ -88,100 +89,124 @@ public class WordListActivity extends ListActivity {
             }
             return words;
     	}
-    	
+
     	@Override
     	protected void onPostExecute(Map<Integer, String> words) {
     		dialog.dismiss();
-    		TextView textView = parent.findViewById(R.id.word_not_found);
     		if (words != null && ! words.isEmpty()) {
-    			ArrayList<Entry<Integer, String>> wordList = new ArrayList<>(
-                        words.entrySet());
+    			List<Entry<Integer, String>> wordList = new ArrayList<>(words.entrySet());
     			Collections.sort(wordList, (object1, object2) -> object1.getValue().compareTo(object2.getValue()));
-    			setListAdapter(new ArrayAdapter<Entry<Integer, String>>(WordListActivity.this, R.layout.wordlist_item, wordList) {
-                	@Override
-                	public View getView(int position, View convertView, ViewGroup parent) {
-                		View row;
-                        if (convertView == null) {
-                        	row = inflater.inflate(R.layout.wordlist_item, null);
-                        }
-                        else {
-                        	row = convertView;
-                        }
-                        
-                        TextView tv = row.findViewById(android.R.id.text1);
-                        tv.setText(Html.fromHtml(getItem(position).getValue()));
-                        tv.setTypeface(service.getFont());
-                        tv.setTextColor(Color.BLACK);
-                        
-                        row.setTag(getItem(position).getKey());
-                        row.setOnClickListener(paramView -> startWordActivity((Integer) paramView.getTag()));
-                        row.setPadding(MARGIN, MARGIN, MARGIN, MARGIN);
-                        return row;
-                	}
-                });
-    			textView.setVisibility(View.GONE);
+    			recyclerView.setAdapter(new WordAdapter(wordList));
+    			wordNotFound.setVisibility(View.GONE);
             }
             else {
-            	textView.setText(getString(R.string.word_not_found) + ": " + queryString);
-            	textView.setTypeface(service.getFont());
-            	textView.setVisibility(View.VISIBLE);
+            	wordNotFound.setText(getString(R.string.word_not_found) + ": " + queryString);
+            	wordNotFound.setTypeface(service.getFont());
+            	wordNotFound.setVisibility(View.VISIBLE);
             }
-    		configureSearchFullButton();
+    		configureSearchFullButton(searchType, queryString);
     	}
+	}
 
-		private void configureSearchFullButton() {
-			Button searchFull = parent.findViewById(R.id.search_full);
-			if (searchType == SearchType.BEGIN) {
-				searchFull.setTypeface(service.getFont());
-	    		searchFull.setVisibility(View.VISIBLE);
-	    		searchFull.setOnClickListener(paramView -> {
-					Intent intent = new Intent(WordListActivity.this, WordListActivity.class);
-					intent.putExtra(Constants.SEARCH_QUERY_FULL, queryString);
-					startActivity(intent);
-				});
-			}
-			else {
-				searchFull.setVisibility(View.GONE);
-			}
+	private void configureSearchFullButton(SearchType searchType, String queryString) {
+		if (searchType == SearchType.BEGIN) {
+			searchFull.setTypeface(service.getFont());
+    		searchFull.setVisibility(View.VISIBLE);
+    		searchFull.setOnClickListener(paramView -> {
+				Intent intent = new Intent(WordListActivity.this, WordListActivity.class);
+				intent.putExtra(Constants.SEARCH_QUERY_FULL, queryString);
+				startActivity(intent);
+			});
+		}
+		else {
+			searchFull.setVisibility(View.GONE);
 		}
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		if (service.isPreferencesChanged(lastPreferencesCheck)) {
 			lastPreferencesCheck = new Date();
-			onCreate(null);
+			recreate();
 		}
 	}
-	
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wordlist);
-		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.wordlist));
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+		toolbar.setNavigationOnClickListener(v -> finish());
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+		toolbar.setNavigationOnClickListener(v -> finish());
+
         service = (DalDicService) getApplicationContext();
-        
-        inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        parent = findViewById(R.id.wordlist);
-        
+		recyclerView = findViewById(R.id.recycler_view);
+		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		wordNotFound = findViewById(R.id.word_not_found);
+		searchFull = findViewById(R.id.search_full);
+		clearAll = findViewById(R.id.clear_all);
+
         new SearchTask().execute();
     }
-	
+
+	private class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
+		private final List<Entry<Integer, String>> words;
+
+		WordAdapter(List<Entry<Integer, String>> words) {
+			this.words = words;
+		}
+
+		@NonNull
+		@Override
+		public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wordlist_item, parent, false);
+			return new ViewHolder(view);
+		}
+
+		@Override
+		public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+			Entry<Integer, String> entry = words.get(position);
+			holder.textView.setText(Html.fromHtml(entry.getValue()));
+			holder.textView.setTypeface(service.getFont());
+			holder.itemView.setOnClickListener(v -> startWordActivity(entry.getKey()));
+		}
+
+		@Override
+		public int getItemCount() {
+			return words.size();
+		}
+
+		class ViewHolder extends RecyclerView.ViewHolder {
+			TextView textView;
+			ViewHolder(View view) {
+				super(view);
+				textView = view.findViewById(android.R.id.text1);
+			}
+		}
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return MenuUtils.createOptionsMenu(menu, this);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return MenuUtils.optionsItemSelected(item, this);
 	}
-	
+
 	private void startWordActivity(Integer wordId) {
 		Intent intent = new Intent(this, WordActivity.class);
 		intent.putExtra(Constants.WORD_ID, wordId);
 		startActivity(intent);
 	}
-	
+
 }

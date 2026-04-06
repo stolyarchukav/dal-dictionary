@@ -1,12 +1,8 @@
 package org.forzaverita.daldic.history;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -15,32 +11,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.forzaverita.daldic.R;
 import org.forzaverita.daldic.WordActivity;
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
-import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public abstract class AbstractListActivity extends ListActivity {
+public abstract class AbstractListActivity extends AppCompatActivity {
 
-	private static final int MARGIN = 5;
-	
 	private DalDicService service;
-	private LayoutInflater inflater;
-	private LinearLayout parent;
 	private Date lastPreferencesCheck = new Date();
+	private RecyclerView recyclerView;
+	private TextView wordNotFound;
+	private Button clearAll;
 
 	private class SearchTask extends AsyncTask<Void, Void, Map<Integer, String>> {
     	
@@ -60,53 +59,19 @@ public abstract class AbstractListActivity extends ListActivity {
     	@Override
     	protected void onPostExecute(Map<Integer, String> words) {
     		dialog.dismiss();
-    		TextView textView = parent.findViewById(R.id.word_not_found);
     		if (words != null && ! words.isEmpty()) {
-    			ArrayList<Entry<Integer, String>> wordList = new ArrayList<>(
-						words.entrySet());
+    			List<Entry<Integer, String>> wordList = new ArrayList<>(words.entrySet());
     			Collections.reverse(wordList);
     			configureClearButton(wordList.size());
-    			setListAdapter(new ArrayAdapter<Entry<Integer, String>>(AbstractListActivity.this, R.layout.wordlist_item, wordList) {
-                	@Override
-                	public View getView(int position, View convertView, ViewGroup parent) {
-                		View row;
-                        if (convertView == null) {
-                        	row =  inflater.inflate(R.layout.wordlist_item, null);
-                        }
-                        else {
-                        	row = convertView;
-                        }
-                        
-                        TextView tv = row.findViewById(android.R.id.text1);
-                        tv.setText(Html.fromHtml(getItem(position).getValue()));
-                        tv.setTypeface(service.getFont());
-                        tv.setTextColor(Color.BLACK);
-                        
-                        row.setTag(getItem(position).getKey());
-                        row.setOnClickListener(new View.OnClickListener() {
-    						@Override
-    						public void onClick(View paramView) {
-    							startWordActivity((Integer) paramView.getTag());
-    						}
-    					});
-                        row.setPadding(MARGIN, MARGIN, MARGIN, MARGIN);
-                        return row;
-                	}
-                });
-    			textView.setVisibility(View.GONE);
+    			recyclerView.setAdapter(new WordAdapter(wordList));
+    			wordNotFound.setVisibility(View.GONE);
             }
             else {
-            	textView.setText(getEmptyText());
-            	textView.setTypeface(service.getFont());
-            	textView.setVisibility(View.VISIBLE);
+            	wordNotFound.setText(getEmptyText());
+            	wordNotFound.setTypeface(service.getFont());
+            	wordNotFound.setVisibility(View.VISIBLE);
             }
-    		configureSearchFullButton();
     	}
-
-		private void configureSearchFullButton() {
-			Button searchFull = parent.findViewById(R.id.search_full);
-			searchFull.setVisibility(View.GONE);
-		}
 	}
 	
 	@Override
@@ -114,7 +79,7 @@ public abstract class AbstractListActivity extends ListActivity {
 		super.onResume();
 		if (service.isPreferencesChanged(lastPreferencesCheck)) {
 			lastPreferencesCheck = new Date();
-			onCreate(null);
+			recreate();
 		}
 	}
 	
@@ -122,13 +87,56 @@ public abstract class AbstractListActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.wordlist);
-		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.wordlist));
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+		toolbar.setNavigationOnClickListener(v -> finish());
+
 		service = (DalDicService) getApplicationContext();
-	
-		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        parent = findViewById(R.id.wordlist);
+		recyclerView = findViewById(R.id.recycler_view);
+		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		wordNotFound = findViewById(R.id.word_not_found);
+		clearAll = findViewById(R.id.clear_all);
         
         new SearchTask().execute();
+	}
+
+	private class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
+		private final List<Entry<Integer, String>> words;
+
+		WordAdapter(List<Entry<Integer, String>> words) {
+			this.words = words;
+		}
+
+		@NonNull
+		@Override
+		public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wordlist_item, parent, false);
+			return new ViewHolder(view);
+		}
+
+		@Override
+		public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+			Entry<Integer, String> entry = words.get(position);
+			holder.textView.setText(Html.fromHtml(entry.getValue()));
+			holder.textView.setTypeface(service.getFont());
+			holder.itemView.setOnClickListener(v -> startWordActivity(entry.getKey()));
+		}
+
+		@Override
+		public int getItemCount() {
+			return words.size();
+		}
+
+		class ViewHolder extends RecyclerView.ViewHolder {
+			TextView textView;
+			ViewHolder(View view) {
+				super(view);
+				textView = view.findViewById(android.R.id.text1);
+			}
+		}
 	}
 	
 	@Override
@@ -149,27 +157,17 @@ public abstract class AbstractListActivity extends ListActivity {
 
 	private void configureClearButton(int size) {
 		if (size > 0) {
-			Button clearAll = findViewById(R.id.clear_all);
 			clearAll.setVisibility(View.VISIBLE);
-			clearAll.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					showClearConfirmation();
-				}
-			});
+			clearAll.setOnClickListener(view -> showClearConfirmation());
 		}
 	}
 
 	private void showClearConfirmation() {
 		new AlertDialog.Builder(this)
 				.setMessage(R.string.are_you_sure)
-				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						doClear();
-						finish();
-						startActivity(getIntent());
-					}
+				.setPositiveButton(R.string.yes, (dialog, which) -> {
+					doClear();
+					recreate();
 				})
 				.setNegativeButton(R.string.no, null)
 				.show();

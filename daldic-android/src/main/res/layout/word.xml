@@ -1,62 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/word"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/texture">
-    
-    <LinearLayout android:id="@+id/word_top_panel"
-        android:orientation="horizontal" 
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-    			
-    	<Button android:id="@+id/word_previous"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-			android:layout_weight="0.4"
-        	android:layout_gravity="start"
-		    android:background="@drawable/selector_word_button"
-        	android:drawableStart="@drawable/left_arrow_64"
-		    android:textSize="14sp"
-        	android:textColor="#000000"
-		    android:drawablePadding="-10sp"
-        	android:text="@string/word_previous" />
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/word_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
 
-		<Button
-			android:id="@+id/bookmark"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:background="@android:color/transparent"
-			android:drawableTop="@drawable/bookmark_on" />
-    	
-    	<Button android:id="@+id/word_next"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-			android:layout_weight="0.4"
-        	android:layout_gravity="end"
-			android:background="@drawable/selector_word_button"
-        	android:drawableEnd="@drawable/right_arrow_64"
-        	android:textSize="14sp"
-        	android:textColor="#000000"
-			android:drawablePadding="-10sp"
-        	android:text="@string/word_next" />
-    			
-    </LinearLayout>
-    
-    <WebView android:id="@+id/word_text"
-    	android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"
-    	android:layout_margin="5px"
-    	android:layout_weight="0.9" />
-    		
-    <Button android:id="@+id/word_goto_main"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:text="@string/goto_menu"
-    	android:layout_margin="5px"
-    	android:layout_marginTop="15px" />
-    
-</LinearLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/word_top_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/word_previous"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:icon="@drawable/left_arrow_64" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bookmark"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/bookmark_on" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/word_next"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:icon="@drawable/right_arrow_64"
+                app:iconGravity="end" />
+
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/word_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/word_goto_main"
+            app:layout_constraintTop_toBottomOf="@id/word_top_panel" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/word_goto_main"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/goto_menu"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

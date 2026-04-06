@@ -11,14 +11,16 @@ public class BookmarksActivity extends AbstractListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.bookmarks);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.bookmarks);
+        }
     }
 
     @Override
 	protected void onResume() {
 		super.onResume();
 		if (getService().isBookmarksChanged()) {
-			onCreate(null);
+			recreate();
 		}
 	}
 	

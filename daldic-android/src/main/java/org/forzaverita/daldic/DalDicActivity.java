@@ -1,6 +1,8 @@
 package org.forzaverita.daldic;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -25,7 +27,7 @@ import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.util.Date;
 
-public class DalDicActivity extends Activity {
+public class DalDicActivity extends AppCompatActivity {
 	
 	private DalDicService service;
 	private Date lastPreferencesCheck = new Date();
@@ -35,7 +37,7 @@ public class DalDicActivity extends Activity {
 		super.onResume();
 		if (service.isPreferencesChanged(lastPreferencesCheck)) {
 			lastPreferencesCheck = new Date();
-			onCreate(null);
+			recreate();
 		}
 	}
 	
@@ -43,7 +45,8 @@ public class DalDicActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.root));
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
 		service = (DalDicService) getApplicationContext();
         
@@ -82,7 +85,6 @@ public class DalDicActivity extends Activity {
         
         Button rateBtn = findViewById(R.id.rate_app);
         rateBtn.setTypeface(font);
-        rateBtn.setPaintFlags(rateBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         rateBtn.setOnClickListener(paramView -> {
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" +
@@ -95,7 +97,6 @@ public class DalDicActivity extends Activity {
         
         Button moreAppsBtn = findViewById(R.id.moreAppsButton);
         moreAppsBtn.setTypeface(font);
-        moreAppsBtn.setPaintFlags(moreAppsBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         moreAppsBtn.setOnClickListener(paramView -> {
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW,

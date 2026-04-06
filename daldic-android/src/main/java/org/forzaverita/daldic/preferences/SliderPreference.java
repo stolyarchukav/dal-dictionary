@@ -4,14 +4,14 @@ import org.forzaverita.daldic.R;
 import org.forzaverita.daldic.data.Constants;
 
 import android.content.Context;
-import android.preference.Preference;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 
 public class SliderPreference extends Preference {
 
@@ -19,59 +19,61 @@ public class SliderPreference extends Preference {
 	public static final int MINIMUM = 5;
 
 	private int position = Constants.PREF_REFRESH_INTERVAL;
-	private TextView positionText;
 	
 	public SliderPreference(Context context) {
 		super(context);
+		setLayoutResource(R.layout.preference_slider);
 	}
 
 	public SliderPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		setLayoutResource(R.layout.preference_slider);
 	}
 
 	public SliderPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-	}
-	
-	@Override
-	public View onCreateView(ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) 
-			getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.preference_slider, null);
-		
-		TextView title = (TextView) view.findViewById(R.id.pref_slider_title);
-		title.setText(getTitle());
-		
-		TextView titleSummary = (TextView) view.findViewById(R.id.pref_slider_title_summary);
-		titleSummary.setText(getSummary());
-		
-		SeekBar seekBar = (SeekBar) view.findViewById(R.id.pref_slider_seek);
-		seekBar.setMax(getProgress(MAXIMUM));
-		seekBar.setProgress(getProgress(position));
-		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-			}
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-			}
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				position = getPosition(progress);
-				positionText.setText(String.valueOf(position));
-				persistInt(position);
-				notifyChanged();
-			}
-		});
-		
-		positionText = (TextView) view.findViewById(R.id.pref_slider_position);
-		positionText.setText(String.valueOf(position));
-		
-		return view;
+		setLayoutResource(R.layout.preference_slider);
 	}
 
 	@Override
-	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+	public void onBindViewHolder(@NonNull PreferenceViewHolder holder) {
+		super.onBindViewHolder(holder);
+
+		TextView title = (TextView) holder.findViewById(R.id.pref_slider_title);
+		if (title != null) title.setText(getTitle());
+		
+		TextView titleSummary = (TextView) holder.findViewById(R.id.pref_slider_title_summary);
+		if (titleSummary != null) titleSummary.setText(getSummary());
+		
+		TextView positionText = (TextView) holder.findViewById(R.id.pref_slider_position);
+		if (positionText != null) positionText.setText(String.valueOf(position));
+
+		SeekBar seekBar = (SeekBar) holder.findViewById(R.id.pref_slider_seek);
+		if (seekBar != null) {
+			seekBar.setMax(getProgress(MAXIMUM));
+			seekBar.setProgress(getProgress(position));
+			seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+				}
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+				}
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+					position = getPosition(progress);
+					if (positionText != null) {
+						positionText.setText(String.valueOf(position));
+					}
+					persistInt(position);
+					notifyChanged();
+				}
+			});
+		}
+	}
+
+	@Override
+	protected void onSetInitialValue(Object defaultValue) {
 		position = getPersistedInt(position);
 	}
 

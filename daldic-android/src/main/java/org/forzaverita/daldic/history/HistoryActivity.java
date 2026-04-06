@@ -11,7 +11,9 @@ public class HistoryActivity extends AbstractListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.history);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.history);
+        }
 	}
 
 	@Override

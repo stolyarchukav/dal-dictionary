@@ -1,29 +1,30 @@
 package org.forzaverita.daldic;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
-import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.button.MaterialButton;
 
 import org.forzaverita.daldic.data.Constants;
 import org.forzaverita.daldic.data.Word;
 import org.forzaverita.daldic.menu.MenuUtils;
 import org.forzaverita.daldic.service.DalDicService;
-import org.forzaverita.daldic.util.CommonViewUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class WordActivity extends Activity {
+public class WordActivity extends AppCompatActivity {
 	
 	private static final String UTF_8 = "UTF-8";
 	private static final String FILE_ANDROID_ASSET = "file:///android_asset/";
@@ -37,7 +38,7 @@ public class WordActivity extends Activity {
 		super.onResume();
 		if (service.isPreferencesChanged(lastPreferencesCheck)) {
 			lastPreferencesCheck = new Date();
-			onCreate(null);
+			recreate();
 		}
 	}
 	
@@ -45,7 +46,13 @@ public class WordActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word);
-		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.word_top_panel));
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
+		toolbar.setNavigationOnClickListener(v -> finish());
+
         service = (DalDicService) getApplicationContext();
         configureActivity();
     }
@@ -54,7 +61,7 @@ public class WordActivity extends Activity {
 		boolean fromWidget = false;
         Word word;
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null && extras.containsKey(Constants.WORD_ID)) {
         	int wordId = (Integer) extras.get(Constants.WORD_ID);
         	word = service.getWord(wordId);
         }
@@ -67,11 +74,15 @@ public class WordActivity extends Activity {
 	}
 
 	private void configureWord(Word word) {
+		if (word == null) return;
 		int wordId = word.getId();
         String description = buildDescription(word);
     	service.addToHistory(wordId, word.getWord());
     	configureTopPanel(wordId, word.getWord());
         configureWordView(description);
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setTitle(word.getWord());
+		}
 	}
 
 	private String buildDescription(Word word) {
@@ -89,7 +100,9 @@ public class WordActivity extends Activity {
 		if (descBuilder.length() > 0) {
 			description = descBuilder.toString();
 		}
-        description = description.replaceAll("[|]", "<p>");
+		if (description != null) {
+			description = description.replaceAll("[|]", "<p>");
+		}
 		return description;
 	}
 	
@@ -105,7 +118,7 @@ public class WordActivity extends Activity {
 
 	private void configureTopPanel(final Integer wordId, final String word) {
 		final AtomicBoolean bookmarked = new AtomicBoolean(service.isBookmarked(wordId));
-		final Button buttonBookmark = (Button) findViewById(R.id.bookmark);
+		final MaterialButton buttonBookmark = findViewById(R.id.bookmark);
 		configureBookmark(bookmarked.get(), buttonBookmark);
 		buttonBookmark.setOnClickListener(v -> {
 			if (bookmarked.get()) {
@@ -117,50 +130,40 @@ public class WordActivity extends Activity {
 			bookmarked.set(! bookmarked.get());
 			configureBookmark(bookmarked.get(), buttonBookmark);
 		});
-		final Button buttonPrevious = (Button) findViewById(R.id.word_previous);
-		buttonPrevious.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				configureWord(getPreviousWord(wordId));
-			}
-		});
-		final Button buttonNext = (Button) findViewById(R.id.word_next);
-		buttonNext.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				configureWord(getNextWord(wordId));
-			}
-		});
+		final View buttonPrevious = findViewById(R.id.word_previous);
+		buttonPrevious.setOnClickListener(v -> configureWord(getPreviousWord(wordId)));
+		final View buttonNext = findViewById(R.id.word_next);
+		buttonNext.setOnClickListener(v -> configureWord(getNextWord(wordId)));
 	}
 	
 	private Word getPreviousWord(int wordId) {
-		if (wordId <= 0) {
-			wordId = Constants.WORDS_COUNT;
+		if (wordId <= 1) {
+			wordId = Constants.WORDS_COUNT + 1;
 		}
 		Word word = service.getWord(--wordId);
-		return word != null ? word : getPreviousWord(wordId - 1);
+		return word != null ? word : getPreviousWord(wordId);
 	}
 
 	protected Word getNextWord(Integer wordId) {
-		if (wordId > Constants.WORDS_COUNT) {
-			wordId = 1;
+		if (wordId >= Constants.WORDS_COUNT) {
+			wordId = 0;
 		}
 		Word word = service.getWord(++wordId);
-		return word != null ? word : getNextWord(wordId + 1);
+		return word != null ? word : getNextWord(wordId);
 	}
 	
-	private void configureBookmark(final boolean bookmarked, Button button) {
-		int drawable = bookmarked ? R.drawable.bookmark_on : R.drawable.bookmark_off;
-		button.setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
+	private void configureBookmark(final boolean bookmarked, MaterialButton button) {
+		button.setIconResource(bookmarked ? R.drawable.bookmark_on : R.drawable.bookmark_off);
 	}
 	
 	private void configureWordView(String description) {
 		if (description != null) {
         	WebView text = findViewById(R.id.word_text);
         	text.setBackgroundColor(0x00000000);
-        	text.getSettings().setDefaultFontSize(25);
+        	text.getSettings().setDefaultFontSize(20);
         	text.getSettings().setSupportZoom(true);
         	text.getSettings().setBuiltInZoomControls(true);
+        	text.getSettings().setDisplayZoomControls(false);
         	text.getSettings().setDefaultTextEncodingName(UTF_8);
         	text.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
         	String data = "";
@@ -183,11 +186,10 @@ public class WordActivity extends Activity {
 	}
 
 	private void configureGotoMain(boolean fromWidget) {
-		Button button = (Button) findViewById(R.id.word_goto_main);
+		MaterialButton button = findViewById(R.id.word_goto_main);
         if (fromWidget) {
         	button.setVisibility(View.VISIBLE);
         	button.setTypeface(service.getFont());
-        	button.setTextColor(Color.BLACK);
         	button.setOnClickListener(v -> {
 				Intent intent = new Intent(WordActivity.this, DalDicActivity.class);
 				startActivity(intent);
