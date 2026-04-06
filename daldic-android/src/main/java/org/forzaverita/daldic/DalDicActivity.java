@@ -80,7 +80,6 @@ public class DalDicActivity extends Activity {
 			service.setShowBackground(!service.isShowBackground());
 			recreate();
 		});
-		CommonViewUtil.addEdgeToEdgeMargins(switchClassicBtn);
 
 		EditText searchText = findViewById(R.id.search_full_text);
 		Button searchFullTextBtn = findViewById(R.id.search_full_button);
