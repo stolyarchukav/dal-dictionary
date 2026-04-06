@@ -223,7 +223,7 @@ public class DataBaseServiceImpl implements DatabaseService {
 				 String postfix = desc.substring(index + query.length(), end);
 				 wordDesc.append("</br><small><i> ...");
 				 wordDesc.append(prefix);
-				 wordDesc.append("<font color='green'>");
+				 wordDesc.append("<font color='blue'>");
 				 wordDesc.append(body);
 				 wordDesc.append("</font>");
 				 wordDesc.append(postfix);
