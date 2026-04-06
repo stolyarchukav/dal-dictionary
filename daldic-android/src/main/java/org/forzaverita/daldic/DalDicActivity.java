@@ -46,6 +46,7 @@ public class DalDicActivity extends Activity {
 		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.root));
 
 		service = (DalDicService) getApplicationContext();
+		CommonViewUtil.setupBackground(findViewById(R.id.main_layout_parent), service);
         
         Typeface font = ((DalDicService) getApplicationContext()).getFont();
         

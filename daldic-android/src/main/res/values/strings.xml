@@ -40,6 +40,8 @@
     </string-array>
     <string name="pref_text_font">Font</string>
     <string name="pref_text_font_summary">Text font in application</string>
+    <string name="pref_show_background">Show background</string>
+    <string name="pref_show_background_summary">Show texture background in application</string>
     <string-array name="pref_text_font_names">
     	<item>Philosopher</item>
     	<item>Flow</item>

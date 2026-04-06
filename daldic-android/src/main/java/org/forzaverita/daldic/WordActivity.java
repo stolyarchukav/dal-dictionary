@@ -47,6 +47,7 @@ public class WordActivity extends Activity {
         setContentView(R.layout.word);
 		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.word_top_panel));
         service = (DalDicService) getApplicationContext();
+        CommonViewUtil.setupBackground(findViewById(R.id.word), service);
         configureActivity();
     }
 

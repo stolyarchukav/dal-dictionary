@@ -161,6 +161,7 @@ public class WordListActivity extends ListActivity {
         setContentView(R.layout.wordlist);
 		CommonViewUtil.addEdgeToEdgeMargins(findViewById(R.id.wordlist));
         service = (DalDicService) getApplicationContext();
+        CommonViewUtil.setupBackground(findViewById(R.id.wordlist), service);
         
         inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         parent = findViewById(R.id.wordlist);

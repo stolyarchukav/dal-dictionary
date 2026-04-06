@@ -17,6 +17,8 @@ public interface PreferencesService {
 
 	boolean isCapitalLetters();
 
+	boolean isShowBackground();
+
 	boolean isAutoRefresh();
 
 	int getRefreshInterval();

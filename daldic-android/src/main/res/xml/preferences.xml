@@ -37,7 +37,12 @@
 			android:entries="@array/pref_text_font_names"
 			android:entryValues="@array/pref_text_font_values"
 			android:defaultValue="SANS_SERIF" />
-		
+
+		<CheckBoxPreference android:key="pref_show_background"
+			android:title="@string/pref_show_background"
+			android:summary="@string/pref_show_background_summary"
+			android:defaultValue="true" />
+
 	</PreferenceCategory>
 	
 </PreferenceScreen>

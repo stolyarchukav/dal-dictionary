@@ -7,6 +7,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.forzaverita.daldic.R;
+import org.forzaverita.daldic.service.DalDicService;
+
 public final class CommonViewUtil {
 
     public static void addEdgeToEdgeMargins(View view) {
@@ -27,6 +30,14 @@ public final class CommonViewUtil {
             // down to descendant views.
             return WindowInsetsCompat.CONSUMED;
         });
+    }
+
+    public static void setupBackground(View view, DalDicService service) {
+        if (service.isShowBackground()) {
+            view.setBackgroundResource(R.drawable.texture);
+        } else {
+            view.setBackgroundResource(android.R.color.white);
+        }
     }
 
 }

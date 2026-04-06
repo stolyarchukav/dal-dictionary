@@ -48,6 +48,8 @@ public class AlphabetActivity extends ListActivity {
 		inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         service = (DalDicService) getApplicationContext();
+		CommonViewUtil.setupBackground(findViewById(R.id.alphabet_layout_root), service);
+
 		List<Character> letters = new ArrayList<>();
 		for (char letter = 'А'; letter <= 'Я'; letter++) {
 			letters.add(letter);

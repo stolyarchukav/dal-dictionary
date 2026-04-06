@@ -12,6 +12,7 @@ import org.forzaverita.daldic.service.PreferencesService;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static org.forzaverita.daldic.data.Constants.NAME_PREF_SHOW_BACKGROUND;
 import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_ALIGN;
 import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_CAPITAL_LETTERS;
 import static org.forzaverita.daldic.data.Constants.NAME_PREF_TEXT_FONT;
@@ -19,6 +20,7 @@ import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_AUT
 import static org.forzaverita.daldic.data.Constants.NAME_PREF_WIDGET_REFRESH_INTERVAL;
 import static org.forzaverita.daldic.data.Constants.PREF_REFRESH_AUTO;
 import static org.forzaverita.daldic.data.Constants.PREF_REFRESH_INTERVAL;
+import static org.forzaverita.daldic.data.Constants.PREF_SHOW_BACKGROUND;
 import static org.forzaverita.daldic.data.Constants.PREF_TEXT_CAPITAL_LETTERS;
 
 public class PreferencesServiceImpl implements PreferencesService {
@@ -63,6 +65,11 @@ public class PreferencesServiceImpl implements PreferencesService {
 	@Override
 	public boolean isCapitalLetters() {
 		return preferences.getBoolean(NAME_PREF_TEXT_CAPITAL_LETTERS, PREF_TEXT_CAPITAL_LETTERS);
+	}
+
+	@Override
+	public boolean isShowBackground() {
+		return preferences.getBoolean(NAME_PREF_SHOW_BACKGROUND, PREF_SHOW_BACKGROUND);
 	}
 	
 	@Override

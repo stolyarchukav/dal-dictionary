@@ -39,6 +39,8 @@ public interface DalDicService {
 	
 	int getRefreshInterval();
 
+	boolean isShowBackground();
+
 	boolean isDatabaseReady();
 
 	void openDatabase();
