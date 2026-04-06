@@ -19,6 +19,8 @@ public interface PreferencesService {
 
 	boolean isShowBackground();
 
+	void setShowBackground(boolean show);
+
 	boolean isAutoRefresh();
 
 	int getRefreshInterval();

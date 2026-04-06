@@ -1,5 +1,6 @@
 package org.forzaverita.daldic.util;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -36,7 +37,7 @@ public final class CommonViewUtil {
         if (service.isShowBackground()) {
             view.setBackgroundResource(R.drawable.texture);
         } else {
-            view.setBackgroundResource(android.R.color.white);
+            view.setBackgroundColor(Color.WHITE);
         }
     }
 

@@ -42,6 +42,8 @@
     <string name="pref_text_font_summary">Text font in application</string>
     <string name="pref_show_background">Show background</string>
     <string name="pref_show_background_summary">Show texture background in application</string>
+    <string name="switch_to_classic">Classic mode</string>
+    <string name="disable_classic">Modern mode</string>
     <string-array name="pref_text_font_names">
     	<item>Philosopher</item>
     	<item>Flow</item>

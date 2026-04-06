@@ -41,6 +41,8 @@ public interface DalDicService {
 
 	boolean isShowBackground();
 
+	void setShowBackground(boolean show);
+
 	boolean isDatabaseReady();
 
 	void openDatabase();

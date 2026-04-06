@@ -185,6 +185,12 @@ public class DalDicServiceImpl extends Application implements DalDicService {
 	public boolean isShowBackground() {
 		return preferencesService.isShowBackground();
 	}
+
+	@Override
+	public void setShowBackground(boolean show) {
+		preferencesService.setShowBackground(show);
+		preferencesChanged();
+	}
 	
 	@Override
 	public TextAlignment getWordTextAlign() {

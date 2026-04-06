@@ -71,6 +71,11 @@ public class PreferencesServiceImpl implements PreferencesService {
 	public boolean isShowBackground() {
 		return preferences.getBoolean(NAME_PREF_SHOW_BACKGROUND, PREF_SHOW_BACKGROUND);
 	}
+
+	@Override
+	public void setShowBackground(boolean show) {
+		preferences.edit().putBoolean(NAME_PREF_SHOW_BACKGROUND, show).apply();
+	}
 	
 	@Override
 	public int getRefreshInterval() {

@@ -42,6 +42,8 @@
     <string name="pref_text_font_summary">Шрифт текста</string>
     <string name="pref_show_background">Фоновый рисунок</string>
     <string name="pref_show_background_summary">Использовать текстуру в качестве фона приложения</string>
+    <string name="switch_to_classic">Классический вид</string>
+    <string name="disable_classic">Современный вид</string>
     <string-array name="pref_text_font_names">
     	<item>Philosopher</item>
     	<item>Flow</item>

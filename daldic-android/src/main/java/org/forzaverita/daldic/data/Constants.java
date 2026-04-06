@@ -13,7 +13,7 @@ public class Constants {
 	public static final int PREF_REFRESH_INTERVAL = 15;
 	public static final boolean PREF_REFRESH_AUTO = true;
 	public static final boolean PREF_TEXT_CAPITAL_LETTERS = false;
-	public static final boolean PREF_SHOW_BACKGROUND = true;
+	public static final boolean PREF_SHOW_BACKGROUND = false;
 	
 	public static final String NAME_PREF_TEXT_ALIGN = "pref_text_align";
 	public static final String NAME_PREF_TEXT_FONT = "pref_text_font";

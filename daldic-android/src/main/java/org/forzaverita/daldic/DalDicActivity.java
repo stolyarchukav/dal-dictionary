@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class DalDicActivity extends Activity {
 		super.onResume();
 		if (service.isPreferencesChanged(lastPreferencesCheck)) {
 			lastPreferencesCheck = new Date();
-			onCreate(null);
+			recreate();
 		}
 	}
 	
@@ -66,6 +67,20 @@ public class DalDicActivity extends Activity {
 		Button randomWordBtn = findViewById(R.id.random_word);
 		randomWordBtn.setTypeface(font);
 		randomWordBtn.setOnClickListener(v -> randomWord());
+
+		Button switchClassicBtn = findViewById(R.id.switch_classic);
+		switchClassicBtn.setVisibility(View.VISIBLE);
+		switchClassicBtn.setTypeface(font);
+		if (service.isShowBackground()) {
+			switchClassicBtn.setText(R.string.disable_classic);
+		} else {
+			switchClassicBtn.setText(R.string.switch_to_classic);
+		}
+		switchClassicBtn.setOnClickListener(v -> {
+			service.setShowBackground(!service.isShowBackground());
+			recreate();
+		});
+		CommonViewUtil.addEdgeToEdgeMargins(switchClassicBtn);
 
 		EditText searchText = findViewById(R.id.search_full_text);
 		Button searchFullTextBtn = findViewById(R.id.search_full_button);
